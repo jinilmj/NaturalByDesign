@@ -3,7 +3,7 @@ using System;
 
 namespace NBD4.Models
 {
-    public class Project
+    public class Project :IValidatableObject
     {
         public int ID { get; set; }
 
@@ -32,5 +32,13 @@ namespace NBD4.Models
 
         [Display(Name = "Client")]
         public Client Client { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (EndDate < StartDate)
+            {
+                yield return new ValidationResult("Project cannot end before it starts.", new[] { "EndDate" });
+            }
+        }
     }
 }

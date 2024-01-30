@@ -13,45 +13,115 @@ namespace NBD4.Data
 
             try
             {
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
 
+                if (!context.Provinces.Any())
+                {
+                    var provinces = new List<Province>
+                    {
+                        new Province { ID = "ON", Name = "Ontario"},
+                        new Province { ID = "PE", Name = "Prince Edward Island"},
+                        new Province { ID = "NB", Name = "New Brunswick"},
+                        new Province { ID = "BC", Name = "British Columbia"},
+                        new Province { ID = "NL", Name = "Newfoundland and Labrador"},
+                        new Province { ID = "SK", Name = "Saskatchewan"},
+                        new Province { ID = "NS", Name = "Nova Scotia"},
+                        new Province { ID = "MB", Name = "Manitoba"},
+                        new Province { ID = "QC", Name = "Quebec"},
+                        new Province { ID = "YT", Name = "Yukon"},
+                        new Province { ID = "NU", Name = "Nunavut"},
+                        new Province { ID = "NT", Name = "Northwest Territories"},
+                        new Province { ID = "AB", Name = "Alberta"}
+                    };
+                    context.Provinces.AddRange(provinces);
+                    context.SaveChanges();
+                }
+                if (!context.Cities.Any())
+                {
+                    var cities = new List<City>
+                    {
+                        new City { Name = "Toronto", ProvinceID="ON" },
+                        new City { Name = "Halifax", ProvinceID="NS" },
+                        new City { Name = "Calgary", ProvinceID="AB" },
+                        new City { Name = "Winnipeg", ProvinceID="MB", },
+                        new City { Name = "Stratford", ProvinceID="ON" },
+                        new City { Name = "St. Catharines", ProvinceID="ON" },
+                        new City { Name = "Stratford", ProvinceID="PE" },
+                        new City { Name = "Ancaster", ProvinceID="ON" },
+                        new City { Name = "Vancouver", ProvinceID="BC" },
+                        new City { Name = "Montreal", ProvinceID = "QC" },
+                        new City { Name = "Quebec City", ProvinceID = "QC" },
+                        new City { Name = "Edmonton", ProvinceID = "AB" },
+                        new City { Name = "Ottawa", ProvinceID = "ON" },
+                        new City { Name = "Fredericton", ProvinceID = "NB" },
+                        new City { Name = "Victoria", ProvinceID = "BC" },
+                        new City { Name = "Regina", ProvinceID = "SK" },
+                        new City { Name = "Charlottetown", ProvinceID = "PE" },
+                        new City { Name = "Yellowknife", ProvinceID = "NT" },
+                        new City { Name = "Whitehorse", ProvinceID = "YT" },
+                        new City { Name = "Iqaluit", ProvinceID = "NU" },
+                        new City { Name = "Saskatoon", ProvinceID = "SK" },
+                        new City { Name = "London", ProvinceID = "ON" },
+                        new City { Name = "Windsor", ProvinceID = "ON" },
+                    };
+                    context.Cities.AddRange(cities);
+                    context.SaveChanges();
+                }
+                    
                 if (!context.Clients.Any())
                 {
                     context.Clients.AddRange(
                     new Client
                     {
-                        Name = "John Doe",
+                        Name = "Tech Innovators Ltd",
                         Email = "john.doe@example.com",
-                        Phone = "+1 (555) 123-4567",
+                        Phone = "5559876543",
+                        Street = "123 Main St",
+                        PostalCode = "M1M1M1",
+                        CityID = 2
                     },
                     new Client
                     {
-                        Name = "Alice Smith",
+                        Name = "Global Solutions Inc",
                         Email = "alice.smith@example.com",
-                        Phone = "+1 (555) 987-6543",
+                        Phone = "7896541230",
+                        Street = "456 Elm St",
+                        PostalCode = "V2V2V2",
+                        CityID = 3
                     },
                     new Client
                     {
-                        Name = "Bob Johnson",
+                        Name = "Pinnacle Enterprises",
                         Email = "bob.johnson@example.com",
-                        Phone = "+1 (555) 789-0123",
+                        Phone = "5553334444",
+                        Street = "789 Oak St",
+                        PostalCode = "K3K 3K3",
+                        CityID = 4
                     },
                     new Client
                     {
-                        Name = "Eva Brown",
+                        Name = "Infinite Dynamics Co",
                         Email = "eva.brown@example.com",
-                        Phone = "+1 (555) 456-7890",
+                        Phone = "7778889999",
+                        Street = "101 Pine St",
+                        PostalCode = "R4R 4R4",
+                        CityID = 5
                     },
                     new Client
                     {
-                        Name = "Michael Davis",
+                        Name = "EagleEye Technologies",
                         Email = "michael.davis@example.com",
-                        Phone = "+1 (555) 234-5678",
+                        Phone = "6665554444",
+                        Street = "202 Cedar St",
+                        PostalCode = "L5L 5L5",
+                        CityID = 6
                     }
                     )
                     ;
                     context.SaveChanges();
                 }
-                // Seed Patients if there aren't any.
+                
                 if (!context.Projects.Any())
                 {
                     context.Projects.AddRange(
@@ -60,70 +130,70 @@ namespace NBD4.Data
                         StartDate = DateTime.Parse("2024-04-23"),
                         EndDate = DateTime.Parse("2024-05-23"),
                         Site = "Main entrance Mall Dr./Cinema Lane",
-                        ClientID = context.Clients.FirstOrDefault(c => c.Name == "Client1").ID
+                        ClientID = context.Clients.FirstOrDefault(c => c.Name == "Tech Innovators Ltd").ID
                     },
                     new Project
                     {
                         StartDate = DateTime.Parse("2024-05-10"),
                         EndDate = DateTime.Parse("2024-06-10"),
                         Site = "Downtown Plaza",
-                        ClientID = context.Clients.FirstOrDefault(c => c.Name == "Client2").ID
+                        ClientID = context.Clients.FirstOrDefault(c => c.Name == "Tech Innovators Ltd").ID
                     },
                     new Project
                     {
                         StartDate = DateTime.Parse("2024-06-01"),
                         EndDate = DateTime.Parse("2024-07-01"),
                         Site = "Shopping Center Avenue",
-                        ClientID = context.Clients.FirstOrDefault(c => c.Name == "Client3").ID
+                        ClientID = context.Clients.FirstOrDefault(c => c.Name == "Global Solutions Inc").ID
                     },
                     new Project
                     {
                         StartDate = DateTime.Parse("2024-07-15"),
                         EndDate = DateTime.Parse("2024-08-15"),
                         Site = "Tech Park Tower",
-                        ClientID = context.Clients.FirstOrDefault(c => c.Name == "Client4").ID
+                        ClientID = context.Clients.FirstOrDefault(c => c.Name == "Global Solutions Inc").ID
                     },
                     new Project
                     {
                         StartDate = DateTime.Parse("2024-08-05"),
                         EndDate = DateTime.Parse("2024-09-05"),
                         Site = "Riverside Gardens",
-                        ClientID = context.Clients.FirstOrDefault(c => c.Name == "Client5").ID
+                        ClientID = context.Clients.FirstOrDefault(c => c.Name == "Pinnacle Enterprises").ID
                     },
                     new Project
                     {
                         StartDate = DateTime.Parse("2024-09-20"),
                         EndDate = DateTime.Parse("2024-10-20"),
                         Site = "Harbor View Plaza",
-                        ClientID = context.Clients.FirstOrDefault(c => c.Name == "Client6").ID
+                        ClientID = context.Clients.FirstOrDefault(c => c.Name == "Pinnacle Enterprises").ID
                     },
                     new Project
                     {
                         StartDate = DateTime.Parse("2024-10-15"),
                         EndDate = DateTime.Parse("2024-11-15"),
                         Site = "Green Park Street",
-                        ClientID = context.Clients.FirstOrDefault(c => c.Name == "Client7").ID
+                        ClientID = context.Clients.FirstOrDefault(c => c.Name == "Infinite Dynamics Co").ID
                     },
                     new Project
                     {
                         StartDate = DateTime.Parse("2024-11-01"),
                         EndDate = DateTime.Parse("2024-12-01"),
                         Site = "Metro Center Square",
-                        ClientID = context.Clients.FirstOrDefault(c => c.Name == "Client8").ID
+                        ClientID = context.Clients.FirstOrDefault(c => c.Name == "Infinite Dynamics Co").ID
                     },
                     new Project
                     {
                         StartDate = DateTime.Parse("2024-12-10"),
                         EndDate = DateTime.Parse("2025-01-10"),
                         Site = "Sunset Ridge Avenue",
-                        ClientID = context.Clients.FirstOrDefault(c => c.Name == "Client9").ID
+                        ClientID = context.Clients.FirstOrDefault(c => c.Name == "EagleEye Technologies").ID
                     },
                     new Project
                     {
                         StartDate = DateTime.Parse("2025-01-05"),
                         EndDate = DateTime.Parse("2025-02-05"),
                         Site = "Oakwood Terrace",
-                        ClientID = context.Clients.FirstOrDefault(c => c.Name == "Client10").ID
+                        ClientID = context.Clients.FirstOrDefault(c => c.Name == "EagleEye Technologies").ID
                     }
                     );
                     context.SaveChanges();

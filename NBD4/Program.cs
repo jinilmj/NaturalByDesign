@@ -48,4 +48,6 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
+NBDInitializer.Seed(app);
+
 app.Run();
