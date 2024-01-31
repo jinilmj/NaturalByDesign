@@ -37,6 +37,7 @@ namespace NBD4.Controllers
 
             var client = await _context.Clients
                 .Include(c => c.City)
+                .Include(c=>c.Projects)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (client == null)
             {

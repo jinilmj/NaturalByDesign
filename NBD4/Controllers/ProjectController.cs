@@ -48,7 +48,7 @@ namespace NBD4.Controllers
         // GET: Project/Create
         public IActionResult Create()
         {
-            ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "Email");
+            ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "Name");
             return View();
         }
 
