@@ -50,11 +50,14 @@ namespace NBD4.Data.NBDMigrations
                     ID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
+                    ContactFirstName = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    ContactMiddleName = table.Column<string>(type: "TEXT", maxLength: 50, nullable: true),
+                    ContactLastName = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
                     Email = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
                     Phone = table.Column<string>(type: "TEXT", maxLength: 10, nullable: false),
                     Street = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
                     PostalCode = table.Column<string>(type: "TEXT", nullable: false),
-                    CityID = table.Column<int>(type: "INTEGER", nullable: true)
+                    CityID = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -63,7 +66,8 @@ namespace NBD4.Data.NBDMigrations
                         name: "FK_Clients_Cities_CityID",
                         column: x => x.CityID,
                         principalTable: "Cities",
-                        principalColumn: "ID");
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

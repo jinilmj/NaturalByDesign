@@ -75,6 +75,9 @@ namespace NBD4.Data
                     new Client
                     {
                         Name = "Tech Innovators Ltd",
+                        ContactFirstName="John",
+                        ContactMiddleName="N",
+                        ContactLastName="Doe",
                         Email = "john.doe@example.com",
                         Phone = "5559876543",
                         Street = "123 Main St",
@@ -85,6 +88,9 @@ namespace NBD4.Data
                     {
                         Name = "Global Solutions Inc",
                         Email = "alice.smith@example.com",
+                        ContactFirstName = "Alice",
+                        ContactMiddleName = "D",
+                        ContactLastName = "Smith",
                         Phone = "7896541230",
                         Street = "456 Elm St",
                         PostalCode = "V2V2V2",
@@ -93,6 +99,9 @@ namespace NBD4.Data
                     new Client
                     {
                         Name = "Pinnacle Enterprises",
+                        ContactFirstName = "Bob",
+                        ContactMiddleName = "N",
+                        ContactLastName = "Johnson",
                         Email = "bob.johnson@example.com",
                         Phone = "5553334444",
                         Street = "789 Oak St",
@@ -102,6 +111,9 @@ namespace NBD4.Data
                     new Client
                     {
                         Name = "Infinite Dynamics Co",
+                        ContactFirstName = "Eva",
+                        ContactMiddleName = "N",
+                        ContactLastName = "Brown",
                         Email = "eva.brown@example.com",
                         Phone = "7778889999",
                         Street = "101 Pine St",
@@ -111,6 +123,9 @@ namespace NBD4.Data
                     new Client
                     {
                         Name = "EagleEye Technologies",
+                        ContactFirstName = "Michael",
+                        ContactMiddleName = "N",
+                        ContactLastName = "Davis",
                         Email = "michael.davis@example.com",
                         Phone = "6665554444",
                         Street = "202 Cedar St",

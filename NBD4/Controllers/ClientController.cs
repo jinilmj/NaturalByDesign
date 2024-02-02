@@ -60,7 +60,7 @@ namespace NBD4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Email,Phone,Street,PostalCode,CityID")] Client client)
+        public async Task<IActionResult> Create([Bind("ID,Name,ContactFirstName,ContactMiddleName,ContactLastName,Email,Phone,Street,PostalCode,CityID")] Client client)
         {
             if (ModelState.IsValid)
             {
@@ -96,7 +96,7 @@ namespace NBD4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Email,Phone,Street,PostalCode,CityID")] Client client)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,ContactFirstName,ContactMiddleName,ContactLastName,Email,Phone,Street,PostalCode,CityID")] Client client)
         {
             if (id != client.ID)
             {

@@ -1,0 +1,3 @@
+﻿Add-Migration -Context NBDContext -o Data\MOMigrations Initial
+
+Update-Database -Context NBDContext 

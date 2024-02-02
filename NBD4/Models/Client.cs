@@ -8,11 +8,44 @@ namespace NBD4.Models
     {
         public int ID { get; set; }
 
+        [Display(Name = "Contact")]
+        public string FullName
+        {
+            get
+            {
+                return ContactFirstName
+                    + (string.IsNullOrEmpty(ContactMiddleName) ? " " :
+                        (" " + (char?)ContactMiddleName[0] + ". ").ToUpper())
+                    + ContactLastName;
+            }
+        }
+
+
+        [Display(Name = "Client Name")]
         [Required(ErrorMessage = "Client Name is required.")]
         [StringLength(100, ErrorMessage = "Client Name cannot exceed 100 characters.")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Email Address is required.")]
+
+        [Display(Name = "Contact First Name")]
+        [Required(ErrorMessage = "You cannot leave the first name blank.")]
+        [StringLength(50, ErrorMessage = "First name cannot be more than 50 characters long.")]
+        public string ContactFirstName { get; set; }
+
+        [Display(Name = "Contact Middle Name")]
+        [StringLength(50, ErrorMessage = "Middle name cannot be more than 50 characters long.")]
+        public string ContactMiddleName { get; set; }
+
+        [Display(Name = "Contact LastName")]
+        [Required(ErrorMessage = "You cannot leave the last name blank.")]
+        [StringLength(100, ErrorMessage = "Last name cannot be more than 100 characters long.")]
+        public string ContactLastName { get; set; }
+
+        [Required(ErrorMessage = "Email Address is required.e.g. johndoe@example.com")]
+        [RegularExpression(@"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*"
+        + "@"
+        + @"((([\-\w]+\.)+[a-zA-Z]{2,4})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$",
+        ErrorMessage = "Enter a valid email address.e.g. johndoe@example.com")]
         [StringLength(255)]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
@@ -48,15 +81,15 @@ namespace NBD4.Models
 
 
         [Display(Name = "Postal Code")]
-        [Required(ErrorMessage = "Zip Code is required.")]
-        [RegularExpression(@"^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ]\d[ABCEGHJKLMNPRSTVWXYZ]\d$",
-        ErrorMessage = "Invalid Postal Code.")]
-
+        [Required(ErrorMessage = "Postal Code is required.e.g. A1B1C1")]
+        [RegularExpression(@"^[a-zA-Z]\d[a-zA-Z]\d[a-zA-Z]\d$",
+         ErrorMessage = "Enter Postal Code In the correct format.e.g. A1B1C1")]
+     
         public string PostalCode { get; set; }
 
         [Display(Name = "City")]
-        [Range(1, int.MaxValue, ErrorMessage = "You must select the City.")]
-        public int? CityID { get; set; }
+        [Range(1, int.MaxValue)]
+        public int CityID { get; set; }
         public City City { get; set; }
 
         public ICollection<Project> Projects { get; set; } = new HashSet<Project>();
