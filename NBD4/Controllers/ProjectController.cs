@@ -22,8 +22,8 @@ namespace NBD4.Controllers
         // GET: Project
         public async Task<IActionResult> Index()
         {
-            var nBDContext = _context.Projects.Include(p => p.Client);
-            return View(await nBDContext.ToListAsync());
+            var projects = _context.Projects.Include(p => p.Client);
+            return View(await projects.ToListAsync());
         }
 
         // GET: Project/Details/5
@@ -48,7 +48,7 @@ namespace NBD4.Controllers
         // GET: Project/Create
         public IActionResult Create()
         {
-            ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "Name");
+            PopulateDropDownLists();
             return View();
         }
 
@@ -59,13 +59,21 @@ namespace NBD4.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,StartDate,EndDate,Site,ClientID")] Project project)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(project);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(project);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
-            ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "Email", project.ClientID);
+            catch (DbUpdateException )
+            {               
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");               
+            }
+            
+            PopulateDropDownLists(project);
             return View(project);
         }
 
@@ -82,7 +90,7 @@ namespace NBD4.Controllers
             {
                 return NotFound();
             }
-            ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "Email", project.ClientID);
+            PopulateDropDownLists(project);
             return View(project);
         }
 
@@ -91,23 +99,26 @@ namespace NBD4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,StartDate,EndDate,Site,ClientID")] Project project)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id != project.ID)
+            //Go get the patient to update
+            var projectToUpdate = await _context.Projects.FirstOrDefaultAsync(p => p.ID == id);
+
+            if (projectToUpdate == null)
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            if (await TryUpdateModelAsync<Project>(projectToUpdate, "",
+                p => p.StartDate, p => p.EndDate, p => p.Site, p => p.ClientID))
             {
                 try
                 {
-                    _context.Update(project);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProjectExists(project.ID))
+                    if (!ProjectExists(projectToUpdate.ID))
                     {
                         return NotFound();
                     }
@@ -116,10 +127,14 @@ namespace NBD4.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                catch (DbUpdateException)
+                {
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+                }
             }
-            ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "Email", project.ClientID);
-            return View(project);
+            //ViewData["ClientID"] = new SelectList(_context.Clients, "ID", "Email", project.ClientID);
+            PopulateDropDownLists(projectToUpdate);
+            return View(projectToUpdate);
         }
 
         // GET: Project/Delete/5
@@ -132,6 +147,7 @@ namespace NBD4.Controllers
 
             var project = await _context.Projects
                 .Include(p => p.Client)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (project == null)
             {
@@ -148,18 +164,33 @@ namespace NBD4.Controllers
         {
             if (_context.Projects == null)
             {
-                return Problem("Entity set 'NBDContext.Projects'  is null.");
+                return Problem("Project has already removed from the system.");
             }
             var project = await _context.Projects.FindAsync(id);
-            if (project != null)
+            try
             {
-                _context.Projects.Remove(project);
+                if (project != null)
+                {
+                    _context.Projects.Remove(project);
+                }
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", "Unable to delete record. Try again, and if the problem persists see your system administrator.");
+            }
+            return View(project);           
             
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
+        private void PopulateDropDownLists(Project project = null)
+        {
+            var dQuery = from c in _context.Clients
+                         orderby c.Name
+                         select c;
+            ViewData["ClientID"] = new SelectList(dQuery, "ID", "Name", project?.ClientID);
+        }
         private bool ProjectExists(int id)
         {
           return _context.Projects.Any(e => e.ID == id);

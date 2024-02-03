@@ -23,8 +23,8 @@ namespace NBD4.Controllers
         // GET: Client
         public async Task<IActionResult> Index()
         {
-            var nBDContext = _context.Clients.Include(c => c.City);
-            return View(await nBDContext.ToListAsync());
+            var doctors = _context.Clients.Include(c => c.City);
+            return View(await doctors.ToListAsync());
         }
 
         // GET: Client/Details/5
@@ -62,12 +62,20 @@ namespace NBD4.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,Name,ContactFirstName,ContactMiddleName,ContactLastName,Email,Phone,Street,PostalCode,CityID")] Client client)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(client);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(client);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
+            catch (DbUpdateException)
+            {
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+            }
+
             ViewData["CityID"] = new SelectList(_context.Cities, "ID", "Name", client.CityID);
             PopulateDropDownLists(client);
             return View(client);
@@ -96,23 +104,24 @@ namespace NBD4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,ContactFirstName,ContactMiddleName,ContactLastName,Email,Phone,Street,PostalCode,CityID")] Client client)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id != client.ID)
+            var clientToUpdate = await _context.Clients.SingleOrDefaultAsync(c => c.ID == id);
+            if (clientToUpdate == null)
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            if (await TryUpdateModelAsync<Client>(clientToUpdate, "",
+               c => c.Name, c=> c.ContactFirstName, c => c.ContactMiddleName, c => c.ContactLastName, c=>c.Email, c=>c.Phone, c=>c.Street, c=>c.PostalCode, c=>c.CityID))
             {
                 try
                 {
-                    _context.Update(client);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ClientExists(client.ID))
+                    if (!ClientExists(clientToUpdate.ID))
                     {
                         return NotFound();
                     }
@@ -121,11 +130,15 @@ namespace NBD4.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                catch (DbUpdateException)
+                {
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+                }
+
             }
             //ViewData["CityID"] = new SelectList(_context.Cities, "ID", "Name", client.CityID);
             PopulateDropDownLists();
-            return View(client);
+            return View(clientToUpdate);
         }
 
         // GET: Client/Delete/5
@@ -137,6 +150,7 @@ namespace NBD4.Controllers
             }
 
             var client = await _context.Clients
+                .AsNoTracking()
                 .Include(c => c.City)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (client == null)
@@ -157,13 +171,28 @@ namespace NBD4.Controllers
                 return Problem("Entity set 'NBDContext.Clients'  is null.");
             }
             var client = await _context.Clients.FindAsync(id);
-            if (client != null)
+            try
             {
-                _context.Clients.Remove(client);
+                if (client != null)
+                {
+                    _context.Clients.Remove(client);
+                }
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            catch (DbUpdateException dex)
+            {
+                if (dex.GetBaseException().Message.Contains("FOREIGN KEY constraint failed"))
+                {
+                    ModelState.AddModelError("", "Unable to Delete Client. Remember, you cannot delete a Client that has projects assigned.");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+                }
+            }
+            return View(client);
+
         }
         private SelectList ProvinceSelectList(string selectedId)
         {

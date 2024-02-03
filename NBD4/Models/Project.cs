@@ -26,7 +26,7 @@ namespace NBD4.Models
         [StringLength(150, ErrorMessage = "Site name cannot exceed 150 characters.")]
         public string Site { get; set; }
 
-        [Required(ErrorMessage = "You must select a Primary Client.")]
+        [Required(ErrorMessage = "You must select a Client.")]
         [Display(Name = "Client")]
         public int ClientID { get; set; }
 
