@@ -22,7 +22,10 @@ namespace NBD4.Controllers
         // GET: Project
         public async Task<IActionResult> Index()
         {
-            var projects = _context.Projects.Include(p => p.Client);
+            var projects = _context
+                .Projects
+                .AsNoTracking()
+                .Include(p => p.Client);
             return View(await projects.ToListAsync());
         }
 
@@ -34,7 +37,7 @@ namespace NBD4.Controllers
                 return NotFound();
             }
 
-            var project = await _context.Projects
+            var project = await _context.Projects.AsNoTracking()
                 .Include(p => p.Client)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (project == null)

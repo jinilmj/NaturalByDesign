@@ -24,7 +24,7 @@ namespace NBD4.Controllers
         public async Task<IActionResult> Index()
         {
             var doctors = _context.Clients.Include(c => c.City);
-            return View(await doctors.ToListAsync());
+            return View(await doctors.AsNoTracking().ToListAsync());
         }
 
         // GET: Client/Details/5
@@ -35,7 +35,7 @@ namespace NBD4.Controllers
                 return NotFound();
             }
 
-            var client = await _context.Clients
+            var client = await _context.Clients.AsNoTracking()
                 .Include(c => c.City)
                 .Include(c=>c.Projects)
                 .FirstOrDefaultAsync(m => m.ID == id);
