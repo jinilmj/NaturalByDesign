@@ -13,12 +13,12 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <label asp-for="Name" class="control-label">City Name<span class="mandatory">*</span></label>
+                <input asp-for="Name" class="form-control" placeholder="Enter City Name" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ProvinceID" class="control-label"></label>
+                <label asp-for="ProvinceID" class="control-label">Province<span class="mandatory">*</span></label>
                 <select asp-for="ProvinceID" class ="form-control" asp-items="ViewBag.ProvinceID"></select>
             </div>
             <div class="form-group">

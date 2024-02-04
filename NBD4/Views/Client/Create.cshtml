@@ -13,56 +13,57 @@
         <div class="col-md-6">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">Name<span class="mandatory">*</span></label>
                 <input asp-for="Name" class="form-control" placeholder="Enter client name" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ContactFirstName" class="control-label"></label>
-                <input asp-for="ContactFirstName" class="form-control" />
+                <label asp-for="ContactFirstName" class="control-label">Contact First Name<span class="mandatory">*</span></label>
+                <input asp-for="ContactFirstName" class="form-control" placeholder="Enter First Name" />
                 <span asp-validation-for="ContactFirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ContactMiddleName" class="control-label"></label>
-                <input asp-for="ContactMiddleName" class="form-control" />
+                <input asp-for="ContactMiddleName" class="form-control" placeholder="Enter Middle Name" />
                 <span asp-validation-for="ContactMiddleName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ContactLastName" class="control-label"></label>
-                <input asp-for="ContactLastName" class="form-control" />
+                <label asp-for="ContactLastName" class="control-label">Contact Last Name<span class="mandatory">*</span></label>
+                <input asp-for="ContactLastName" class="form-control" placeholder="Enter Last Name"/>
                 <span asp-validation-for="ContactLastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
+                <label asp-for="Email" class="control-label">Email<span class="mandatory">*</span></label>
+                <input asp-for="Email" class="form-control" placeholder="Enter Email e.g. johndoe@example.com"/>
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
         </div>
         <div class="col-md-6">
 
             <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
+                <label asp-for="Phone" class="control-label">Phone <span class="mandatory">*</span></label>
+                <input asp-for="Phone" class="form-control" placeholder="Enter Phone Number (No Spaces)" />
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="Street" class="control-label"></label>
-                <input asp-for="Street" class="form-control" />
+                <label asp-for="Street" class="control-label">Street<span class="mandatory">*</span></label>
+                <input asp-for="Street" class="form-control" placeholder="Enter Street Name"/>
                 <span asp-validation-for="Street" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PostalCode" class="control-label"></label>
-                <input asp-for="PostalCode" class="form-control" />
+                <label asp-for="PostalCode" class="control-label">Postal Code<span class="mandatory">*</span></label>
+                <input asp-for="PostalCode" class="form-control" placeholder="Enter Postal Code e.g. A1B1C1 (No spaces)"/>
                 <span asp-validation-for="PostalCode" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label">Province:</label>
+                <label class="control-label">Province<span class="mandatory">*</span></label>
                 <select class="form-control" id="ProvinceID" name="ProvinceID" asp-items="ViewBag.ProvinceID">
                     <option value="0">Select Province</option>
                 </select>
             </div>
             <div class="form-group">
-                <label asp-for="CityID" class="control-label"></label>
+                <label asp-for="CityID" class="control-label">City<span class="mandatory">*</span></label>
                 <select asp-for="CityID" class="form-control" asp-items="ViewBag.CityID">
                     <option value="0">Select a Province First</option>
                 </select>

@@ -13,22 +13,22 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="StartDate" class="control-label"></label>
-                <input asp-for="StartDate" class="form-control" />
+                <label asp-for="StartDate" class="control-label">Est.Project Start Date<span class="mandatory">*</span></label>
+                <input asp-for="StartDate" class="form-control"  />
                 <span asp-validation-for="StartDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EndDate" class="control-label"></label>
-                <input asp-for="EndDate" class="form-control" />
+                <label asp-for="EndDate" class="control-label">Est.Project Completion Date<span class="mandatory">*</span></label>
+                <input asp-for="EndDate" class="form-control"  />
                 <span asp-validation-for="EndDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Site" class="control-label"></label>
-                <input asp-for="Site" class="form-control" />
+                <label asp-for="Site" class="control-label">Project Site Name<span class="mandatory">*</span></label>
+                <input asp-for="Site" class="form-control" placeholder="Enter Project Site Name" />
                 <span asp-validation-for="Site" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ClientID" class="control-label"></label>
+                <label asp-for="ClientID" class="control-label">Client<span class="mandatory">*</span></label>
                 <select asp-for="ClientID" class="form-control" asp-items="ViewBag.ClientID">
                     <option value="">Select a Client</option>
                 </select>

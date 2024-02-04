@@ -83,7 +83,7 @@ namespace NBD4.Models
         [Display(Name = "Postal Code")]
         [Required(ErrorMessage = "Postal Code is required.e.g. A1B1C1")]
         [RegularExpression(@"^[a-zA-Z]\d[a-zA-Z]\d[a-zA-Z]\d$",
-         ErrorMessage = "Enter Postal Code In the correct format.e.g. A1B1C1")]
+         ErrorMessage = "Enter Postal Code In the correct format.e.g. A1B1C1 (No Spaces)")]
      
         public string PostalCode { get; set; }
 

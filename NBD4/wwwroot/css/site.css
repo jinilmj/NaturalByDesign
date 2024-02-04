@@ -16,6 +16,10 @@ html {
   position: relative;
   min-height: 100%;
 }
+.mandatory {
+    color: red;
+}
+
 
 body {
   margin-bottom: 60px;
