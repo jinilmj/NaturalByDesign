@@ -20,14 +20,17 @@ namespace NBD4.Controllers
         }
 
         // GET: Project
-        public async Task<IActionResult> Index(string SearchString, int? ClientID)
+        public async Task<IActionResult> Index(string SearchString, int? ClientID,
+            string actionButton, string sortDirection = "asc", string sortField = "Project")
         {
             ViewData["Filtering"] = "btn-outline-secondary";
             int numberFilters = 0;
 
             PopulateDropDownLists();
 
-            var projects = _context
+			string[] sortOptions = new[] { "Start Date", "End Date", "Clients" };
+
+			var projects = _context
                 .Projects
                 .Include(p => p.Client)
                 .AsNoTracking();
@@ -51,7 +54,62 @@ namespace NBD4.Controllers
                     + " Filter" + (numberFilters > 1 ? "s" : "") + " Applied)";
             }
 
-            return View(await projects.ToListAsync());
+			if (!String.IsNullOrEmpty(actionButton)) //Form Submitted!
+			{
+				if (sortOptions.Contains(actionButton))//Change of sort is requested
+				{
+					if (actionButton == sortField) //Reverse order on same field
+					{
+						sortDirection = sortDirection == "asc" ? "desc" : "asc";
+					}
+					sortField = actionButton;//Sort by the button clicked
+				}
+			}
+
+			//Now we know which field and direction to sort by
+			if (sortField == "Start Date")
+			{
+				if (sortDirection == "asc")
+				{
+					projects = projects
+						.OrderBy(p => p.StartDate);
+				}
+				else
+				{
+					projects = projects
+						.OrderByDescending(p => p.StartDate);
+				}
+			}
+			else if (sortField == "End Date")
+			{
+				if (sortDirection == "asc")
+				{
+					projects = projects
+						.OrderByDescending(p => p.EndDate);
+				}
+				else
+				{
+					projects = projects
+						.OrderBy(p => p.EndDate);
+				}
+			}
+			else 
+			{
+				if (sortDirection == "asc")
+				{
+					projects = projects
+						.OrderBy(p => p.Client.Name);
+				}
+				else
+				{
+					projects = projects
+						.OrderByDescending(p => p.Client.Name);
+				}
+			}
+			//Set sort for next time
+			ViewData["sortField"] = sortField;
+			ViewData["sortDirection"] = sortDirection;
+			return View(await projects.ToListAsync());
         }
 
         // GET: Project/Details/5

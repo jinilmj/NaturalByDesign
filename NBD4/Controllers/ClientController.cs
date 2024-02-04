@@ -21,12 +21,15 @@ namespace NBD4.Controllers
         }
 
         // GET: Client
-        public async Task<IActionResult> Index(string SearchString, string SearchStringPh, string SearchClient)
+        public async Task<IActionResult> Index(string SearchString, string SearchStringPh, string SearchClient,
+            string actionButton, string sortDirection = "asc", string sortField = "Client")
         {
             ViewData["Filtering"] = "btn-outline-secondary";
             int numberFilters = 0;
 
-            var clients = _context
+			string[] sortOptions = new[] { "Clients", "Contacts" };
+
+			var clients = _context
                 .Clients
                 .Include(c => c.City)
                 .AsNoTracking();
@@ -55,8 +58,50 @@ namespace NBD4.Controllers
                 ViewData["numberFilters"] = "(" + numberFilters.ToString()
                     + " Filter" + (numberFilters > 1 ? "s" : "") + " Applied)";
             }
-
-            return View(await clients.ToListAsync());
+			if (!String.IsNullOrEmpty(actionButton)) //Form Submitted!
+			{
+				if (sortOptions.Contains(actionButton))//Change of sort is requested
+				{
+					if (actionButton == sortField) //Reverse order on same field
+					{
+						sortDirection = sortDirection == "asc" ? "desc" : "asc";
+					}
+					sortField = actionButton;//Sort by the button clicked
+				}
+			}
+			//Now we know which field and direction to sort by
+			if (sortField == "Clients")
+			{
+				if (sortDirection == "asc")
+				{
+					clients = clients
+						.OrderBy(p => p.Name);
+				}
+				else
+				{
+					clients = clients
+						.OrderByDescending(p => p.Name);
+				}
+			}
+			else 
+			{
+				if (sortDirection == "asc")
+				{
+					clients = clients
+						.OrderBy(p => p.ContactLastName)
+						.ThenBy(p => p.ContactFirstName);
+				}
+				else
+				{
+					clients = clients
+						.OrderByDescending(p => p.ContactLastName)
+						.ThenByDescending(p => p.ContactFirstName);
+				}
+			}
+			//Set sort for next time
+			ViewData["sortField"] = sortField;
+			ViewData["sortDirection"] = sortDirection;
+			return View(await clients.ToListAsync());
         }
 
         // GET: Client/Details/5
