@@ -27,28 +27,12 @@ namespace NBD4.Controllers
         }
 
         // GET: City/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.Cities == null)
-            {
-                return NotFound();
-            }
-
-            var city = await _context.Cities
-                .Include(c => c.Province)
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (city == null)
-            {
-                return NotFound();
-            }
-
-            return View(city);
-        }
+        
 
         // GET: City/Create
         public IActionResult Create()
         {
-            ViewData["ProvinceID"] = new SelectList(_context.Provinces, "ID", "ID");
+            ViewData["ProvinceID"] = new SelectList(_context.Provinces, "ID", "Name");
             return View();
         }
 
@@ -59,13 +43,21 @@ namespace NBD4.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,Name,ProvinceID")] City city)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(city);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(city);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
-            ViewData["ProvinceID"] = new SelectList(_context.Provinces, "ID", "ID", city.ProvinceID);
+            catch (DbUpdateException)
+            {
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+            }
+
+            ViewData["ProvinceID"] = new SelectList(_context.Provinces, "ID", "Name", city.ProvinceID);
             return View(city);
         }
 
@@ -82,7 +74,7 @@ namespace NBD4.Controllers
             {
                 return NotFound();
             }
-            ViewData["ProvinceID"] = new SelectList(_context.Provinces, "ID", "ID", city.ProvinceID);
+            ViewData["ProvinceID"] = new SelectList(_context.Provinces, "ID", "Name", city.ProvinceID);
             return View(city);
         }
 
@@ -91,23 +83,24 @@ namespace NBD4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,ProvinceID")] City city)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id != city.ID)
+            var cityToUpdate = await _context.Cities.FirstOrDefaultAsync(p => p.ID == id);
+            if (cityToUpdate == null)
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            if (await TryUpdateModelAsync<City>(cityToUpdate, "",
+                d => d.Name, d => d.ProvinceID))
             {
                 try
                 {
-                    _context.Update(city);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CityExists(city.ID))
+                    if (!CityExists(cityToUpdate.ID))
                     {
                         return NotFound();
                     }
@@ -116,10 +109,14 @@ namespace NBD4.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["ProvinceID"] = new SelectList(_context.Provinces, "ID", "ID", city.ProvinceID);
-            return View(city);
+                catch (DbUpdateException)
+                {
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+                }
+            }  
+            
+            ViewData["ProvinceID"] = new SelectList(_context.Provinces, "ID", "Name", cityToUpdate.ProvinceID);
+            return View(cityToUpdate);
         }
 
         // GET: City/Delete/5
@@ -151,13 +148,33 @@ namespace NBD4.Controllers
                 return Problem("Entity set 'NBDContext.Cities'  is null.");
             }
             var city = await _context.Cities.FindAsync(id);
+            try
+            {
+                if (city != null)
+                {
+                    _context.Cities.Remove(city);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (DbUpdateException dex)
+            {
+                if (dex.GetBaseException().Message.Contains("FOREIGN KEY constraint failed"))
+                {
+                    ModelState.AddModelError("", "Unable to Delete City. Remember, you cannot delete a City that is used in the system.");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+                }
+            }
             if (city != null)
             {
                 _context.Cities.Remove(city);
             }
+            return View(city);
             
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            
         }
 
         private bool CityExists(int id)

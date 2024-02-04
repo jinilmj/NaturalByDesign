@@ -4,10 +4,13 @@ namespace NBD4.Models
 {
     public class Province
     {
+        //[Display(Name = "Two Letter Province Code")]
+        //[Required(ErrorMessage = "You cannot leave the province code blank.")]
+        //[StringLength(2, ErrorMessage = "Province Code can only be two capital letters.")]
+        //[RegularExpression("^\\p{Lu}{2}$", ErrorMessage = "Please enter two capital letters for the province code.")]
         [Display(Name = "Two Letter Province Code")]
         [Required(ErrorMessage = "You cannot leave the province code blank.")]
-        [StringLength(2, ErrorMessage = "Province Code can only be two capital letters.")]
-        [RegularExpression("^\\p{Lu}{2}$", ErrorMessage = "Please enter two capital letters for the province code.")]
+        [RegularExpression("^[A-Z]{2}$", ErrorMessage = "Please enter two capital letters for the province code.")]
         public string ID { get; set; }
 
         [Display(Name = "Province Name")]

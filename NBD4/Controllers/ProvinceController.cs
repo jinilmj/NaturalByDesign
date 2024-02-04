@@ -26,22 +26,7 @@ namespace NBD4.Controllers
         }
 
         // GET: Province/Details/5
-        public async Task<IActionResult> Details(string id)
-        {
-            if (id == null || _context.Provinces == null)
-            {
-                return NotFound();
-            }
-
-            var province = await _context.Provinces
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (province == null)
-            {
-                return NotFound();
-            }
-
-            return View(province);
-        }
+        
 
         // GET: Province/Create
         public IActionResult Create()
@@ -54,14 +39,22 @@ namespace NBD4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name")] Province province)
+        public async Task<IActionResult> Create([Bind("Name,ID")] Province province)
         {
-            if (ModelState.IsValid)
+            try
+            {
+               if (ModelState.IsValid)
             {
                 _context.Add(province);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            }
+            catch (DbUpdateException)
+            {
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+            }
+            
             return View(province);
         }
 
@@ -88,21 +81,27 @@ namespace NBD4.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("ID,Name")] Province province)
         {
-            if (id != province.ID)
+            
+            var provinceToUpdate = await _context.Provinces.FirstOrDefaultAsync(p => p.ID == id);
+
+            //Check that you got it or exit with a not found error
+            if (provinceToUpdate == null)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            //Try updating it with the values posted
+            if (await TryUpdateModelAsync<Province>(provinceToUpdate, "",
+                d => d.Name ,d=>d.ID))
             {
                 try
                 {
-                    _context.Update(province);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProvinceExists(province.ID))
+                    if (!ProvinceExists(provinceToUpdate.ID))
                     {
                         return NotFound();
                     }
@@ -111,9 +110,12 @@ namespace NBD4.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                catch (DbUpdateException)
+                {
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+                }
             }
-            return View(province);
+            return View(provinceToUpdate);
         }
 
         // GET: Province/Delete/5
@@ -144,13 +146,29 @@ namespace NBD4.Controllers
                 return Problem("Entity set 'NBDContext.Provinces'  is null.");
             }
             var province = await _context.Provinces.FindAsync(id);
-            if (province != null)
+            try
             {
-                _context.Provinces.Remove(province);
+                if (province != null)
+                {
+                    _context.Provinces.Remove(province);
+                }
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
+            catch (DbUpdateException dex)
+            {
+                if (dex.GetBaseException().Message.Contains("FOREIGN KEY constraint failed"))
+                {
+                    ModelState.AddModelError("", "Unable to Delete Province. Remember, you cannot delete a Province that is used in the system.");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+                }
+            }
+
+            return View(province);
             
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool ProvinceExists(string id)
