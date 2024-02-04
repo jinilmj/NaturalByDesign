@@ -21,10 +21,42 @@ namespace NBD4.Controllers
         }
 
         // GET: Client
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string SearchString, string SearchStringPh, string SearchClient)
         {
-            var doctors = _context.Clients.Include(c => c.City);
-            return View(await doctors.AsNoTracking().ToListAsync());
+            ViewData["Filtering"] = "btn-outline-secondary";
+            int numberFilters = 0;
+
+            var clients = _context
+                .Clients
+                .Include(c => c.City)
+                .AsNoTracking();
+
+
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                clients= clients.Where(p => p.Name.ToUpper().Contains(SearchString.ToUpper()));
+                numberFilters++;
+            }
+            if (!String.IsNullOrEmpty(SearchStringPh))
+            {
+                clients = clients.Where(p => p.Phone.Contains(SearchStringPh));
+                numberFilters++;
+            }
+            if (!String.IsNullOrEmpty(SearchClient))
+            {
+                clients = clients.Where(p => p.Name.ToUpper() == SearchClient.ToUpper());
+            }
+
+            if (numberFilters != 0)
+            {
+                //Toggle the Open/Closed state of the collapse depending on if we are filtering
+                ViewData["Filtering"] = " btn-danger";
+                //Show how many filters have been applied
+                ViewData["numberFilters"] = "(" + numberFilters.ToString()
+                    + " Filter" + (numberFilters > 1 ? "s" : "") + " Applied)";
+            }
+
+            return View(await clients.ToListAsync());
         }
 
         // GET: Client/Details/5
@@ -207,6 +239,14 @@ namespace NBD4.Controllers
             return new SelectList(query.OrderBy(p => p.Name), "ID", "Summary", selectedId);
         }
 
+        public JsonResult GetClients(string term)
+        {
+            var result = from d in _context.Clients
+                         where d.Name.ToUpper().Contains(term.ToUpper())
+                         orderby d.Name
+                         select new { value = d.Name  };
+            return Json(result);
+        }
         private void PopulateDropDownLists(Client client = null)
         {
 

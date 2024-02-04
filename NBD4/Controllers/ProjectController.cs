@@ -20,12 +20,37 @@ namespace NBD4.Controllers
         }
 
         // GET: Project
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string SearchString, int? ClientID)
         {
+            ViewData["Filtering"] = "btn-outline-secondary";
+            int numberFilters = 0;
+
+            PopulateDropDownLists();
+
             var projects = _context
                 .Projects
-                .AsNoTracking()
-                .Include(p => p.Client);
+                .Include(p => p.Client)
+                .AsNoTracking();
+
+            if (ClientID.HasValue)
+            {
+                projects = projects.Where(p => p.ClientID == ClientID);
+                numberFilters++;
+            }
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                projects = projects.Where(p => p.Site.ToUpper().Contains(SearchString.ToUpper()));
+                numberFilters++;
+            }
+            if (numberFilters != 0)
+            {
+                //Toggle the Open/Closed state of the collapse depending on if we are filtering
+                ViewData["Filtering"] = " btn-danger";
+                //Show how many filters have been applied
+                ViewData["numberFilters"] = "(" + numberFilters.ToString()
+                    + " Filter" + (numberFilters > 1 ? "s" : "") + " Applied)";
+            }
+
             return View(await projects.ToListAsync());
         }
 
@@ -186,13 +211,18 @@ namespace NBD4.Controllers
             return View(project);           
             
         }
-
+        private SelectList ClientSelectList(int? selectedId)
+        {
+            return new SelectList(_context.Clients
+                .OrderBy(c => c.Name), "ID", "Name", selectedId);
+        }
         private void PopulateDropDownLists(Project project = null)
         {
-            var dQuery = from c in _context.Clients
-                         orderby c.Name
-                         select c;
-            ViewData["ClientID"] = new SelectList(dQuery, "ID", "Name", project?.ClientID);
+            ViewData["ClientID"] = ClientSelectList(project?.ClientID);
+            //var dQuery = from c in _context.Clients
+            //             orderby c.Name
+            //             select c;
+            //ViewData["ClientID"] = new SelectList(dQuery, "ID", "Name", project?.ClientID);
         }
         private bool ProjectExists(int id)
         {
