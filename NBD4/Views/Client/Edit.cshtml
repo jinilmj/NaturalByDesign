@@ -96,7 +96,7 @@
     <script type="text/javascript">
         $('#ProvinceID').change(function () {
             var selectedProvince = $("#ProvinceID").val();
-            var URL = "/Doctor/GetCities/?ProvinceID=" + selectedProvince;
+            var URL = "/Client/GetCities/?ProvinceID=" + selectedProvince;
             refreshDDL('CityID', URL, true, 'Select a Province with Cities first', false, null, true);
         });
     </script>

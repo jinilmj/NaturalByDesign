@@ -105,7 +105,7 @@ namespace NBD4.Data
                         Email = "bob.johnson@example.com",
                         Phone = "5553334444",
                         Street = "789 Oak St",
-                        PostalCode = "K3K 3K3",
+                        PostalCode = "K3K3K3",
                         CityID = 4
                     },
                     new Client
@@ -117,7 +117,7 @@ namespace NBD4.Data
                         Email = "eva.brown@example.com",
                         Phone = "7778889999",
                         Street = "101 Pine St",
-                        PostalCode = "R4R 4R4",
+                        PostalCode = "R4R4R4",
                         CityID = 5
                     },
                     new Client
@@ -129,7 +129,7 @@ namespace NBD4.Data
                         Email = "michael.davis@example.com",
                         Phone = "6665554444",
                         Street = "202 Cedar St",
-                        PostalCode = "L5L 5L5",
+                        PostalCode = "L5L5L5",
                         CityID = 6
                     }
                     )

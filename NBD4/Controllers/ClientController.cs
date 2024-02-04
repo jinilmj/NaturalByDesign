@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using NBD4.Data;
 using NBD4.Models;
 
@@ -153,7 +154,6 @@ namespace NBD4.Controllers
                 ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
 
-            ViewData["CityID"] = new SelectList(_context.Cities, "ID", "Name", client.CityID);
             PopulateDropDownLists(client);
             return View(client);
         }
@@ -166,12 +166,12 @@ namespace NBD4.Controllers
                 return NotFound();
             }
 
-            var client = await _context.Clients.FindAsync(id);
+            var client = await _context.Clients
+                .Include(c => c.City).FirstOrDefaultAsync(c => c.ID == id);
             if (client == null)
             {
                 return NotFound();
             }
-            //ViewData["CityID"] = new SelectList(_context.Cities, "ID", "Name", client.CityID);
             PopulateDropDownLists(client);
             return View(client);
         }
@@ -183,18 +183,24 @@ namespace NBD4.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id)
         {
-            var clientToUpdate = await _context.Clients.SingleOrDefaultAsync(c => c.ID == id);
+            var clientToUpdate = await _context.Clients
+                .Include(c => c.City)
+                .FirstOrDefaultAsync(c => c.ID == id);
             if (clientToUpdate == null)
             {
                 return NotFound();
             }
-            if (await TryUpdateModelAsync<Client>(clientToUpdate, "",
-               c => c.Name, c=> c.ContactFirstName, c => c.ContactMiddleName, c => c.ContactLastName, c=>c.Email, c=>c.Phone, c=>c.Street, c=>c.PostalCode, c=>c.CityID))
+            if (await TryUpdateModelAsync<Client>(clientToUpdate, "", c => c.Name, c=> c.ContactFirstName, 
+                c => c.ContactMiddleName, c => c.ContactLastName, c=>c.Email, c=>c.Phone, c=>c.Street, c=>c.PostalCode, c=>c.CityID))
             {
                 try
                 {
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
+                }
+                catch (RetryLimitExceededException /* dex */)
+                {
+                    ModelState.AddModelError("", "Unable to save changes after multiple attempts. Try again, and if the problem persists, see your system administrator.");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -213,8 +219,8 @@ namespace NBD4.Controllers
                 }
 
             }
-            //ViewData["CityID"] = new SelectList(_context.Cities, "ID", "Name", client.CityID);
-            PopulateDropDownLists();
+            
+            PopulateDropDownLists(clientToUpdate);
             return View(clientToUpdate);
         }
 
