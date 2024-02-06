@@ -7,12 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using NBD4.CustomControllers;
 using NBD4.Data;
 using NBD4.Models;
+using NBD4.Utilities;
 
 namespace NBD4.Controllers
 {
-    public class ClientController : Controller
+    public class ClientController : CognizantController
     {
         private readonly NBDContext _context;
 
@@ -23,7 +25,7 @@ namespace NBD4.Controllers
 
         // GET: Client
         public async Task<IActionResult> Index(string SearchString, string SearchStringPh, string SearchClient,
-            string actionButton, string sortDirection = "asc", string sortField = "Client")
+            int? page, int? pageSizeID, string actionButton, string sortDirection = "asc", string sortField = "Client")
         {
             ViewData["Filtering"] = "btn-outline-secondary";
             int numberFilters = 0;
@@ -61,7 +63,9 @@ namespace NBD4.Controllers
             }
 			if (!String.IsNullOrEmpty(actionButton)) //Form Submitted!
 			{
-				if (sortOptions.Contains(actionButton))//Change of sort is requested
+                page = 1;
+
+                if (sortOptions.Contains(actionButton))//Change of sort is requested
 				{
 					if (actionButton == sortField) //Reverse order on same field
 					{
@@ -102,7 +106,12 @@ namespace NBD4.Controllers
 			//Set sort for next time
 			ViewData["sortField"] = sortField;
 			ViewData["sortDirection"] = sortDirection;
-			return View(await clients.ToListAsync());
+
+            int pageSize = PageSizeHelper.SetPageSize(HttpContext, pageSizeID,ControllerName());
+            ViewData["pageSizeID"] = PageSizeHelper.PageSizeList(pageSize);
+            var pagedData = await PaginatedList<Client>.CreateAsync(clients.AsNoTracking(), page ?? 1, pageSize);
+
+            return View(pagedData);
         }
 
         // GET: Client/Details/5
