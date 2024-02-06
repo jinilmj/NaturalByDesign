@@ -1,13 +1,8 @@
 ﻿@model NBD4.Models.Client
 
-@{
-    ViewData["Title"] = "Details";
-}
-
-<h1>Client </h1>
+<partial name="_ViewHeading" />
 
 <div>
-    <h4>Client</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -112,5 +107,6 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.ID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @* <a asp-controller="Project" asp-action="Create" asp-route-clientId="@Model.ID">Create New Project</a> | *@
+     <a href='@ViewData["returnURL"]'>Back to the @ViewData["ControllerName"] List</a>
 </div>

@@ -14,7 +14,7 @@ using NBD4.Utilities;
 
 namespace NBD4.Controllers
 {
-    public class ClientController : CognizantController
+    public class ClientController : ElephantController
     {
         private readonly NBDContext _context;
 
@@ -155,7 +155,7 @@ namespace NBD4.Controllers
                 {
                     _context.Add(client);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Details", new { client.ID });
                 }
             }
             catch (DbUpdateException)
@@ -205,7 +205,7 @@ namespace NBD4.Controllers
                 try
                 {
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Details", new { clientToUpdate.ID });
                 }
                 catch (RetryLimitExceededException /* dex */)
                 {
@@ -270,7 +270,8 @@ namespace NBD4.Controllers
                     _context.Clients.Remove(client);
                 }
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                return Redirect(ViewData["returnURL"].ToString());
             }
             catch (DbUpdateException dex)
             {

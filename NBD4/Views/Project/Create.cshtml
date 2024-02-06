@@ -1,12 +1,7 @@
 ﻿@model NBD4.Models.Project
 
-@{
-    ViewData["Title"] = "Create";
-}
+<partial name="_ViewHeading" />
 
-<h1>Project</h1>
-
-<h4>Project</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -42,7 +37,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+     <a href='@ViewData["returnURL"]'>Back to the @ViewData["ControllerName"] List</a>
 </div>
 
 @section Scripts {

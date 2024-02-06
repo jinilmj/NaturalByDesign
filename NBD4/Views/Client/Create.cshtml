@@ -1,12 +1,7 @@
 ﻿@model NBD4.Models.Client
 
-@{
-    ViewData["Title"] = "Create";
-}
+<partial name="_ViewHeading" />
 
-<h1>Create Client</h1>
-
-<h4>Client</h4>
 <hr />
 <form asp-action="Create">
     <div class="row">
@@ -80,7 +75,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
-                <input type="submit" value="Next" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </div>
     </div>
@@ -89,7 +84,7 @@
 
 
 <div>
-    <a asp-action="Index">Back to List</a>
+     <a href='@ViewData["returnURL"]'>Back to the @ViewData["ControllerName"] List</a>
 </div>
 
 @section Scripts {

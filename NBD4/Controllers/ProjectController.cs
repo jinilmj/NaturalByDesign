@@ -12,7 +12,7 @@ using NBD4.Utilities;
 
 namespace NBD4.Controllers
 {
-    public class ProjectController : CognizantController
+    public class ProjectController : ElephantController
     {
         private readonly NBDContext _context;
 
@@ -160,7 +160,7 @@ namespace NBD4.Controllers
                 {
                     _context.Add(project);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Details", new { project.ID });
                 }
             }
             catch (DbUpdateException )
@@ -209,7 +209,7 @@ namespace NBD4.Controllers
                 try
                 {
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Details", new { projectToUpdate.ID });
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -269,7 +269,7 @@ namespace NBD4.Controllers
                     _context.Projects.Remove(project);
                 }
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return Redirect(ViewData["returnURL"].ToString());
             }
             catch (Exception)
             {

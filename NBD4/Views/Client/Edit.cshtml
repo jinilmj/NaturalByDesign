@@ -1,12 +1,7 @@
 ﻿@model NBD4.Models.Client
 
-@{
-    ViewData["Title"] = "Edit";
-}
+<partial name="_ViewHeading" />
 
-<h1>Edit</h1>
-
-<h4>Client</h4>
 <hr />
 <form asp-action="Edit">
     <div class="row">
@@ -87,7 +82,7 @@
   
 
 <div>
-    <a asp-action="Index">Back to List</a>
+     <a href='@ViewData["returnURL"]'>Back to the @ViewData["ControllerName"] List</a>
 </div>
 
 @section Scripts {

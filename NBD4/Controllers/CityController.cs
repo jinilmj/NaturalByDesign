@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NBD4.CustomControllers;
 using NBD4.Data;
 using NBD4.Models;
 
 namespace NBD4.Controllers
 {
-    public class CityController : Controller
+    public class CityController : CognizantController
     {
         private readonly NBDContext _context;
 
