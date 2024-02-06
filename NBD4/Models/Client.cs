@@ -22,7 +22,7 @@ namespace NBD4.Models
 
 
         [Display(Name = "Client Name")]
-        [Required(ErrorMessage = "Client Name is required.")]
+        [Required(ErrorMessage = "You cannot leave the Client Name blank.")]
         [StringLength(100, ErrorMessage = "Client Name cannot exceed 100 characters.")]
         public string Name { get; set; }
 
@@ -60,12 +60,21 @@ namespace NBD4.Models
             }
         }
 
+        public string PostalCodeFormatted
+        {
+            get
+            {
+                string formattedPostalCode = PostalCode.ToUpper(); 
+                return formattedPostalCode.Substring(0, 3) + " " + formattedPostalCode[3..];
+            }
+        }
+
         [Display(Name = "Address")]
         public string Summary
         {
             get
             {
-                return $"{Street},{City?.Name},{PostalCode}";
+                return $"{Street}, {City?.Summary}, {PostalCodeFormatted}";
             }
         }
 
