@@ -25,6 +25,12 @@ body {
   margin-bottom: 60px;
 }
 
+nav .logo {
+    margin-right: auto;
+}
+
+
+
 .form-group {
     margin-bottom: 1rem;
 }
