@@ -96,6 +96,7 @@ namespace NBD4.Models
      
         public string PostalCode { get; set; }
 
+
         [Display(Name = "City")]
         [Range(1, int.MaxValue)]
         public int CityID { get; set; }

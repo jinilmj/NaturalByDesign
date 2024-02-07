@@ -3,12 +3,13 @@
 <partial name="_ViewHeading" />
 
 <hr />
+
 <form asp-action="Create">
     <div class="row">
         <div class="col-md-6">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label">Name<span class="mandatory">*</span></label>
+                <label asp-for="Name" class="control-label">Client Name<span class="mandatory">*</span></label>
                 <input asp-for="Name" class="form-control" placeholder="Enter client name" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
@@ -57,13 +58,14 @@
                     <option value="0">Select Province</option>
                 </select>
             </div>
+            
             <div class="form-group">
                 <label asp-for="CityID" class="control-label">City<span class="mandatory">*</span></label>
                 <select asp-for="CityID" class="form-control" asp-items="ViewBag.CityID">
-                    <option value="0">Select a Province First</option>
-                </select>
-                @* <span asp-validation-for="CityID" class="text-danger"></span> *@
-            </div>
+                    <option value="0"><span class="mandatory">Select a Province First</span></option>
+                </select> 
+                @* <span asp-validation-for="CityID" class="text-danger"></span>  *@
+             </div>
             @* 
             <div class="form-group">
                 <label asp-for="CityID" class="control-label"></label>
@@ -97,4 +99,5 @@
             refreshDDL('CityID', URL, true, 'Select a Province with Cities first', false, null, true);
         });
     </script>
+   
 }

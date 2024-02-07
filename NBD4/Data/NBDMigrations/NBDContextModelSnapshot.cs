@@ -127,7 +127,6 @@ namespace NBD4.Data.NBDMigrations
             modelBuilder.Entity("NBD4.Models.Province", b =>
                 {
                     b.Property<string>("ID")
-                        .HasMaxLength(2)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")

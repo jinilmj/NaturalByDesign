@@ -34,3 +34,35 @@ nav .logo {
 .form-group {
     margin-bottom: 1rem;
 }
+
+.red-option {
+    color: red; /* Set text color to red */
+}
+
+.home-page {
+    background-image: url('../images/design.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 5%; 
+    margin: 20px;
+    height: calc(100vh - 40px);
+}
+
+.main-home {
+    background: rgba(204,215,212, 0.8);
+    border-radius: 15px;
+    margin: 5%;
+    
+}
+.home-header h1 {
+    color: #096A2E; font-weight: bold;
+}
+
+.home-header h2 {
+    color: #003366;
+    font-weight: bold;
+}
+.main-home h2 {
+    color: #243837;
+}
