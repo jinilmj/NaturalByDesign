@@ -21,9 +21,13 @@ namespace NBD4.Data
 
         public DbSet<MaterialType> MaterialTypes { get; set; }
         public DbSet<Inventory> Inventories { get; set; }
+        public DbSet<Material> Material { get; set; }
 
         public DbSet<Bid> Bids { get; set; }
 
+        public DbSet<StaffRole> StaffRoles { get; set; }
+
+        public DbSet<Staff> Staffs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -33,7 +37,19 @@ namespace NBD4.Data
                 .HasForeignKey(p => p.ClientID)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            
+            modelBuilder.Entity<Bid>()
+                .HasMany(b => b.Materials)
+                .WithOne(m => m.Bid)
+                .HasForeignKey(m => m.BidID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Bid>()
+                .HasMany(b => b.Labours)
+                .WithOne(l => l.Bid)
+                .HasForeignKey(l => l.BidID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
             modelBuilder.Entity<City>()
             .HasIndex(c => new { c.Name, c.ProvinceID })
             .IsUnique();
@@ -63,6 +79,16 @@ namespace NBD4.Data
               .WithOne(p => p.MaterialType)
               .HasForeignKey(p => p.MaterialTypeID)
               .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<StaffRole>()
+             .HasMany<Staff>(d => d.Staffs)
+             .WithOne(p => p.StaffRole)
+             .HasForeignKey(p => p.StaffRoleID)
+             .OnDelete(DeleteBehavior.Restrict);
+
+
+
+
         }
 
     }

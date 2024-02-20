@@ -45,6 +45,10 @@ namespace NBD4.Models
         [Display(Name = "Project")]
         public Project Project { get; set; }
 
+        public ICollection<Material> Materials { get; set; } = new HashSet<Material>();
+
+        public ICollection<Labour> Labours { get; set; } = new HashSet<Labour>();
+
 
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

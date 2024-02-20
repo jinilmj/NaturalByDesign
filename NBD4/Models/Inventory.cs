@@ -31,5 +31,9 @@ namespace NBD4.Models
 
         [Display(Name = "Material Type")]
         public MaterialType MaterialType { get; set; }
+
+        public ICollection<Material> Materials { get; set; } = new HashSet<Material>();
+
+
     }
 }
