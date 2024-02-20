@@ -22,6 +22,8 @@ namespace NBD4.Data
         public DbSet<MaterialType> MaterialTypes { get; set; }
         public DbSet<Inventory> Inventories { get; set; }
 
+        public DbSet<Bid> Bids { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
