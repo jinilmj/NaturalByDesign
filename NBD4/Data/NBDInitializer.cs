@@ -68,7 +68,27 @@ namespace NBD4.Data
                     context.Cities.AddRange(cities);
                     context.SaveChanges();
                 }
-                    
+                if (!context.MaterialTypes.Any())
+                {
+                    var materialTypes = new List<MaterialType>
+                    {
+                        new MaterialType { MaterialTypeName= "Plants"},
+                        new MaterialType { MaterialTypeName= "Pottery"},
+                        new MaterialType { MaterialTypeName= "Materials"}
+                    };
+                    context.MaterialTypes.AddRange(materialTypes);
+                    context.SaveChanges();
+                }
+                if (!context.Inventories.Any())
+                {
+                    var inventories = new List<Inventory>
+                    {
+                        new Inventory { ID="LACC",Description="lacco australasica", ListCost=749.0,Size="15 gal", MaterialTypeID=1}
+                    };
+                    context.Inventories.AddRange(inventories);
+                    context.SaveChanges();
+                }
+
                 if (!context.Clients.Any())
                 {
                     context.Clients.AddRange(
@@ -213,6 +233,20 @@ namespace NBD4.Data
                     );
                     context.SaveChanges();
                 }
+                //if (!context.LabourTypeInfos.Any())
+                //{
+                //    var labourTypeInfos = new List<LabourTypeInfo>
+                //    {
+                //        new LabourTypeInfo { /*ID = "PDWO",*/ ID = "Production Worker ", PricePerHour=30.0,CostPerHour=18.0},
+                //        new LabourTypeInfo { /*ID = "DESG",*/ ID = "Designer ", PricePerHour=65.0,CostPerHour=40.0},
+                //        new LabourTypeInfo { /*ID = "EQOP",*/ ID = "Equipment Operator ", PricePerHour=65.0,CostPerHour=45.0},
+                //        new LabourTypeInfo { /*ID = "BOTA",*/ ID = "Botanist ", PricePerHour=75.0,CostPerHour=50.0}
+                //    };
+                //    context.LabourTypeInfos.AddRange(labourTypeInfos);
+                //    context.SaveChanges();
+                //}
+               
+
             }
             catch (Exception ex)
             {

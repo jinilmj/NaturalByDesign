@@ -12,6 +12,32 @@ namespace NBD4.Data.NBDMigrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "LabourTypeInfos",
+                columns: table => new
+                {
+                    ID = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    PricePerHour = table.Column<double>(type: "REAL", nullable: false),
+                    CostPerHour = table.Column<double>(type: "REAL", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LabourTypeInfos", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MaterialTypes",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    MaterialTypeName = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MaterialTypes", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Provinces",
                 columns: table => new
                 {
@@ -21,6 +47,48 @@ namespace NBD4.Data.NBDMigrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Provinces", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Labours",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Hours = table.Column<int>(type: "INTEGER", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
+                    LabourTypeID = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Labours", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Labours_LabourTypeInfos_LabourTypeID",
+                        column: x => x.LabourTypeID,
+                        principalTable: "LabourTypeInfos",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Inventories",
+                columns: table => new
+                {
+                    ID = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    Size = table.Column<string>(type: "TEXT", maxLength: 15, nullable: false),
+                    ListCost = table.Column<double>(type: "REAL", nullable: false),
+                    MaterialTypeID = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Inventories", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Inventories_MaterialTypes_MaterialTypeID",
+                        column: x => x.MaterialTypeID,
+                        principalTable: "MaterialTypes",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -109,6 +177,16 @@ namespace NBD4.Data.NBDMigrations
                 column: "CityID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Inventories_MaterialTypeID",
+                table: "Inventories",
+                column: "MaterialTypeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Labours_LabourTypeID",
+                table: "Labours",
+                column: "LabourTypeID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Projects_ClientID",
                 table: "Projects",
                 column: "ClientID");
@@ -118,7 +196,19 @@ namespace NBD4.Data.NBDMigrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Inventories");
+
+            migrationBuilder.DropTable(
+                name: "Labours");
+
+            migrationBuilder.DropTable(
                 name: "Projects");
+
+            migrationBuilder.DropTable(
+                name: "MaterialTypes");
+
+            migrationBuilder.DropTable(
+                name: "LabourTypeInfos");
 
             migrationBuilder.DropTable(
                 name: "Clients");

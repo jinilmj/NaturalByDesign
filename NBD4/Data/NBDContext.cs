@@ -16,6 +16,13 @@ namespace NBD4.Data
         public DbSet<Province> Provinces { get; set; }
         public DbSet<City> Cities { get; set; }
 
+        public DbSet<LabourTypeInfo> LabourTypeInfos { get; set; }
+        public DbSet<Labour> Labours { get; set; }
+
+        public DbSet<MaterialType> MaterialTypes { get; set; }
+        public DbSet<Inventory> Inventories { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Client>()
@@ -29,12 +36,31 @@ namespace NBD4.Data
             .HasIndex(c => new { c.Name, c.ProvinceID })
             .IsUnique();
 
-           
+
+
+           // modelBuilder.Entity<LabourTypeInfo>()
+           //.HasIndex(c => new { c.TypeName})
+           //.IsUnique();
+
+
+
             modelBuilder.Entity<Province>()
                 .HasMany<City>(d => d.Cities)
                 .WithOne(p => p.Province)
                 .HasForeignKey(p => p.ProvinceID)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<LabourTypeInfo>()
+               .HasMany<Labour>(d => d.Labours)
+               .WithOne(p => p.LabourTypeInfo)
+               .HasForeignKey(p => p.LabourTypeID)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<MaterialType>()
+              .HasMany<Inventory>(d => d.Inventories)
+              .WithOne(p => p.MaterialType)
+              .HasForeignKey(p => p.MaterialTypeID)
+              .OnDelete(DeleteBehavior.Restrict);
         }
 
     }
