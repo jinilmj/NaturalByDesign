@@ -56,12 +56,6 @@ namespace NBD4.Data
 
 
 
-           // modelBuilder.Entity<LabourTypeInfo>()
-           //.HasIndex(c => new { c.TypeName})
-           //.IsUnique();
-
-
-
             modelBuilder.Entity<Province>()
                 .HasMany<City>(d => d.Cities)
                 .WithOne(p => p.Province)
@@ -71,7 +65,7 @@ namespace NBD4.Data
             modelBuilder.Entity<LabourTypeInfo>()
                .HasMany<Labour>(d => d.Labours)
                .WithOne(p => p.LabourTypeInfo)
-               .HasForeignKey(p => p.LabourTypeID)
+               .HasForeignKey(p => p.LabourTypeInfoID)
                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<MaterialType>()
@@ -85,8 +79,6 @@ namespace NBD4.Data
              .WithOne(p => p.StaffRole)
              .HasForeignKey(p => p.StaffRoleID)
              .OnDelete(DeleteBehavior.Restrict);
-
-
 
 
         }

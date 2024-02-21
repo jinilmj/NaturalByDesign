@@ -17,7 +17,7 @@ namespace NBD4.Models
 
         [Required(ErrorMessage = "You must select a Labour type.")]
         [Display(Name = "Labour Type")]
-        public string LabourTypeID { get; set; }
+        public string LabourTypeInfoID { get; set; }
 
         [Display(Name = "Labour Type")]
         public LabourTypeInfo LabourTypeInfo { get; set; }

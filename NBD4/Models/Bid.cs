@@ -2,7 +2,7 @@
 
 namespace NBD4.Models
 {
-    public class Bid : IValidatableObject
+    public class Bid 
     {
         public int ID { get; set; }
 
@@ -37,7 +37,6 @@ namespace NBD4.Models
         [Display(Name = "Reviewed By")]
         public string ReviewedBy { get; set; }
 
-        // Relationship with Project
         [Required(ErrorMessage = "You must select a Project.")]
         [Display(Name = "Project")]
         public int ProjectID { get; set; }
@@ -45,18 +44,9 @@ namespace NBD4.Models
         [Display(Name = "Project")]
         public Project Project { get; set; }
 
-        public ICollection<Material> Materials { get; set; } = new HashSet<Material>();
+        public List<Material> Materials { get; set; } = new List<Material>();
 
-        public ICollection<Labour> Labours { get; set; } = new HashSet<Labour>();
-
-
-
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // Your custom validation logic, if needed
-            // For example, ensuring that BidAmount is positive, etc.
-
-            return new List<ValidationResult>();
-        }
+        public List<Labour> Labours { get; set; } = new List<Labour>();
+        
     }
 }

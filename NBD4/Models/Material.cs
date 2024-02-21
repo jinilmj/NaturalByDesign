@@ -7,12 +7,6 @@ namespace NBD4.Models
         public int ID { get; set; }
 
 
-        [Required(ErrorMessage = "You must select a Material.")]   //inventory item give inventory description in the field
-        [Display(Name = "Material")]
-        public int InventoryID { get; set; }
-
-        [Display(Name = "Material")]
-        public Inventory Inventory { get; set; }
 
         [Display(Name = "Material Quantity")]
         public int MaterialQuantity { get; set; }
@@ -22,6 +16,14 @@ namespace NBD4.Models
 
         public int BidID { get; set; }
         public Bid Bid { get; set; }
+
+
+        [Required(ErrorMessage = "You must select a Material.")]   //inventory item give inventory description in the field
+        [Display(Name = "Inventory Item")]
+        public string InventoryID { get; set; }
+
+        [Display(Name = "Inventory Item")]
+        public Inventory Inventory { get; set; }
 
 
         public void CalculateExtendPrice()
