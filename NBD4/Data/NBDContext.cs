@@ -29,8 +29,21 @@ namespace NBD4.Data
 
         public DbSet<Staff> Staffs { get; set; }
 
+        public DbSet<BidStaff> BidsStaffs { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<BidStaff>()
+                .HasKey(t => new { t.StaffID, t.BidID });
+
+            modelBuilder.Entity<Material>()
+               .HasKey(t => new { t.ID, t.BidID });
+
+
+            modelBuilder.Entity<Labour>()
+               .HasKey(t => new { t.ID, t.BidID });
+
+
             modelBuilder.Entity<Client>()
                 .HasMany<Project>(c => c.Projects)
                 .WithOne(p => p.Client)

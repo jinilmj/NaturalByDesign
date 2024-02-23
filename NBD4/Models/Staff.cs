@@ -63,5 +63,8 @@ namespace NBD4.Models
 
         [Display(Name = "Staff Role")]
         public StaffRole StaffRole { get; set; }
+
+
+        public ICollection<BidStaff>BidStaffs { get; set; } = new HashSet<BidStaff>();
     }
 }

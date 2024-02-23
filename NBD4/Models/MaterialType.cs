@@ -13,8 +13,6 @@ namespace NBD4.Models
 
         public ICollection<Inventory> Inventories { get; set; } = new HashSet<Inventory>();
 
-
-
-
     }
 }
+    

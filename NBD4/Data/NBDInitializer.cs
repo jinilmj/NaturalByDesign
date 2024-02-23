@@ -233,19 +233,19 @@ namespace NBD4.Data
                     );
                     context.SaveChanges();
                 }
-                //if (!context.LabourTypeInfos.Any())
-                //{
-                //    var labourTypeInfos = new List<LabourTypeInfo>
-                //    {
-                //        new LabourTypeInfo { /*ID = "PDWO",*/ ID = "Production Worker ", PricePerHour=30.0,CostPerHour=18.0},
-                //        new LabourTypeInfo { /*ID = "DESG",*/ ID = "Designer ", PricePerHour=65.0,CostPerHour=40.0},
-                //        new LabourTypeInfo { /*ID = "EQOP",*/ ID = "Equipment Operator ", PricePerHour=65.0,CostPerHour=45.0},
-                //        new LabourTypeInfo { /*ID = "BOTA",*/ ID = "Botanist ", PricePerHour=75.0,CostPerHour=50.0}
-                //    };
-                //    context.LabourTypeInfos.AddRange(labourTypeInfos);
-                //    context.SaveChanges();
-                //}
-               
+                if (!context.LabourTypeInfos.Any())
+                {
+                    var labourTypeInfos = new List<LabourTypeInfo>
+                    {
+                        new LabourTypeInfo {  LabourTypeName = "Production Worker ", PricePerHour=30.0,CostPerHour=18.0},
+                        new LabourTypeInfo {  LabourTypeName = "Designer ", PricePerHour=65.0,CostPerHour=40.0},
+                        new LabourTypeInfo {  LabourTypeName = "Equipment Operator ", PricePerHour=65.0,CostPerHour=45.0},
+                        new LabourTypeInfo {  LabourTypeName = "Botanist ", PricePerHour=75.0,CostPerHour=50.0}
+                    };
+                    context.LabourTypeInfos.AddRange(labourTypeInfos);
+                    context.SaveChanges();
+                }
+
 
             }
             catch (Exception ex)

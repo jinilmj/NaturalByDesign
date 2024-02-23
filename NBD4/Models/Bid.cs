@@ -44,9 +44,13 @@ namespace NBD4.Models
         [Display(Name = "Project")]
         public Project Project { get; set; }
 
+        [Display(Name = "Material")]
         public List<Material> Materials { get; set; } = new List<Material>();
 
+        [Display(Name = "Labour")]
         public List<Labour> Labours { get; set; } = new List<Labour>();
-        
+
+        [Display(Name = "Designer")]
+        public ICollection<BidStaff> BidStaffs { get; set; } = new HashSet<BidStaff>();
     }
 }

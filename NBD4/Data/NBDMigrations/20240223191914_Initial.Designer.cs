@@ -11,7 +11,7 @@ using NBD4.Data;
 namespace NBD4.Data.NBDMigrations
 {
     [DbContext(typeof(NBDContext))]
-    [Migration("20240221150752_Initial")]
+    [Migration("20240223191914_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -61,6 +61,21 @@ namespace NBD4.Data.NBDMigrations
                     b.HasIndex("ProjectID");
 
                     b.ToTable("Bids");
+                });
+
+            modelBuilder.Entity("NBD4.Models.BidStaff", b =>
+                {
+                    b.Property<int>("StaffID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("BidID")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("StaffID", "BidID");
+
+                    b.HasIndex("BidID");
+
+                    b.ToTable("BidsStaffs");
                 });
 
             modelBuilder.Entity("NBD4.Models.City", b =>
@@ -174,7 +189,6 @@ namespace NBD4.Data.NBDMigrations
             modelBuilder.Entity("NBD4.Models.Labour", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("BidID")
@@ -192,7 +206,7 @@ namespace NBD4.Data.NBDMigrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("ID");
+                    b.HasKey("ID", "BidID");
 
                     b.HasIndex("BidID");
 
@@ -225,7 +239,6 @@ namespace NBD4.Data.NBDMigrations
             modelBuilder.Entity("NBD4.Models.Material", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("BidID")
@@ -241,7 +254,7 @@ namespace NBD4.Data.NBDMigrations
                     b.Property<int>("MaterialQuantity")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("ID");
+                    b.HasKey("ID", "BidID");
 
                     b.HasIndex("BidID");
 
@@ -375,6 +388,25 @@ namespace NBD4.Data.NBDMigrations
                     b.Navigation("Project");
                 });
 
+            modelBuilder.Entity("NBD4.Models.BidStaff", b =>
+                {
+                    b.HasOne("NBD4.Models.Bid", "Bid")
+                        .WithMany("BidStaffs")
+                        .HasForeignKey("BidID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("NBD4.Models.Staff", "Staff")
+                        .WithMany("BidStaffs")
+                        .HasForeignKey("StaffID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Bid");
+
+                    b.Navigation("Staff");
+                });
+
             modelBuilder.Entity("NBD4.Models.City", b =>
                 {
                     b.HasOne("NBD4.Models.Province", "Province")
@@ -470,6 +502,8 @@ namespace NBD4.Data.NBDMigrations
 
             modelBuilder.Entity("NBD4.Models.Bid", b =>
                 {
+                    b.Navigation("BidStaffs");
+
                     b.Navigation("Labours");
 
                     b.Navigation("Materials");
@@ -503,6 +537,11 @@ namespace NBD4.Data.NBDMigrations
             modelBuilder.Entity("NBD4.Models.Province", b =>
                 {
                     b.Navigation("Cities");
+                });
+
+            modelBuilder.Entity("NBD4.Models.Staff", b =>
+                {
+                    b.Navigation("BidStaffs");
                 });
 
             modelBuilder.Entity("NBD4.Models.StaffRole", b =>

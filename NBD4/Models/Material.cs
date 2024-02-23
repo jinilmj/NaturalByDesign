@@ -7,7 +7,6 @@ namespace NBD4.Models
         public int ID { get; set; }
 
 
-
         [Display(Name = "Material Quantity")]
         public int MaterialQuantity { get; set; }
 
