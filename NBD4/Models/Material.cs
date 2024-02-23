@@ -11,7 +11,7 @@ namespace NBD4.Models
         public int MaterialQuantity { get; set; }
 
         [Display(Name = "Material Extend Price")]
-        public double MaterialExtendPrice { get; private set; } = 0; 
+        public double MaterialExtendPrice { get; set; }
 
         public int BidID { get; set; }
         public Bid Bid { get; set; }
@@ -27,7 +27,7 @@ namespace NBD4.Models
 
         public void CalculateExtendPrice()
         {
-            MaterialExtendPrice = MaterialQuantity * Inventory.ListCost;
+            MaterialExtendPrice = Math.Round(MaterialQuantity * Inventory.ListCost,2);
         }
     }
 }

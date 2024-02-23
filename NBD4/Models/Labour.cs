@@ -21,10 +21,16 @@ namespace NBD4.Models
 
         [Display(Name = "Labour Type")]
         public LabourTypeInfo LabourTypeInfo { get; set; }
-      
+
+        public double LabourCharge { get; set; }
         public int BidID { get; set; }
 
         public Bid Bid { get; set; }
+
+        public void CalculateExtendPrice()
+        {
+            LabourCharge = Math.Round(Hours * LabourTypeInfo.PricePerHour,2);
+        }
 
 
     }

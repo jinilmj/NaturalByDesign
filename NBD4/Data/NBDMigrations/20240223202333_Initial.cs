@@ -184,7 +184,7 @@ namespace NBD4.Data.NBDMigrations
                     ID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     BidDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    BidAmount = table.Column<decimal>(type: "TEXT", nullable: false),
+                    BidAmount = table.Column<double>(type: "REAL", nullable: false),
                     BidNBDApproved = table.Column<bool>(type: "INTEGER", nullable: false),
                     BidNBDApprovalNotes = table.Column<string>(type: "TEXT", nullable: true),
                     BidClientApproved = table.Column<bool>(type: "INTEGER", nullable: false),
@@ -237,7 +237,8 @@ namespace NBD4.Data.NBDMigrations
                     BidID = table.Column<int>(type: "INTEGER", nullable: false),
                     Hours = table.Column<int>(type: "INTEGER", nullable: false),
                     Description = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
-                    LabourTypeInfoID = table.Column<string>(type: "TEXT", nullable: false)
+                    LabourTypeInfoID = table.Column<string>(type: "TEXT", nullable: false),
+                    LabourCharge = table.Column<double>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -11,7 +11,7 @@ using NBD4.Data;
 namespace NBD4.Data.NBDMigrations
 {
     [DbContext(typeof(NBDContext))]
-    [Migration("20240223191914_Initial")]
+    [Migration("20240223202333_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -26,8 +26,8 @@ namespace NBD4.Data.NBDMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<decimal>("BidAmount")
-                        .HasColumnType("TEXT");
+                    b.Property<double>("BidAmount")
+                        .HasColumnType("REAL");
 
                     b.Property<string>("BidClientApprovalNotes")
                         .HasColumnType("TEXT");
@@ -201,6 +201,9 @@ namespace NBD4.Data.NBDMigrations
 
                     b.Property<int>("Hours")
                         .HasColumnType("INTEGER");
+
+                    b.Property<double>("LabourCharge")
+                        .HasColumnType("REAL");
 
                     b.Property<string>("LabourTypeInfoID")
                         .IsRequired()

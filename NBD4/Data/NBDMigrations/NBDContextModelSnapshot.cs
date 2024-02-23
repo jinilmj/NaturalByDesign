@@ -23,8 +23,8 @@ namespace NBD4.Data.NBDMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<decimal>("BidAmount")
-                        .HasColumnType("TEXT");
+                    b.Property<double>("BidAmount")
+                        .HasColumnType("REAL");
 
                     b.Property<string>("BidClientApprovalNotes")
                         .HasColumnType("TEXT");
@@ -198,6 +198,9 @@ namespace NBD4.Data.NBDMigrations
 
                     b.Property<int>("Hours")
                         .HasColumnType("INTEGER");
+
+                    b.Property<double>("LabourCharge")
+                        .HasColumnType("REAL");
 
                     b.Property<string>("LabourTypeInfoID")
                         .IsRequired()

@@ -14,7 +14,7 @@ namespace NBD4.Models
 
         [Display(Name = "Bid Amount")]
         [Required(ErrorMessage = "Bid Amount is required.")]
-        public decimal BidAmount { get; set; }
+        public double BidAmount { get; set; } = 0;
 
         [Display(Name = "NBD Approved")]
         public bool BidNBDApproved { get; set; }
@@ -52,5 +52,21 @@ namespace NBD4.Models
 
         [Display(Name = "Designer")]
         public ICollection<BidStaff> BidStaffs { get; set; } = new HashSet<BidStaff>();
+
+        public double CalculateTotalMaterialCost()
+        {
+            return Materials.Sum(material => material.MaterialExtendPrice);
+        }
+
+        public double CalculateTotalLaborCost()
+        {
+            return Labours.Sum(labour => labour.LabourCharge);
+        }
+
+        public void CalculateTotalBidAmount()
+        {
+            BidAmount = Math.Round(CalculateTotalMaterialCost() + CalculateTotalLaborCost(), 2);
+        }
+
     }
 }
