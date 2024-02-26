@@ -30,7 +30,7 @@ namespace NBD4.Controllers
             ViewData["Filtering"] = "btn-outline-secondary";
             int numberFilters = 0;
 
-			string[] sortOptions = new[] { "Clients", "Contacts" };
+			string[] sortOptions = new[] { "Name", "Contact" };
 
 			var clients = _context
                 .Clients
@@ -75,7 +75,7 @@ namespace NBD4.Controllers
 				}
 			}
 			//Now we know which field and direction to sort by
-			if (sortField == "Clients")
+			if (sortField == "Name")
 			{
 				if (sortDirection == "asc")
 				{

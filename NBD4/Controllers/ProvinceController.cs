@@ -53,7 +53,7 @@ namespace NBD4.Controllers
             }
             catch (DbUpdateException)
             {
-                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+                ModelState.AddModelError("", "Province already exists You cannot create duplicate.");
             }
             
             return View(province);
