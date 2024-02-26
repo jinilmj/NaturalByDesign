@@ -191,20 +191,14 @@ namespace NBD4.Data.NBDMigrations
                     b.Property<int>("BidID")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("Hours")
                         .HasColumnType("INTEGER");
 
                     b.Property<double>("LabourCharge")
                         .HasColumnType("REAL");
 
-                    b.Property<string>("LabourTypeInfoID")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("LabourTypeInfoID")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("ID", "BidID");
 
@@ -217,8 +211,9 @@ namespace NBD4.Data.NBDMigrations
 
             modelBuilder.Entity("NBD4.Models.LabourTypeInfo", b =>
                 {
-                    b.Property<string>("ID")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
                     b.Property<double>("CostPerHour")
                         .HasColumnType("REAL");

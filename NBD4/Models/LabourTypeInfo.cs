@@ -9,7 +9,7 @@ namespace NBD4.Models
         //[RegularExpression("^[A-Z]{4}$", ErrorMessage = "Please enter four capital letters for the Labour Code.")]
         //public string ID { get; set; }
       
-        public string ID { get; set; }
+        public int ID { get; set; }
 
         [Required(ErrorMessage = "You must Enter Labour Type Name")]
         [Display(Name = "Labour Type Name")]

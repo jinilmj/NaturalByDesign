@@ -15,7 +15,8 @@ namespace NBD4.Data.NBDMigrations
                 name: "LabourTypeInfos",
                 columns: table => new
                 {
-                    ID = table.Column<string>(type: "TEXT", nullable: false),
+                    ID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     LabourTypeName = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     PricePerHour = table.Column<double>(type: "REAL", nullable: false),
                     CostPerHour = table.Column<double>(type: "REAL", nullable: false)
@@ -236,8 +237,7 @@ namespace NBD4.Data.NBDMigrations
                     ID = table.Column<int>(type: "INTEGER", nullable: false),
                     BidID = table.Column<int>(type: "INTEGER", nullable: false),
                     Hours = table.Column<int>(type: "INTEGER", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
-                    LabourTypeInfoID = table.Column<string>(type: "TEXT", nullable: false),
+                    LabourTypeInfoID = table.Column<int>(type: "INTEGER", nullable: false),
                     LabourCharge = table.Column<double>(type: "REAL", nullable: false)
                 },
                 constraints: table =>

@@ -11,7 +11,7 @@ using NBD4.Data;
 namespace NBD4.Data.NBDMigrations
 {
     [DbContext(typeof(NBDContext))]
-    [Migration("20240223202333_Initial")]
+    [Migration("20240226201145_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -194,20 +194,14 @@ namespace NBD4.Data.NBDMigrations
                     b.Property<int>("BidID")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("Hours")
                         .HasColumnType("INTEGER");
 
                     b.Property<double>("LabourCharge")
                         .HasColumnType("REAL");
 
-                    b.Property<string>("LabourTypeInfoID")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("LabourTypeInfoID")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("ID", "BidID");
 
@@ -220,8 +214,9 @@ namespace NBD4.Data.NBDMigrations
 
             modelBuilder.Entity("NBD4.Models.LabourTypeInfo", b =>
                 {
-                    b.Property<string>("ID")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
                     b.Property<double>("CostPerHour")
                         .HasColumnType("REAL");

@@ -26,7 +26,7 @@ namespace NBD4.Controllers
         }
 
         // GET: LabourTypeInfo/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.LabourTypeInfos == null)
             {
@@ -66,7 +66,7 @@ namespace NBD4.Controllers
         }
 
         // GET: LabourTypeInfo/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.LabourTypeInfos == null)
             {
@@ -86,7 +86,7 @@ namespace NBD4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("ID,LabourTypeName,PricePerHour,CostPerHour")] LabourTypeInfo labourTypeInfo)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,LabourTypeName,PricePerHour,CostPerHour")] LabourTypeInfo labourTypeInfo)
         {
             if (id != labourTypeInfo.ID)
             {
@@ -117,7 +117,7 @@ namespace NBD4.Controllers
         }
 
         // GET: LabourTypeInfo/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.LabourTypeInfos == null)
             {
@@ -137,7 +137,7 @@ namespace NBD4.Controllers
         // POST: LabourTypeInfo/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.LabourTypeInfos == null)
             {
@@ -153,7 +153,7 @@ namespace NBD4.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool LabourTypeInfoExists(string id)
+        private bool LabourTypeInfoExists(int id)
         {
           return _context.LabourTypeInfos.Any(e => e.ID == id);
         }
