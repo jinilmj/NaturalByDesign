@@ -11,7 +11,7 @@ using NBD4.Models;
 
 namespace NBD4.Controllers
 {
-    public class ProvinceController : CognizantController
+    public class ProvinceController : LookupsController
     {
         private readonly NBDContext _context;
 
@@ -20,17 +20,17 @@ namespace NBD4.Controllers
             _context = context;
         }
 
-        // GET: Province
-        public async Task<IActionResult> Index()
-        {
-              return View(await _context.Provinces.ToListAsync());
-        }
+		// GET: Province
+		public IActionResult Index()
+		{
+			return Redirect(ViewData["returnURL"].ToString());
+		}
 
-        // GET: Province/Details/5
-        
+		// GET: Province/Details/5
 
-        // GET: Province/Create
-        public IActionResult Create()
+
+		// GET: Province/Create
+		public IActionResult Create()
         {
             return View();
         }
@@ -48,13 +48,14 @@ namespace NBD4.Controllers
             {
                 _context.Add(province);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return Redirect(ViewData["returnURL"].ToString());
             }
             }
             catch (DbUpdateException)
             {
                 ModelState.AddModelError("", "Province already exists You cannot create duplicate.");
             }
+
             
             return View(province);
         }
@@ -98,8 +99,8 @@ namespace NBD4.Controllers
                 try
                 {
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
+					return Redirect(ViewData["returnURL"].ToString());
+				}
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!ProvinceExists(provinceToUpdate.ID))
@@ -154,8 +155,8 @@ namespace NBD4.Controllers
                     _context.Provinces.Remove(province);
                 }
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
+				return Redirect(ViewData["returnURL"].ToString());
+			}
             catch (DbUpdateException dex)
             {
                 if (dex.GetBaseException().Message.Contains("FOREIGN KEY constraint failed"))

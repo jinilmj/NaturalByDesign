@@ -1,12 +1,6 @@
 ﻿@model NBD4.Models.LabourTypeInfo
 
-@{
-    ViewData["Title"] = "Create";
-}
-
-<h1>Create</h1>
-
-<h4>LabourTypeInfo</h4>
+<partial name="_ViewHeading" />
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -35,7 +29,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <partial name="_BackToList" />
 </div>
 
 @section Scripts {

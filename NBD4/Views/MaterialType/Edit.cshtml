@@ -1,12 +1,6 @@
 ﻿@model NBD4.Models.MaterialType
 
-@{
-    ViewData["Title"] = "Edit";
-}
-
-<h1>Edit</h1>
-
-<h4>MaterialType</h4>
+<partial name="_ViewHeading" />
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -26,6 +20,6 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <partial name="_BackToList" />
 </div>
 

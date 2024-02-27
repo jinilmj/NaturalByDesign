@@ -1,12 +1,6 @@
 ﻿@model NBD4.Models.StaffRole
 
-@{
-    ViewData["Title"] = "Create";
-}
-
-<h1>Create</h1>
-
-<h4>StaffRole</h4>
+<partial name="_ViewHeading" />
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -25,6 +19,6 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <partial name="_BackToList" />
 </div>
 

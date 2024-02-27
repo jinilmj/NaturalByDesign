@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
+using NBD4.CustomControllers;
 using NBD4.Data;
 using NBD4.Models;
 
 namespace NBD4.Controllers
 {
-    public class InventoryController : Controller
+    public class InventoryController : LookupsController
     {
         private readonly NBDContext _context;
 
@@ -19,15 +22,21 @@ namespace NBD4.Controllers
             _context = context;
         }
 
-        // GET: Inventory
-        public async Task<IActionResult> Index()
-        {
-            var nBDContext = _context.Inventories.Include(i => i.MaterialType);
-            return View(await nBDContext.ToListAsync());
-        }
+		// GET: Inventory
+		//public async Task<IActionResult> Index()
+		//{
+		//    var nBDContext = _context.Inventories.Include(i => i.MaterialType);
+		//    return View(await nBDContext.ToListAsync());
+		//}
 
-        // GET: Inventory/Details/5
-        public async Task<IActionResult> Details(string id)
+		public IActionResult Index()
+		{
+			return Redirect(ViewData["returnURL"].ToString());
+		}
+
+
+		// GET: Inventory/Details/5
+		public async Task<IActionResult> Details(string id)
         {
             if (id == null || _context.Inventories == null)
             {
@@ -59,13 +68,37 @@ namespace NBD4.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,Description,Size,ListCost,MaterialTypeID")] Inventory inventory)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(inventory);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["MaterialTypeID"] = new SelectList(_context.MaterialTypes, "ID", "MaterialTypeName", inventory.MaterialTypeID);
+
+			try
+			{
+				if (ModelState.IsValid)
+				{
+					_context.Add(inventory);
+					await _context.SaveChangesAsync();
+					return Redirect(ViewData["returnURL"].ToString());
+				}
+			}
+			catch (DbUpdateException)
+			{
+				ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+			}
+
+			//Decide if we need to send the Validaiton Errors directly to the client
+			if (!ModelState.IsValid && Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+			{
+				//Was an AJAX request so build a message with all validation errors
+				string errorMessage = "";
+				foreach (var modelState in ViewData.ModelState.Values)
+				{
+					foreach (ModelError error in modelState.Errors)
+					{
+						errorMessage += error.ErrorMessage + "|";
+					}
+				}
+				//Note: returning a BadRequest results in HTTP Status code 400
+				return BadRequest(errorMessage);
+			}
+			ViewData["MaterialTypeID"] = new SelectList(_context.MaterialTypes, "ID", "MaterialTypeName", inventory.MaterialTypeID);
             return View(inventory);
         }
 
@@ -93,33 +126,42 @@ namespace NBD4.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("ID,Description,Size,ListCost,MaterialTypeID")] Inventory inventory)
         {
-            if (id != inventory.ID)
-            {
-                return NotFound();
-            }
+			var inventoryToUpdate = await _context.Inventories
+					.FirstOrDefaultAsync(m => m.ID == id);
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(inventory);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!InventoryExists(inventory.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["MaterialTypeID"] = new SelectList(_context.MaterialTypes, "ID", "MaterialTypeName", inventory.MaterialTypeID);
-            return View(inventory);
+			//Check that you got it or exit with a not found error
+			if (inventoryToUpdate == null)
+			{
+				return NotFound();
+			}
+
+			//Try updating it with the values posted
+			if (await TryUpdateModelAsync<Inventory>(inventoryToUpdate, "",
+				d => d.ID, d => d.Description,d=>d.Size,d=>d.ListCost,d=>d.MaterialTypeID))
+			{
+				try
+				{
+					await _context.SaveChangesAsync();
+					return Redirect(ViewData["returnURL"].ToString());
+				}
+				catch (DbUpdateConcurrencyException)
+				{
+					if (!InventoryExists(inventoryToUpdate.ID))
+					{
+						return NotFound();
+					}
+					else
+					{
+						throw;
+					}
+				}
+				catch (DbUpdateException)
+				{
+					ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+				}
+			}
+			ViewData["MaterialTypeID"] = new SelectList(_context.MaterialTypes, "ID", "MaterialTypeName", inventory.MaterialTypeID);
+            return View(inventoryToUpdate);
         }
 
         // GET: Inventory/Delete/5
@@ -146,19 +188,36 @@ namespace NBD4.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            if (_context.Inventories == null)
-            {
-                return Problem("Entity set 'NBDContext.Inventories'  is null.");
-            }
-            var inventory = await _context.Inventories.FindAsync(id);
-            if (inventory != null)
-            {
-                _context.Inventories.Remove(inventory);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+
+			if (_context.Inventories == null)
+			{
+				return Problem("Inventory is null.");
+			}
+			var inventory = await _context.Inventories
+				.FirstOrDefaultAsync(m => m.ID == id);
+			try
+			{
+				if (inventory != null)
+				{
+					_context.Inventories.Remove(inventory);
+				}
+				await _context.SaveChangesAsync();
+				return Redirect(ViewData["returnURL"].ToString());
+			}
+			catch (DbUpdateException dex)
+			{
+				if (dex.GetBaseException().Message.Contains("FOREIGN KEY constraint failed"))
+				{
+					ModelState.AddModelError("", "Unable to Delete " + ViewData["ControllerFriendlyName"] +
+						". Remember, you cannot delete a " + ViewData["ControllerFriendlyName"] + " that has related records.");
+				}
+				else
+				{
+					ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+				}
+			}
+			return View(inventory);
+		}
 
         private bool InventoryExists(string id)
         {

@@ -7,12 +7,13 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
+using NBD4.CustomControllers;
 using NBD4.Data;
 using NBD4.Models;
 
 namespace NBD4.Controllers
 {
-    public class MaterialTypeController : Controller
+    public class MaterialTypeController : LookupsController
     {
         private readonly NBDContext _context;
 
@@ -148,7 +149,7 @@ namespace NBD4.Controllers
 					ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
 				}
 			}
-			return View(materialType);
+			return View(materialTypeToUpdate);
 		}
 
         // GET: MaterialType/Delete/5

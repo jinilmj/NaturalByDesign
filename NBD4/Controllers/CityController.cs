@@ -11,7 +11,7 @@ using NBD4.Models;
 
 namespace NBD4.Controllers
 {
-    public class CityController : CognizantController
+    public class CityController : LookupsController
     {
         private readonly NBDContext _context;
 
@@ -20,18 +20,17 @@ namespace NBD4.Controllers
             _context = context;
         }
 
-        // GET: City
-        public async Task<IActionResult> Index()
-        {
-            var nBDContext = _context.Cities.Include(c => c.Province);
-            return View(await nBDContext.ToListAsync());
-        }
+		// GET: City
+		public IActionResult Index()
+		{
+			return Redirect(ViewData["returnURL"].ToString());
+		}
 
-        // GET: City/Details/5
-        
+		// GET: City/Details/5
 
-        // GET: City/Create
-        public IActionResult Create()
+
+		// GET: City/Create
+		public IActionResult Create()
         {
             ViewData["ProvinceID"] = new SelectList(_context.Provinces, "ID", "Name");
             return View();
@@ -50,8 +49,8 @@ namespace NBD4.Controllers
                 {
                     _context.Add(city);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
+					return Redirect(ViewData["returnURL"].ToString());
+				}
             }
             catch (DbUpdateException)
             {
@@ -97,8 +96,8 @@ namespace NBD4.Controllers
                 try
                 {
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
+					return Redirect(ViewData["returnURL"].ToString());
+				}
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!CityExists(cityToUpdate.ID))
@@ -155,7 +154,7 @@ namespace NBD4.Controllers
                 {
                     _context.Cities.Remove(city);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    return Redirect(ViewData["returnURL"].ToString());
                 }
             }
             catch (DbUpdateException dex)

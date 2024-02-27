@@ -1,0 +1,68 @@
+﻿<h2>Lookup Values</h2>
+
+<div>
+    <!-- Nav tabs -->
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="City-Tab" data-bs-toggle="tab" data-bs-target="#CityPanel" type="button" role="tab" aria-controls="CityPanel" aria-selected="true">Cities</button>
+            <button class="nav-link" id="Province-Tab" data-bs-toggle="tab" data-bs-target="#ProvincePanel" type="button" role="tab" aria-controls="ProvincePanel" aria-selected="false">Provinces</button>
+            <button class="nav-link" id="MaterialType-Tab" data-bs-toggle="tab" data-bs-target="#MaterialTypePanel" type="button" role="tab" aria-controls="MaterialTypePanel" aria-selected="false">Material Types</button>
+            <button class="nav-link" id="Inventory-Tab" data-bs-toggle="tab" data-bs-target="#InventoryPanel" type="button" role="tab" aria-controls="InventoryPanel" aria-selected="false">Inventory Item</button>
+            <button class="nav-link" id="LabourTypeInfo-Tab" data-bs-toggle="tab" data-bs-target="#LabourTypeInfoPanel" type="button" role="tab" aria-controls="LabourTypeInfoPanel" aria-selected="true">Labour Types</button>
+            <button class="nav-link" id="StaffRole-Tab" data-bs-toggle="tab" data-bs-target="#StaffRolePanel" type="button" role="tab" aria-controls="StaffRolePanel" aria-selected="false">Staff Roles</button>
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="CityPanel" role="tabpanel" aria-labelledby="City-Tab"><br /></div>
+        <div class="tab-pane fade" id="ProvincePanel" role="tabpanel" aria-labelledby="Province-Tab"><br /></div>
+        <div class="tab-pane fade" id="MaterialTypePanel" role="tabpanel" aria-labelledby="MaterialType-Tab"><br /></div>
+        <div class="tab-pane fade" id="InventoryPanel" role="tabpanel" aria-labelledby="Inventory-Tab"><br /></div>
+        <div class="tab-pane fade" id="LabourTypeInfoPanel" role="tabpanel" aria-labelledby="LabourTypeInfo-Tab"><br /></div>
+        <div class="tab-pane fade" id="StaffRolePanel" role="tabpanel" aria-labelledby="StaffRoleReason-Tab"><br /></div>
+    </div>
+</div>
+<hr />
+<br />
+@section Scripts {
+    <script type="text/javascript">
+        function refreshTab(activeTab) {
+            switch (activeTab) {
+                case 'City-Tab': $('#CityPanel').load('/Lookup/City');
+                    break;
+                case 'Province-Tab': $('#ProvincePanel').load('/Lookup/Province');
+                    break;
+                case 'MaterialType-Tab': $('#MaterialTypePanel').load('/Lookup/MaterialType');
+                    break;
+                case 'Inventory-Tab': $('#InventoryPanel').load('/Lookup/Inventory');
+                    break;
+                case 'LabourTypeInfo-Tab': $('#LabourTypeInfoPanel').load('/Lookup/LabourTypeInfo');
+                    break;
+                case 'StaffRole-Tab': $('#StaffRolePanel').load('/Lookup/StaffRole');
+                    break;
+                default: break;
+            };
+            return;
+        };
+        $('.nav-link').click(function () {
+            var activeTab = $(this).attr("id");
+            refreshTab(activeTab);
+        });
+        $(".tab-content").on("click", ".linkClick", function (event) {
+            event.preventDefault();
+            var address = $(this).attr("href");
+            var lookup = address.split("/")[1];
+            var id = $("#" + lookup + "ID").val();
+            var caption = $("#" + lookup).html();
+            if (id == null) {
+                alert("Error: no value selected from the " + caption + " list!");
+            } else {
+                window.location.href = address + "/" + id;
+            }
+        });
+        $(function () {
+            setTimeout(function () {
+                $("#@ViewData["Tab"]").trigger('click');
+            }, 10);
+        });
+    </script>
+}
