@@ -234,15 +234,16 @@ namespace NBD4.Data.NBDMigrations
                 name: "Labours",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "INTEGER", nullable: false),
-                    BidID = table.Column<int>(type: "INTEGER", nullable: false),
+                    ID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     Hours = table.Column<int>(type: "INTEGER", nullable: false),
                     LabourTypeInfoID = table.Column<int>(type: "INTEGER", nullable: false),
-                    LabourCharge = table.Column<double>(type: "REAL", nullable: false)
+                    LabourCharge = table.Column<double>(type: "REAL", nullable: false),
+                    BidID = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Labours", x => new { x.ID, x.BidID });
+                    table.PrimaryKey("PK_Labours", x => x.ID);
                     table.ForeignKey(
                         name: "FK_Labours_Bids_BidID",
                         column: x => x.BidID,
@@ -261,15 +262,16 @@ namespace NBD4.Data.NBDMigrations
                 name: "Material",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "INTEGER", nullable: false),
-                    BidID = table.Column<int>(type: "INTEGER", nullable: false),
+                    ID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     MaterialQuantity = table.Column<int>(type: "INTEGER", nullable: false),
                     MaterialExtendPrice = table.Column<double>(type: "REAL", nullable: false),
+                    BidID = table.Column<int>(type: "INTEGER", nullable: false),
                     InventoryID = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Material", x => new { x.ID, x.BidID });
+                    table.PrimaryKey("PK_Material", x => x.ID);
                     table.ForeignKey(
                         name: "FK_Material_Bids_BidID",
                         column: x => x.BidID,

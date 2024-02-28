@@ -1,0 +1,89 @@
+﻿@model IEnumerable<NBD4.Models.Bid>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BidDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BidAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BidNBDApproved)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BidNBDApprovalNotes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BidClientApproved)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BidClientApprovalNotes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BidMarkForRedesign)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReviewDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReviewedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Project)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BidDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BidAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BidNBDApproved)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BidNBDApprovalNotes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BidClientApproved)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BidClientApprovalNotes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BidMarkForRedesign)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReviewDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReviewedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Project.Site)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

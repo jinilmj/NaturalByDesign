@@ -186,6 +186,7 @@ namespace NBD4.Data.NBDMigrations
             modelBuilder.Entity("NBD4.Models.Labour", b =>
                 {
                     b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("BidID")
@@ -200,7 +201,7 @@ namespace NBD4.Data.NBDMigrations
                     b.Property<int>("LabourTypeInfoID")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("ID", "BidID");
+                    b.HasKey("ID");
 
                     b.HasIndex("BidID");
 
@@ -234,6 +235,7 @@ namespace NBD4.Data.NBDMigrations
             modelBuilder.Entity("NBD4.Models.Material", b =>
                 {
                     b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("BidID")
@@ -249,7 +251,7 @@ namespace NBD4.Data.NBDMigrations
                     b.Property<int>("MaterialQuantity")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("ID", "BidID");
+                    b.HasKey("ID");
 
                     b.HasIndex("BidID");
 

@@ -36,14 +36,6 @@ namespace NBD4.Data
             modelBuilder.Entity<BidStaff>()
                 .HasKey(t => new { t.StaffID, t.BidID });
 
-            modelBuilder.Entity<Material>()
-               .HasKey(t => new { t.ID, t.BidID });
-
-
-            modelBuilder.Entity<Labour>()
-               .HasKey(t => new { t.ID, t.BidID });
-
-
             modelBuilder.Entity<Client>()
                 .HasMany<Project>(c => c.Projects)
                 .WithOne(p => p.Client)

@@ -1,0 +1,79 @@
+﻿@model NBD4.Models.Bid
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Bid</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <div class="form-group">
+                <label asp-for="BidDate" class="control-label"></label>
+                <input asp-for="BidDate" class="form-control" />
+                <span asp-validation-for="BidDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BidAmount" class="control-label"></label>
+                <input asp-for="BidAmount" class="form-control" />
+                <span asp-validation-for="BidAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="BidNBDApproved" /> @Html.DisplayNameFor(model => model.BidNBDApproved)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="BidNBDApprovalNotes" class="control-label"></label>
+                <input asp-for="BidNBDApprovalNotes" class="form-control" />
+                <span asp-validation-for="BidNBDApprovalNotes" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="BidClientApproved" /> @Html.DisplayNameFor(model => model.BidClientApproved)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="BidClientApprovalNotes" class="control-label"></label>
+                <input asp-for="BidClientApprovalNotes" class="form-control" />
+                <span asp-validation-for="BidClientApprovalNotes" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="BidMarkForRedesign" /> @Html.DisplayNameFor(model => model.BidMarkForRedesign)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReviewDate" class="control-label"></label>
+                <input asp-for="ReviewDate" class="form-control" />
+                <span asp-validation-for="ReviewDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReviewedBy" class="control-label"></label>
+                <input asp-for="ReviewedBy" class="form-control" />
+                <span asp-validation-for="ReviewedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProjectID" class="control-label"></label>
+                <select asp-for="ProjectID" class="form-control" asp-items="ViewBag.ProjectID"></select>
+                <span asp-validation-for="ProjectID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
