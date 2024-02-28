@@ -33,6 +33,8 @@ namespace NBD4.Models
         [Display(Name = "Client")]
         public Client Client { get; set; }
 
+        public ICollection<Bid> Bids { get; set; } = new HashSet<Bid>();
+
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (EndDate < StartDate)

@@ -159,7 +159,7 @@ namespace NBD4.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        
+      
         private bool BidExists(int id)
         {
           return _context.Bids.Any(e => e.ID == id);
