@@ -10,6 +10,7 @@
             <button class="nav-link" id="Inventory-Tab" data-bs-toggle="tab" data-bs-target="#InventoryPanel" type="button" role="tab" aria-controls="InventoryPanel" aria-selected="false">Inventory Item</button>
             <button class="nav-link" id="LabourTypeInfo-Tab" data-bs-toggle="tab" data-bs-target="#LabourTypeInfoPanel" type="button" role="tab" aria-controls="LabourTypeInfoPanel" aria-selected="true">Labour Types</button>
             <button class="nav-link" id="StaffRole-Tab" data-bs-toggle="tab" data-bs-target="#StaffRolePanel" type="button" role="tab" aria-controls="StaffRolePanel" aria-selected="false">Staff Roles</button>
+            <button class="nav-link" id="Staff-Tab" data-bs-toggle="tab" data-bs-target="#StaffPanel" type="button" role="tab" aria-controls="StaffPanel" aria-selected="false">Staff </button>
         </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
@@ -18,7 +19,8 @@
         <div class="tab-pane fade" id="MaterialTypePanel" role="tabpanel" aria-labelledby="MaterialType-Tab"><br /></div>
         <div class="tab-pane fade" id="InventoryPanel" role="tabpanel" aria-labelledby="Inventory-Tab"><br /></div>
         <div class="tab-pane fade" id="LabourTypeInfoPanel" role="tabpanel" aria-labelledby="LabourTypeInfo-Tab"><br /></div>
-        <div class="tab-pane fade" id="StaffRolePanel" role="tabpanel" aria-labelledby="StaffRoleReason-Tab"><br /></div>
+        <div class="tab-pane fade" id="StaffRolePanel" role="tabpanel" aria-labelledby="StaffRole-Tab"><br /></div>
+        <div class="tab-pane fade" id="StaffPanel" role="tabpanel" aria-labelledby="Staff-Tab"><br /></div>
     </div>
 </div>
 <hr />
@@ -38,6 +40,8 @@
                 case 'LabourTypeInfo-Tab': $('#LabourTypeInfoPanel').load('/Lookup/LabourTypeInfo');
                     break;
                 case 'StaffRole-Tab': $('#StaffRolePanel').load('/Lookup/StaffRole');
+                    break;
+                case 'Staff-Tab': $('#StaffPanel').load('/Lookup/Staff');
                     break;
                 default: break;
             };

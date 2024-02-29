@@ -39,6 +39,7 @@ namespace NBD4.Controllers
 				.OrderBy(p => p.Name), "ID", "Name");
 			return PartialView("_Province");
 		}
+		
 		public PartialViewResult StaffRole()
 		{
 			ViewData["StaffRoleID"] = new SelectList(_context.StaffRoles
@@ -57,6 +58,25 @@ namespace NBD4.Controllers
 				.OrderBy(i => i.Description), "ID", "Description");
 			return PartialView("_Inventory");
 		}
+        //public PartialViewResult Staff()
+        //{
+        //    ViewData["StaffID"] = new SelectList(_context.Staffs
+        //        .OrderBy(i => i.StaffFirstName), "ID", "StaffFirstName");
+        //    return PartialView("_Staff");
+        //}
 
-	}
+        public PartialViewResult Staff()
+        {
+            var staffList = _context.Staffs.OrderBy(i => i.StaffFirstName).Select(s => new SelectListItem
+            {
+                Value = s.ID.ToString(),
+                Text = $"{s.FullName} - {s.Email} - {s.PhoneFormatted} - {s.StaffRole.StaffRoleName}"
+            });
+
+            ViewData["StaffID"] = new SelectList(staffList, "Value", "Text");
+            return PartialView("_Staff");
+        }
+
+    }
+
 }

@@ -67,7 +67,9 @@ namespace NBD4.Data
                     };
                     context.Cities.AddRange(cities);
                     context.SaveChanges();
-                }
+                }                
+
+
                 if (!context.MaterialTypes.Any())
                 {
                     var materialTypes = new List<MaterialType>
@@ -233,6 +235,154 @@ namespace NBD4.Data
                     );
                     context.SaveChanges();
                 }
+                if (!context.Bids.Any())
+                {
+                    var projectTechInnovators1 = context.Projects.FirstOrDefault(p => p.Site == "Main entrance Mall Dr./Cinema Lane" && p.Client.Name == "Tech Innovators Ltd");
+                    var projectTechInnovators2 = context.Projects.FirstOrDefault(p => p.Site == "Downtown Plaza" && p.Client.Name == "Tech Innovators Ltd");
+                    var projectGlobalSolutions1 = context.Projects.FirstOrDefault(p => p.Site == "Shopping Center Avenue" && p.Client.Name == "Global Solutions Inc");
+                    var projectGlobalSolutions2 = context.Projects.FirstOrDefault(p => p.Site == "Tech Park Tower" && p.Client.Name == "Global Solutions Inc");
+                    var projectPinnacleEnterprises1 = context.Projects.FirstOrDefault(p => p.Site == "Riverside Gardens" && p.Client.Name == "Pinnacle Enterprises");
+                    var projectPinnacleEnterprises2 = context.Projects.FirstOrDefault(p => p.Site == "Harbor View Plaza" && p.Client.Name == "Pinnacle Enterprises");
+                    var projectInfiniteDynamics1 = context.Projects.FirstOrDefault(p => p.Site == "Green Park Street" && p.Client.Name == "Infinite Dynamics Co");
+                    var projectInfiniteDynamics2 = context.Projects.FirstOrDefault(p => p.Site == "Metro Center Square" && p.Client.Name == "Infinite Dynamics Co");
+                    var projectEagleEyeTechnologies1 = context.Projects.FirstOrDefault(p => p.Site == "Sunset Ridge Avenue" && p.Client.Name == "EagleEye Technologies");
+                    var projectEagleEyeTechnologies2 = context.Projects.FirstOrDefault(p => p.Site == "Oakwood Terrace" && p.Client.Name == "EagleEye Technologies");
+
+                    context.Bids.AddRange(
+                        new Bid
+                        {
+                            BidDate = DateTime.Parse("2024-04-25"),
+                            BidAmount = 2500.00,
+                            BidNBDApproved = true,
+                            BidNBDApprovalNotes = "Approved without issues",
+                            BidClientApproved = true,
+                            BidClientApprovalNotes = "Client accepted the bid",
+                            BidMarkForRedesign = false,
+                            ReviewDate = DateTime.Parse("2024-04-22"),
+                            ReviewedBy = "Jane Doe",
+                            ProjectID = projectTechInnovators1.ID
+                        },
+                        new Bid
+                        {
+                            BidDate = DateTime.Parse("2024-05-15"),
+                            BidAmount = 1800.00,
+                            BidNBDApproved = true,
+                            BidNBDApprovalNotes = "Approved with minor revisions",
+                            BidClientApproved = false,
+                            BidClientApprovalNotes = "Client requested further clarification",
+                            BidMarkForRedesign = true,
+                            ReviewDate = null,
+                            ReviewedBy = null,
+                            ProjectID = projectTechInnovators2.ID
+                        },
+                        new Bid
+                        {
+                            BidDate = DateTime.Parse("2024-06-05"),
+                            BidAmount = 3200.00,
+                            BidNBDApproved = false,
+                            BidNBDApprovalNotes = "Under review by NBD team",
+                            BidClientApproved = false,
+                            BidClientApprovalNotes = "Awaiting client response",
+                            BidMarkForRedesign = false,
+                            ReviewDate = null,
+                            ReviewedBy = null,
+                            ProjectID = projectGlobalSolutions1.ID
+                        },
+                        new Bid
+                        {
+                            BidDate = DateTime.Parse("2024-07-01"),
+                            BidAmount = 2800.00,
+                            BidNBDApproved = true,
+                            BidNBDApprovalNotes = "Approved without issues",
+                            BidClientApproved = true,
+                            BidClientApprovalNotes = "Client accepted the bid",
+                            BidMarkForRedesign = false,
+                            ReviewDate = DateTime.Parse("2024-06-25"),
+                            ReviewedBy = "John Smith",
+                            ProjectID = projectGlobalSolutions2.ID
+                        },
+                        new Bid
+                        {
+                            BidDate = DateTime.Parse("2024-08-05"),
+                            BidAmount = 4000.00,
+                            BidNBDApproved = true,
+                            BidNBDApprovalNotes = "Approved with minor revisions",
+                            BidClientApproved = false,
+                            BidClientApprovalNotes = "Client requested further clarification",
+                            BidMarkForRedesign = true,
+                            ReviewDate = null,
+                            ReviewedBy = null,
+                            ProjectID = projectPinnacleEnterprises1.ID
+                        },
+                        new Bid
+                        {
+                            BidDate = DateTime.Parse("2024-09-25"),
+                            BidAmount = 3500.00,
+                            BidNBDApproved = true,
+                            BidNBDApprovalNotes = "Approved without issues",
+                            BidClientApproved = true,
+                            BidClientApprovalNotes = "Client accepted the bid",
+                            BidMarkForRedesign = false,
+                            ReviewDate = DateTime.Parse("2024-09-20"),
+                            ReviewedBy = "Alice Johnson",
+                            ProjectID = projectPinnacleEnterprises2.ID
+                        },
+                        new Bid
+                        {
+                            BidDate = DateTime.Parse("2024-11-01"),
+                            BidAmount = 3000.00,
+                            BidNBDApproved = false,
+                            BidNBDApprovalNotes = "Under review by NBD team",
+                            BidClientApproved = false,
+                            BidClientApprovalNotes = "Awaiting client response",
+                            BidMarkForRedesign = true,
+                            ReviewDate = null,
+                            ReviewedBy = null,
+                            ProjectID = projectInfiniteDynamics1.ID
+                        },
+                        new Bid
+                        {
+                            BidDate = DateTime.Parse("2024-12-10"),
+                            BidAmount = 2800.00,
+                            BidNBDApproved = false,
+                            BidNBDApprovalNotes = "Under review by NBD team",
+                            BidClientApproved = false,
+                            BidClientApprovalNotes = "Awaiting client response",
+                            BidMarkForRedesign = true,
+                            ReviewDate = null,
+                            ReviewedBy = null,
+                            ProjectID = projectInfiniteDynamics2.ID
+                        },
+                        new Bid
+                        {
+                            BidDate = DateTime.Parse("2025-01-15"),
+                            BidAmount = 3200.00,
+                            BidNBDApproved = true,
+                            BidNBDApprovalNotes = "Approved without issues",
+                            BidClientApproved = true,
+                            BidClientApprovalNotes = "Client accepted the bid",
+                            BidMarkForRedesign = false,
+                            ReviewDate = DateTime.Parse("2024-12-28"),
+                            ReviewedBy = "Alex Johnson",
+                            ProjectID = projectEagleEyeTechnologies1.ID
+                        },
+                        new Bid
+                        {
+                            BidDate = DateTime.Parse("2025-02-01"),
+                            BidAmount = 3000.00,
+                            BidNBDApproved = true,
+                            BidNBDApprovalNotes = "Approved with minor revisions",
+                            BidClientApproved = false,
+                            BidClientApprovalNotes = "Client requested further clarification",
+                            BidMarkForRedesign = true,
+                            ReviewDate = null,
+                            ReviewedBy = null,
+                            ProjectID = projectEagleEyeTechnologies2.ID
+                        }
+                    );
+                    context.SaveChanges();
+
+                }
                 if (!context.LabourTypeInfos.Any())
                 {
                     var labourTypeInfos = new List<LabourTypeInfo>
@@ -245,9 +395,48 @@ namespace NBD4.Data
                     context.LabourTypeInfos.AddRange(labourTypeInfos);
                     context.SaveChanges();
                 }
+				if (!context.StaffRoles.Any())
+				{
+					var staffRoles = new List<StaffRole>
+					{
+						new StaffRole { StaffRoleName= "Designer"}
+					};
+					context.StaffRoles.AddRange(staffRoles);
+					context.SaveChanges();
+				}
+				if (!context.Staffs.Any())
+				{
+					var staffs = new List<Staff>
+					{
+						new Staff { StaffFirstName = "Tamara",
+                            StaffLastName = "Bakken",
+                            Email = "tamara@example.com", 
+                            Phone = "1234567890", 
+                            StaffRoleID = 1},
+                        new Staff { StaffFirstName = "Sara",
+                            StaffLastName = "Bakken",
+                            Email = "tamara@examplse.com",
+                            Phone = "1234557890",
+                            StaffRoleID = 1}
+                    };
+					context.Staffs.AddRange(staffs);
+					context.SaveChanges();
+				}
+				//BidStaff
+				if (!context.BidsStaffs.Any())
+				{
+                    context.BidsStaffs.AddRange(
+                        new BidStaff
+                        {
+                            StaffID = context.Staffs.FirstOrDefault(c => c.StaffFirstName == "Tamara" && c.StaffLastName == "Bakken").ID,
+                            BidID = 4
+
+                        });
+					context.SaveChanges();
+				}
 
 
-            }
+			}
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.GetBaseException().Message);

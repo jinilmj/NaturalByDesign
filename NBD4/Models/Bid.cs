@@ -44,23 +44,23 @@ namespace NBD4.Models
         [Display(Name = "Project")]
         public Project Project { get; set; }
 
-        [Display(Name = "Material")]
-        public List<Material> Materials { get; set; } = new List<Material>();
+        [Display(Name = "Materials")]
+        public List<BidInventory> BidInventories { get; set; } = new List<BidInventory>();
 
-        [Display(Name = "Labour")]
-        public List<Labour> Labours { get; set; } = new List<Labour>();
+        [Display(Name = "Labours")]
+        public List<BidLabourTypeInfo> BidLabourTypeInfos { get; set; } = new List<BidLabourTypeInfo>();
 
-        [Display(Name = "Designer")]
+        [Display(Name = "Designer/SalePerson")]
         public ICollection<BidStaff> BidStaffs { get; set; } = new HashSet<BidStaff>();
 
         public double CalculateTotalMaterialCost()
         {
-            return Materials.Sum(material => material.MaterialExtendPrice);
+            return BidInventories.Sum(bidInventory => bidInventory.MaterialExtendPrice);
         }
 
         public double CalculateTotalLaborCost()
         {
-            return Labours.Sum(labour => labour.LabourCharge);
+            return BidLabourTypeInfos.Sum(bidLabourTypeInfo => bidLabourTypeInfo.LabourCharge);
         }
 
         public void CalculateTotalBidAmount()

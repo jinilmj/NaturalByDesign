@@ -19,25 +19,16 @@
                 @Html.DisplayNameFor(model => model.BidAmount)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BidNBDApproved)
+                @Html.DisplayNameFor(model => model.BidStaffs)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BidNBDApprovalNotes)
+                @Html.DisplayNameFor(model => model.BidNBDApproved)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BidClientApproved)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BidClientApprovalNotes)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.BidMarkForRedesign)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReviewDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReviewedBy)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Project)
@@ -54,26 +45,20 @@
             <td>
                 @Html.DisplayFor(modelItem => item.BidAmount)
             </td>
+                <td>
+                    @foreach (var c in item.BidStaffs)
+                    {
+                        @c.Staff.FullName <br />
+                    }
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BidNBDApproved)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BidNBDApprovalNotes)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BidClientApproved)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.BidClientApprovalNotes)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.BidMarkForRedesign)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReviewDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReviewedBy)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Project.Site)

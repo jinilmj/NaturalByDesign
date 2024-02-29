@@ -22,6 +22,15 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.BidAmount)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BidStaffs)
+        </dt>
+        <dd class="col-sm-10">
+            @foreach (var c in Model.BidStaffs)
+            {
+                @c.Staff.FullName <br />
+            }
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.BidNBDApproved)
         </dt>

@@ -28,16 +28,16 @@ namespace NBD4.Models
         }
 
 
-        [Display(Name = "Contact First Name")]
+        [Display(Name = "Staff First Name")]
         [Required(ErrorMessage = "You cannot leave the first name blank.")]
         [StringLength(50, ErrorMessage = "First name cannot be more than 50 characters long.")]
         public string StaffFirstName { get; set; }
 
-        [Display(Name = "Contact Middle Name")]
+        [Display(Name = "Staff Name")]
         [StringLength(50, ErrorMessage = "Middle name cannot be more than 50 characters long.")]
         public string StaffMiddleName { get; set; }
 
-        [Display(Name = "Contact LastName")]
+        [Display(Name = "Staff LastName")]
         [Required(ErrorMessage = "You cannot leave the last name blank.")]
         [StringLength(100, ErrorMessage = "Last name cannot be more than 100 characters long.")]
         public string StaffLastName { get; set; }

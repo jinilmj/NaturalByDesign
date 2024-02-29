@@ -26,6 +26,6 @@ namespace NBD4.Models
         [DataType(DataType.Currency)]
         public double CostPerHour {  get; set; }
 
-        public ICollection<Labour> Labours { get; set; } = new HashSet<Labour>();
+        public ICollection<BidLabourTypeInfo> BidLabourTypeInfos { get; set; } = new HashSet<BidLabourTypeInfo>();
     }
 }

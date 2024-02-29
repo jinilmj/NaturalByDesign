@@ -22,6 +22,38 @@
                 <input asp-for="BidAmount" class="form-control" />
                 <span asp-validation-for="BidAmount" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label class="control-label">@Html.DisplayNameFor(model => model.BidStaffs)</label>
+                <div class="m-2">
+                    <table>
+                        <tr>
+                            @{
+                                int cnt = 0;
+                                List<NBD4.ViewModels.CheckOptionVM> checkboxes = ViewBag.StaffOptions;
+                                
+                                if (checkboxes != null)
+                                {
+                                     foreach (var checkbox in checkboxes)
+                                {
+                                    if (cnt++ % 2 == 0)
+                                    {
+                                    @:</tr><tr>
+                                    }
+                                    @:<td>
+                                        <input type="checkbox"
+                                               name="selectedOptions"
+                                               value="@checkbox.ID"
+                                               @(Html.Raw(checkbox.Assigned ? "checked=\"checked\"" : "")) />
+                                        @checkbox.DisplayText @:&nbsp;&nbsp;
+                                    @:</td>
+                                }
+                                }
+                               
+                        @:</tr>
+                        }
+                    </table>
+                </div>
+            </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="BidNBDApproved" /> @Html.DisplayNameFor(model => model.BidNBDApproved)
