@@ -254,6 +254,40 @@ namespace NBD4.Controllers
                 }
             }
         }
+
+        //private void PopulateAssignedInventoryData(Bid bid)
+        //{
+        //    var allOptions = _context.Inventories;
+        //    var currentOptionsHS = new HashSet<int>(bid.BidInventories.Select(b => b.InventoryID));
+
+        //    var selected = new List<ListOptionVM>();
+        //    var available = new List<ListOptionVM>();
+        //    foreach (var s in allOptions)
+        //    {
+        //        if (currentOptionsHS.Contains(s.ID))
+        //        {
+        //            selected.Add(new ListOptionVM
+        //            {
+        //                ID = s.ID,
+        //                DisplayText = s.SpecialtyName,
+        //                Quantity = 0
+        //    });
+        //        }
+        //        else
+        //        {
+        //            available.Add(new ListOptionVM
+        //            {
+        //                ID = s.ID,
+        //                DisplayText = s.SpecialtyName,
+        //                Quantity = 0
+        //    });
+        //        }
+        //    }
+
+        //    ViewData["selOpts"] = new MultiSelectList(selected.OrderBy(s => s.DisplayText), "ID", "DisplayText");
+        //    ViewData["availOpts"] = new MultiSelectList(available.OrderBy(s => s.DisplayText), "ID", "DisplayText");
+        //}
+
         private bool BidExists(int id)
         {
           return _context.Bids.Any(e => e.ID == id);

@@ -68,7 +68,9 @@ namespace NBD4.Data.NBDMigrations
                 name: "Inventories",
                 columns: table => new
                 {
-                    ID = table.Column<string>(type: "TEXT", nullable: false),
+                    ID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Code = table.Column<string>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
                     Size = table.Column<string>(type: "TEXT", maxLength: 15, nullable: false),
                     ListCost = table.Column<double>(type: "REAL", nullable: false),
@@ -211,7 +213,7 @@ namespace NBD4.Data.NBDMigrations
                 columns: table => new
                 {
                     BidID = table.Column<int>(type: "INTEGER", nullable: false),
-                    InventoryID = table.Column<string>(type: "TEXT", nullable: false),
+                    InventoryID = table.Column<int>(type: "INTEGER", nullable: false),
                     MaterialQuantity = table.Column<int>(type: "INTEGER", nullable: false),
                     MaterialExtendPrice = table.Column<double>(type: "REAL", nullable: false)
                 },

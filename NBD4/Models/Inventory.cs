@@ -4,10 +4,12 @@ namespace NBD4.Models
 {
     public class Inventory
     {
+        public int ID { get; set; } 
+
         [Display(Name = "Four Letter Inventory Code")]
         [Required(ErrorMessage = "You cannot leave the Inventory code blank.")]
         [RegularExpression("^[A-Z]{4}$", ErrorMessage = "Please enter four capital letters for the Inventory Code.")]
-        public string ID { get; set; }
+        public string Code { get; set; }
 
         [Display(Name = "Description")]
         [Required(ErrorMessage = "You must enter a description.")]

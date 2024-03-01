@@ -11,7 +11,7 @@ using NBD4.Data;
 namespace NBD4.Data.NBDMigrations
 {
     [DbContext(typeof(NBDContext))]
-    [Migration("20240301171029_Initial")]
+    [Migration("20240301175511_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -68,8 +68,8 @@ namespace NBD4.Data.NBDMigrations
                     b.Property<int>("BidID")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("InventoryID")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("InventoryID")
+                        .HasColumnType("INTEGER");
 
                     b.Property<double>("MaterialExtendPrice")
                         .HasColumnType("REAL");
@@ -202,7 +202,12 @@ namespace NBD4.Data.NBDMigrations
 
             modelBuilder.Entity("NBD4.Models.Inventory", b =>
                 {
-                    b.Property<string>("ID")
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")

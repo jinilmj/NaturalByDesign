@@ -65,8 +65,8 @@ namespace NBD4.Data.NBDMigrations
                     b.Property<int>("BidID")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("InventoryID")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("InventoryID")
+                        .HasColumnType("INTEGER");
 
                     b.Property<double>("MaterialExtendPrice")
                         .HasColumnType("REAL");
@@ -199,7 +199,12 @@ namespace NBD4.Data.NBDMigrations
 
             modelBuilder.Entity("NBD4.Models.Inventory", b =>
                 {
-                    b.Property<string>("ID")
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")

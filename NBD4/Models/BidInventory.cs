@@ -6,7 +6,7 @@ namespace NBD4.Models
     {
 		public int BidID { get; set; }
 		public Bid Bid { get; set; }
-		public string InventoryID { get; set; }
+		public int InventoryID { get; set; }
 		public Inventory Inventory { get; set; }
 
 		[Display(Name = "Material Quantity")]

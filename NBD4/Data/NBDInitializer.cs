@@ -378,9 +378,9 @@ namespace NBD4.Data
                 {
                     var inventories = new List<Inventory>
                     {
-                        new Inventory { ID="LACC",Description="lacco australasica", ListCost=749.0,Size="15 gal", MaterialTypeID=1},
-                        new Inventory { ID="XXXX",Description="hibiscus", ListCost=100.0,Size="10 gal", MaterialTypeID=2},
-                        new Inventory { ID="YYYY",Description="turtle Vine", ListCost=150.0,Size="20 gal", MaterialTypeID=3}
+                        new Inventory { Code="LACC",Description="lacco australasica", ListCost=749.0,Size="15 gal", MaterialTypeID=1},
+                        new Inventory { Code="XXXX",Description="hibiscus", ListCost=100.0,Size="10 gal", MaterialTypeID=2},
+                        new Inventory { Code="YYYY",Description="turtle Vine", ListCost=150.0,Size="20 gal", MaterialTypeID=3}
                     };
                     context.Inventories.AddRange(inventories);
                     context.SaveChanges();
@@ -393,21 +393,21 @@ namespace NBD4.Data
                     context.BidInventories.AddRange(
                         new BidInventory
                         {
-                            InventoryID = context.Inventories.FirstOrDefault(i => i.ID == "LACC").ID,
+                            InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "LACC").ID,
                             BidID = bidId,
                             MaterialQuantity = 1,
                             MaterialExtendPrice = 749.0,
                         },
                         new BidInventory
                         {
-                            InventoryID = context.Inventories.FirstOrDefault(i => i.ID == "XXXX").ID,
+                            InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "XXXX").ID,
                             BidID = bidId,
                             MaterialQuantity = 2,
                             MaterialExtendPrice = 200.0,
                         },
                         new BidInventory
                         {
-                            InventoryID = context.Inventories.FirstOrDefault(i => i.ID == "YYYY").ID,
+                            InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "YYYY").ID,
                             BidID = bidId,
                             MaterialQuantity = 3,
                             MaterialExtendPrice = 450.0,
