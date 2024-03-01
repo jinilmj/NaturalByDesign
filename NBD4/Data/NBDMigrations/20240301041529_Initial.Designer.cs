@@ -11,7 +11,7 @@ using NBD4.Data;
 namespace NBD4.Data.NBDMigrations
 {
     [DbContext(typeof(NBDContext))]
-    [Migration("20240229170658_Initial")]
+    [Migration("20240301041529_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -424,7 +424,7 @@ namespace NBD4.Data.NBDMigrations
                     b.HasOne("NBD4.Models.Staff", "Staff")
                         .WithMany("BidStaffs")
                         .HasForeignKey("StaffID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Bid");

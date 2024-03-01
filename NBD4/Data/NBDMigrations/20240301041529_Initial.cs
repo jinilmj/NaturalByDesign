@@ -279,7 +279,7 @@ namespace NBD4.Data.NBDMigrations
                         column: x => x.StaffID,
                         principalTable: "Staffs",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

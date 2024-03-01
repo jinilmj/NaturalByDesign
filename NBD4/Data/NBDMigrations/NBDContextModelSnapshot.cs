@@ -421,7 +421,7 @@ namespace NBD4.Data.NBDMigrations
                     b.HasOne("NBD4.Models.Staff", "Staff")
                         .WithMany("BidStaffs")
                         .HasForeignKey("StaffID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Bid");

@@ -73,7 +73,14 @@ namespace NBD4.Data
 			  .HasForeignKey(p => p.InventoryID)
 			  .OnDelete(DeleteBehavior.Restrict);
 
-			modelBuilder.Entity<MaterialType>()
+
+            modelBuilder.Entity<Staff>()
+              .HasMany<BidStaff>(d => d.BidStaffs)
+              .WithOne(p => p.Staff)
+              .HasForeignKey(p => p.StaffID)
+              .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<MaterialType>()
 			  .HasMany<Inventory>(d => d.Inventories)
 			  .WithOne(p => p.MaterialType)
 			  .HasForeignKey(p => p.MaterialTypeID)
