@@ -31,6 +31,34 @@
                 @c.Staff.FullName <br />
             }
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BidInventories)
+        </dt>
+        <dd class="col-sm-10">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Material Quantity</th>
+                        <th>Material Name</th>    
+                        <th>Material Size</th>
+                        <th>Material Unit Price</th>
+                        <th>Material Extended Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var inventory in Model.BidInventories)
+                    {
+                        <tr>
+                            <td>@inventory.MaterialQuantity</td>
+                            <td>@inventory.Inventory.Description</td>
+                            <td>@inventory.Inventory.Size</td>
+                            <td>@inventory.Inventory.ListCost</td>
+                            <td>@inventory.MaterialExtendPrice</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.BidNBDApproved)
         </dt>

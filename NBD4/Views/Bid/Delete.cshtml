@@ -20,6 +20,9 @@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.BidAmount)
         </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BidAmount)
+        </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.BidStaffs)
         </dt>
@@ -29,9 +32,32 @@
                 @c.Staff.FullName <br />
             }
         </dd>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BidAmount)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BidInventories)
+        </dt>
+        <dd class="col-sm-10">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Inventory Description</th>
+                        <th>Material Quantity</th>
+                        <th>Material Extend Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var inventory in Model.BidInventories)
+                    {
+                        <tr>
+                            <td>@inventory.Inventory.Description</td>
+                            <td>@inventory.MaterialQuantity</td>
+                            <td>@inventory.MaterialExtendPrice</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </dd>
+
+
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.BidNBDApproved)
         </dt>

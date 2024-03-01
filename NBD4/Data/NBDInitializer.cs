@@ -68,28 +68,7 @@ namespace NBD4.Data
                     context.Cities.AddRange(cities);
                     context.SaveChanges();
                 }                
-
-
-                if (!context.MaterialTypes.Any())
-                {
-                    var materialTypes = new List<MaterialType>
-                    {
-                        new MaterialType { MaterialTypeName= "Plants"},
-                        new MaterialType { MaterialTypeName= "Pottery"},
-                        new MaterialType { MaterialTypeName= "Materials"}
-                    };
-                    context.MaterialTypes.AddRange(materialTypes);
-                    context.SaveChanges();
-                }
-                if (!context.Inventories.Any())
-                {
-                    var inventories = new List<Inventory>
-                    {
-                        new Inventory { ID="LACC",Description="lacco australasica", ListCost=749.0,Size="15 gal", MaterialTypeID=1}
-                    };
-                    context.Inventories.AddRange(inventories);
-                    context.SaveChanges();
-                }
+                
 
                 if (!context.Clients.Any())
                 {
@@ -382,6 +361,58 @@ namespace NBD4.Data
                     );
                     context.SaveChanges();
 
+                }
+
+                if (!context.MaterialTypes.Any())
+                {
+                    var materialTypes = new List<MaterialType>
+                    {
+                        new MaterialType { MaterialTypeName= "Plants"},
+                        new MaterialType { MaterialTypeName= "Pottery"},
+                        new MaterialType { MaterialTypeName= "Materials"}
+                    };
+                    context.MaterialTypes.AddRange(materialTypes);
+                    context.SaveChanges();
+                }
+                if (!context.Inventories.Any())
+                {
+                    var inventories = new List<Inventory>
+                    {
+                        new Inventory { ID="LACC",Description="lacco australasica", ListCost=749.0,Size="15 gal", MaterialTypeID=1},
+                        new Inventory { ID="XXXX",Description="hibiscus", ListCost=100.0,Size="10 gal", MaterialTypeID=2},
+                        new Inventory { ID="YYYY",Description="turtle Vine", ListCost=150.0,Size="20 gal", MaterialTypeID=3}
+                    };
+                    context.Inventories.AddRange(inventories);
+                    context.SaveChanges();
+                }
+
+                if (!context.BidInventories.Any())
+                {
+                    var bidId = 4; // Replace /* some condition */ with your actual condition to find the bid ID
+
+                    context.BidInventories.AddRange(
+                        new BidInventory
+                        {
+                            InventoryID = context.Inventories.FirstOrDefault(i => i.ID == "LACC").ID,
+                            BidID = bidId,
+                            MaterialQuantity = 1,
+                            MaterialExtendPrice = 749.0,
+                        },
+                        new BidInventory
+                        {
+                            InventoryID = context.Inventories.FirstOrDefault(i => i.ID == "XXXX").ID,
+                            BidID = bidId,
+                            MaterialQuantity = 2,
+                            MaterialExtendPrice = 200.0,
+                        },
+                        new BidInventory
+                        {
+                            InventoryID = context.Inventories.FirstOrDefault(i => i.ID == "YYYY").ID,
+                            BidID = bidId,
+                            MaterialQuantity = 3,
+                            MaterialExtendPrice = 450.0,
+                        });
+                    context.SaveChanges();
                 }
                 if (!context.LabourTypeInfos.Any())
                 {

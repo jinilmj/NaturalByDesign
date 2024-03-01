@@ -27,6 +27,7 @@ namespace NBD4.Controllers
         {
             var nBDContext = _context.Bids
                 .Include(b => b.Project)
+                .Include(p=>p.BidInventories).ThenInclude(p=>p.Inventory)
                 .Include(b=>b.BidStaffs).ThenInclude(p=>p.Staff)
                 .AsNoTracking();
             return View(await nBDContext.ToListAsync());
@@ -42,6 +43,7 @@ namespace NBD4.Controllers
 
             var bid = await _context.Bids
                 .Include(b => b.Project)
+                .Include(p => p.BidInventories).ThenInclude(p => p.Inventory)
                 .Include(b => b.BidStaffs).ThenInclude(p => p.Staff)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
@@ -169,6 +171,7 @@ namespace NBD4.Controllers
 
             var bid = await _context.Bids
                 .Include(b => b.Project)
+                 .Include(p => p.BidInventories).ThenInclude(p => p.Inventory)
                 .Include(b => b.BidStaffs).ThenInclude(p => p.Staff)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
@@ -190,6 +193,7 @@ namespace NBD4.Controllers
                 return Problem("Entity set 'NBDContext.Bids'  is null.");
             }
             var bid = await _context.Bids
+                .Include(p => p.BidInventories).ThenInclude(p => p.Inventory)
                 .Include(b => b.BidStaffs).ThenInclude(p => p.Staff)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
