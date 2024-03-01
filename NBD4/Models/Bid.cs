@@ -45,10 +45,10 @@ namespace NBD4.Models
         public Project Project { get; set; }
 
         [Display(Name = "Materials")]
-        public List<BidInventory> BidInventories { get; set; } = new List<BidInventory>();
+        public ICollection<BidInventory> BidInventories { get; set; } = new HashSet<BidInventory>();
 
         [Display(Name = "Labours")]
-        public List<BidLabourTypeInfo> BidLabourTypeInfos { get; set; } = new List<BidLabourTypeInfo>();
+        public ICollection<BidLabourTypeInfo> BidLabourTypeInfos { get; set; } = new HashSet <BidLabourTypeInfo>();
 
         [Display(Name = "Designer/SalePerson")]
         public ICollection<BidStaff> BidStaffs { get; set; } = new HashSet<BidStaff>();

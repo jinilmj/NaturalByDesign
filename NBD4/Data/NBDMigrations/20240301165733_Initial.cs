@@ -217,7 +217,7 @@ namespace NBD4.Data.NBDMigrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BidInventories", x => new { x.InventoryID, x.BidID });
+                    table.PrimaryKey("PK_BidInventories", x => new { x.BidID, x.InventoryID });
                     table.ForeignKey(
                         name: "FK_BidInventories_Bids_BidID",
                         column: x => x.BidID,
@@ -283,9 +283,9 @@ namespace NBD4.Data.NBDMigrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BidInventories_BidID",
+                name: "IX_BidInventories_InventoryID",
                 table: "BidInventories",
-                column: "BidID");
+                column: "InventoryID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BidLabourTypeInfos_BidID",

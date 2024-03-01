@@ -37,7 +37,7 @@ namespace NBD4.Data
 				.HasKey(t => new { t.StaffID, t.BidID });
 
 			modelBuilder.Entity<BidInventory>()
-				.HasKey(t => new { t.InventoryID, t.BidID });
+				.HasKey(t => new { t.BidID,t.InventoryID });
 
 			modelBuilder.Entity<BidLabourTypeInfo>()
 				.HasKey(t => new { t.LabourTypeInfoID, t.BidID });
