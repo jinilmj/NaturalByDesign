@@ -54,7 +54,7 @@
                     </table>
                 </div>
             </div>
-             <div class="form-group">
+            @*  <div class="form-group">
                 <label class="control-label">@Html.DisplayNameFor(model => model.BidLabourTypeInfos)</label>
                 <div class="m-2">
                     <table>
@@ -77,6 +77,10 @@
                                                value="@checkbox.ID"
                                                @(Html.Raw(checkbox.Assigned ? "checked=\"checked\"" : "")) />
                                         @checkbox.DisplayText @:&nbsp;&nbsp;
+                                        <input type="number"
+                                               name="selectedLabourHours[@checkbox.ID]"
+                                               value="@checkbox.Hours"
+                                               min="0" />
                                     @:</td>
                                 }
                                 }
@@ -85,7 +89,44 @@
                         }
                     </table>
                 </div>
+            </div> *@
+            <div class="form-group">
+                <label class="control-label">Labour and Hours</label>
+                <div class="m-2">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Labour</th>
+                                <th>Hours</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                List<NBD4.ViewModels.CheckOptionVM> checkboxes1 = ViewBag.LabourTypeInfoOptions;
+                                foreach (var checkbox in checkboxes1)
+                                {
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox"
+                                                   name="selectedLabourOptions"
+                                                   value="@checkbox.ID"
+                                                   @(Html.Raw(checkbox.Assigned ? "checked=\"checked\"" : "")) />
+                                            @checkbox.DisplayText
+                                        </td>
+                                        <td>
+                                            <input type="number"
+                                                   name="selectedLabourHours[@checkbox.ID]"
+                                                   value="@checkbox.Hours"
+                                                   min="0" />
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="BidNBDApproved" /> @Html.DisplayNameFor(model => model.BidNBDApproved)

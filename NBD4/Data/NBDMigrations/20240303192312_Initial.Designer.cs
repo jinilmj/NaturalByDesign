@@ -11,7 +11,7 @@ using NBD4.Data;
 namespace NBD4.Data.NBDMigrations
 {
     [DbContext(typeof(NBDContext))]
-    [Migration("20240303025222_Initial")]
+    [Migration("20240303192312_Initial")]
     partial class Initial
     {
         /// <inheritdoc />

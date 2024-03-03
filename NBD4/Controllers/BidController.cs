@@ -89,9 +89,10 @@ namespace NBD4.Controllers
             {
                 foreach (var labourTypeInfo in selectedLabourOptions)
                 {
-                    var labourToAdd = new BidLabourTypeInfo { BidID = bid.ID, LabourTypeInfoID = int.Parse(labourTypeInfo) };
-                    bid.BidLabourTypeInfos.Add(labourToAdd);
-                }
+					int labourId = int.Parse(labourTypeInfo);
+					var labourToAdd = new BidLabourTypeInfo { BidID = bid.ID, LabourTypeInfoID = labourId, Hours = int.Parse(Request.Form[$"selectedLabourHours[{labourId}]"]) };
+					bid.BidLabourTypeInfos.Add(labourToAdd);
+				}
             }
             UpdateBidInventories(selectedOptions, bid);
             if (ModelState.IsValid)
@@ -159,6 +160,15 @@ namespace NBD4.Controllers
             {
                 try
                 {
+                    foreach (var labourTypeInfo in selectedLabourOptions)
+                    {
+                        int labourId = int.Parse(labourTypeInfo);
+                        var labourToUpdate = bidToUpdate.BidLabourTypeInfos.FirstOrDefault(b => b.LabourTypeInfoID == labourId);
+                        if (labourToUpdate != null)
+                        {
+                            labourToUpdate.Hours = int.Parse(Request.Form[$"selectedLabourHours[{labourId}]"]);
+                        }
+                    }
                     await _context.SaveChangesAsync();
                     return RedirectToAction("Details", new { bidToUpdate.ID });
                 }
@@ -285,20 +295,18 @@ namespace NBD4.Controllers
         }
         private void PopulateAssignedLabourData(Bid bid)
         {
-            var allOptions = _context.LabourTypeInfos;
+            var allOptions = _context.LabourTypeInfos.ToList();
             var currentOptionIDs = new HashSet<int>(bid.BidLabourTypeInfos.Select(b => b.LabourTypeInfoID));
-            var checkBoxes = new List<CheckOptionVM>();
-            foreach (var option in allOptions)
+            var dropdownOptions = allOptions.Select(option => new CheckOptionVM
             {
-                checkBoxes.Add(new CheckOptionVM
-                {
-                    ID = option.ID,
-                    DisplayText = option.LabourTypeName,
-                    Assigned = currentOptionIDs.Contains(option.ID)
-                });
-            }
-            ViewData["LabourTypeInfoOptions"] = checkBoxes;
+                ID = option.ID,
+                DisplayText = option.LabourTypeName,
+                Assigned = currentOptionIDs.Contains(option.ID),
+                Hours = bid.BidLabourTypeInfos.FirstOrDefault(b => b.LabourTypeInfoID == option.ID)?.Hours ?? 0
+            }).ToList();
+            ViewData["LabourTypeInfoOptions"] = dropdownOptions;
         }
+
         private void UpdateBidLabours(string[] selectedLabourOptions, Bid bidToUpdate)
         {
             if (selectedLabourOptions == null)

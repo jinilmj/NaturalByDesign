@@ -35,11 +35,34 @@
             @Html.DisplayNameFor(model => model.BidLabourTypeInfos)
         </dt>
         <dd class="col-sm-10">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Labour Type</th>
+                        <th>Hours</th>
+                        <th>Unit Price</th>
+                        <th>Extended Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var c in Model.BidLabourTypeInfos)
+                    {
+                        <tr>
+                            <td>@c.LabourTypeInfo.LabourTypeName</td>
+                            <td>@c.Hours</td>
+                            <td>@c.LabourTypeInfo.PricePerHour</td>
+                            <td>@c.LabourCharge</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </dd>
+        @* <dd class="col-sm-10">
             @foreach (var c in Model.BidLabourTypeInfos)
             {
                 @c.LabourTypeInfo.LabourTypeName <br />
             }
-        </dd>
+        </dd> *@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.BidInventories)
         </dt>
