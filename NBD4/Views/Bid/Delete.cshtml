@@ -33,6 +33,15 @@
             }
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BidLabourTypeInfos)
+        </dt>
+        <dd class="col-sm-10">
+            @foreach (var c in Model.BidLabourTypeInfos)
+            {
+                @c.LabourTypeInfo.LabourTypeName <br />
+            }
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.BidInventories)
         </dt>
         <dd class="col-sm-10">

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +30,7 @@ namespace NBD4.Controllers
                 .Include(b => b.Project)
                 .Include(p=>p.BidInventories).ThenInclude(p=>p.Inventory)
                 .Include(b=>b.BidStaffs).ThenInclude(p=>p.Staff)
+                .Include(b => b.BidLabourTypeInfos).ThenInclude(p => p.LabourTypeInfo)
                 .AsNoTracking();
             return View(await nBDContext.ToListAsync());
         }
@@ -45,6 +47,7 @@ namespace NBD4.Controllers
                 .Include(b => b.Project)
                 .Include(p => p.BidInventories).ThenInclude(p => p.Inventory)
                 .Include(b => b.BidStaffs).ThenInclude(p => p.Staff)
+                .Include(b => b.BidLabourTypeInfos).ThenInclude(p => p.LabourTypeInfo)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (bid == null)
@@ -60,6 +63,8 @@ namespace NBD4.Controllers
         {
             var bid = new Bid();
             PopulateAssignedStaffData(bid);
+            PopulateAssignedLabourData(bid);
+            PopulateAssignedInventoryData(bid);
             ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Site");
             return View();
         }
@@ -69,24 +74,36 @@ namespace NBD4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,BidDate,BidAmount,BidNBDApproved,BidNBDApprovalNotes,BidClientApproved,BidClientApprovalNotes,BidMarkForRedesign,ReviewDate,ReviewedBy,ProjectID")] Bid bid, string[] selectedOptions)
+        public async Task<IActionResult> Create([Bind("ID,BidDate,BidAmount,BidNBDApproved,BidNBDApprovalNotes,BidClientApproved,BidClientApprovalNotes," +
+            "BidMarkForRedesign,ReviewDate,ReviewedBy,ProjectID")] Bid bid, string[] selectedStaffOptions, string[] selectedLabourOptions, string[] selectedOptions)
         {
-            if (selectedOptions != null)
+            if (selectedStaffOptions != null)
             {
-                foreach (var staff in selectedOptions)
+                foreach (var staff in selectedStaffOptions)
                 {
                     var staffToAdd = new BidStaff { BidID = bid.ID, StaffID = int.Parse(staff) };
                     bid.BidStaffs.Add(staffToAdd);
                 }
             }
+            if (selectedLabourOptions != null)
+            {
+                foreach (var labourTypeInfo in selectedLabourOptions)
+                {
+                    var labourToAdd = new BidLabourTypeInfo { BidID = bid.ID, LabourTypeInfoID = int.Parse(labourTypeInfo) };
+                    bid.BidLabourTypeInfos.Add(labourToAdd);
+                }
+            }
+            UpdateBidInventories(selectedOptions, bid);
             if (ModelState.IsValid)
             {
                 _context.Add(bid);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", new { bid.ID });
             }
             ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Site", bid.ProjectID);
             PopulateAssignedStaffData(bid);
+            PopulateAssignedLabourData(bid);
+            PopulateAssignedInventoryData(bid);
             return View(bid);
         }
 
@@ -100,6 +117,8 @@ namespace NBD4.Controllers
 
             var bid = await _context.Bids
                 .Include(p => p.BidStaffs).ThenInclude(p => p.Staff)
+                .Include(b => b.BidLabourTypeInfos).ThenInclude(p => p.LabourTypeInfo)
+                .Include(d => d.BidInventories).ThenInclude(d => d.Inventory)
                 .FirstOrDefaultAsync(p => p.ID == id);
 
             if (bid == null)
@@ -107,6 +126,8 @@ namespace NBD4.Controllers
                 return NotFound();
             }
             PopulateAssignedStaffData(bid);
+            PopulateAssignedLabourData(bid);
+            PopulateAssignedInventoryData(bid);
             ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Site", bid.ProjectID);
             return View(bid);
         }
@@ -116,10 +137,12 @@ namespace NBD4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, string[] selectedOptions)
+        public async Task<IActionResult> Edit(int id, string[] selectedStaffOptions, string[] selectedLabourOptions, string[] selectedOptions)
         {
             var bidToUpdate = await _context.Bids
                .Include(p => p.BidStaffs).ThenInclude(p => p.Staff)
+               .Include(b => b.BidLabourTypeInfos).ThenInclude(p => p.LabourTypeInfo)
+               .Include(d => d.BidInventories).ThenInclude(d => d.Inventory)
                 .FirstOrDefaultAsync(p => p.ID == id); 
 
             if (bidToUpdate == null)
@@ -127,7 +150,9 @@ namespace NBD4.Controllers
                 return NotFound();
             }
 
-            UpdateBidStaffs(selectedOptions, bidToUpdate);
+            UpdateBidStaffs(selectedStaffOptions, bidToUpdate);
+            UpdateBidLabours(selectedLabourOptions, bidToUpdate);
+            UpdateBidInventories(selectedOptions, bidToUpdate);
 
             if (await TryUpdateModelAsync<Bid>(bidToUpdate, "", b => b.BidDate, b => b.BidAmount, b => b.BidNBDApproved, b => b.BidNBDApprovalNotes, b => b.BidClientApproved, b => b.BidClientApprovalNotes
                     , b => b.BidMarkForRedesign, b => b.ReviewDate, b => b.ReviewedBy, b => b.ProjectID))
@@ -158,6 +183,8 @@ namespace NBD4.Controllers
                 }               
             }
             PopulateAssignedStaffData(bidToUpdate);
+            PopulateAssignedLabourData(bidToUpdate);
+            PopulateAssignedInventoryData(bidToUpdate);
             ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Site", bidToUpdate.ProjectID);
             return View(bidToUpdate);
         }
@@ -173,6 +200,7 @@ namespace NBD4.Controllers
                 .Include(b => b.Project)
                  .Include(p => p.BidInventories).ThenInclude(p => p.Inventory)
                 .Include(b => b.BidStaffs).ThenInclude(p => p.Staff)
+                .Include(b => b.BidLabourTypeInfos).ThenInclude(p => p.LabourTypeInfo)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (bid == null)
@@ -195,6 +223,7 @@ namespace NBD4.Controllers
             var bid = await _context.Bids
                 .Include(p => p.BidInventories).ThenInclude(p => p.Inventory)
                 .Include(b => b.BidStaffs).ThenInclude(p => p.Staff)
+                .Include(b => b.BidLabourTypeInfos).ThenInclude(p => p.LabourTypeInfo)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (bid != null)
@@ -223,20 +252,20 @@ namespace NBD4.Controllers
             }
             ViewData["StaffOptions"] = checkBoxes;
         }
-        private void UpdateBidStaffs(string[] selectedOptions, Bid bidToUpdate)
+        private void UpdateBidStaffs(string[] selectedStaffOptions, Bid bidToUpdate)
         {
-            if (selectedOptions == null)
+            if (selectedStaffOptions == null)
             {
                 bidToUpdate.BidStaffs = new List<BidStaff>();
                 return;
             }
 
-            var selectedOptionsHS = new HashSet<string>(selectedOptions);
+            var selectedStaffOptionsHS = new HashSet<string>(selectedStaffOptions);
             var bidOptionsHS = new HashSet<int>
                 (bidToUpdate.BidStaffs.Select(c => c.StaffID));//IDs of the currently selected staffs
             foreach (var option in _context.Staffs)
             {
-                if (selectedOptionsHS.Contains(option.ID.ToString())) //It is checked
+                if (selectedStaffOptionsHS.Contains(option.ID.ToString())) //It is checked
                 {
                     if (!bidOptionsHS.Contains(option.ID))  //but not currently in the history
                     {
@@ -254,39 +283,117 @@ namespace NBD4.Controllers
                 }
             }
         }
+        private void PopulateAssignedLabourData(Bid bid)
+        {
+            var allOptions = _context.LabourTypeInfos;
+            var currentOptionIDs = new HashSet<int>(bid.BidLabourTypeInfos.Select(b => b.LabourTypeInfoID));
+            var checkBoxes = new List<CheckOptionVM>();
+            foreach (var option in allOptions)
+            {
+                checkBoxes.Add(new CheckOptionVM
+                {
+                    ID = option.ID,
+                    DisplayText = option.LabourTypeName,
+                    Assigned = currentOptionIDs.Contains(option.ID)
+                });
+            }
+            ViewData["LabourTypeInfoOptions"] = checkBoxes;
+        }
+        private void UpdateBidLabours(string[] selectedLabourOptions, Bid bidToUpdate)
+        {
+            if (selectedLabourOptions == null)
+            {
+                bidToUpdate.BidLabourTypeInfos = new List<BidLabourTypeInfo>();
+                return;
+            }
 
-        //private void PopulateAssignedInventoryData(Bid bid)
-        //{
-        //    var allOptions = _context.Inventories;
-        //    var currentOptionsHS = new HashSet<int>(bid.BidInventories.Select(b => b.InventoryID));
+            var selectedLabourOptionsHS = new HashSet<string>(selectedLabourOptions);
+            var bidOptionsHS = new HashSet<int>
+                (bidToUpdate.BidLabourTypeInfos.Select(c => c.LabourTypeInfoID));
+            foreach (var option in _context.LabourTypeInfos)
+            {
+                if (selectedLabourOptionsHS.Contains(option.ID.ToString())) //It is checked
+                {
+                    if (!bidOptionsHS.Contains(option.ID))
+                    {
+                        bidToUpdate.BidLabourTypeInfos.Add(new BidLabourTypeInfo { BidID = bidToUpdate.ID, LabourTypeInfoID = option.ID });
+                    }
+                }
+                else
+                {
+                    //Checkbox Not checked
+                    if (bidOptionsHS.Contains(option.ID))
+                    {
+                        BidLabourTypeInfo labourToRemove = bidToUpdate.BidLabourTypeInfos.SingleOrDefault(c => c.LabourTypeInfoID == option.ID);
+                        _context.Remove(labourToRemove);
+                    }
+                }
+            }
+        }
+        private void PopulateAssignedInventoryData(Bid bid)
+        {
+            //For this to work, you must have Included the child collection in the parent object
+            var allOptions = _context.Inventories;
+            var currentOptionsHS = new HashSet<int>(bid.BidInventories.Select(b => b.InventoryID));
+            //Instead of one list with a boolean, we will make two lists
+            var selected = new List<ListOptionVM>();
+            var available = new List<ListOptionVM>();
+            foreach (var s in allOptions)
+            {
+                if (currentOptionsHS.Contains(s.ID))
+                {
+                    selected.Add(new ListOptionVM
+                    {
+                        ID = s.ID,
+                        DisplayText = s.Description
+                    });
+                }
+                else
+                {
+                    available.Add(new ListOptionVM
+                    {
+                        ID = s.ID,
+                        DisplayText = s.Description
+                    });
+                }
+            }
 
-        //    var selected = new List<ListOptionVM>();
-        //    var available = new List<ListOptionVM>();
-        //    foreach (var s in allOptions)
-        //    {
-        //        if (currentOptionsHS.Contains(s.ID))
-        //        {
-        //            selected.Add(new ListOptionVM
-        //            {
-        //                ID = s.ID,
-        //                DisplayText = s.SpecialtyName,
-        //                Quantity = 0
-        //    });
-        //        }
-        //        else
-        //        {
-        //            available.Add(new ListOptionVM
-        //            {
-        //                ID = s.ID,
-        //                DisplayText = s.SpecialtyName,
-        //                Quantity = 0
-        //    });
-        //        }
-        //    }
+            ViewData["selOpts"] = new MultiSelectList(selected.OrderBy(s => s.DisplayText), "ID", "DisplayText");
+            ViewData["availOpts"] = new MultiSelectList(available.OrderBy(s => s.DisplayText), "ID", "DisplayText");
+        }
+        private void UpdateBidInventories(string[] selectedOptions, Bid bidToUpdate)
+        {
+            if (selectedOptions == null)
+            {
+                bidToUpdate.BidInventories = new List<BidInventory>();
+                return;
+            }
 
-        //    ViewData["selOpts"] = new MultiSelectList(selected.OrderBy(s => s.DisplayText), "ID", "DisplayText");
-        //    ViewData["availOpts"] = new MultiSelectList(available.OrderBy(s => s.DisplayText), "ID", "DisplayText");
-        //}
+            var selectedOptionsHS = new HashSet<string>(selectedOptions);
+            var currentOptionsHS = new HashSet<int>(bidToUpdate.BidInventories.Select(b => b.InventoryID));
+            foreach (var s in _context.Inventories)
+            {
+                if (selectedOptionsHS.Contains(s.ID.ToString()))//it is selected
+                {
+                    if (!currentOptionsHS.Contains(s.ID))
+                    {
+                        bidToUpdate.BidInventories.Add(new BidInventory
+                        {
+                            InventoryID = s.ID,
+                            BidID = bidToUpdate.ID
+                        });
+                    }
+                }
+                //else //not selected
+                //{
+                //    if (currentOptionsHS.Contains(s.ID))//but is currently in the Doctor's collection - Remove it!
+                //    {
+                //        BidInventory invToRemove = bidToUpdate.BidInventories.FirstOrDefault(d => d.InventoryID == s.ID);
+                //        _context.Remove(invToRemove);
+                //    }
+                //}
+            }
+        }
 
         private bool BidExists(int id)
         {

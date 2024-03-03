@@ -22,6 +22,9 @@
                 @Html.DisplayNameFor(model => model.BidStaffs)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.BidLabourTypeInfos)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.BidInventories)
             </th>
             <th>
@@ -55,11 +58,18 @@
                     }
                 </td>
                 <td>
+                    @foreach (var c in item.BidLabourTypeInfos)
+                    {
+                        @c.LabourTypeInfo.LabourTypeName<br />
+                    }
+                </td>
+                <td>
                     @foreach (var c in item.BidInventories)
                     {
                         @c.Inventory.Description <br />
                     }
                 </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.BidNBDApproved)
             </td>
