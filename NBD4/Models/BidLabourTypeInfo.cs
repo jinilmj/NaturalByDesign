@@ -12,13 +12,31 @@ namespace NBD4.Models
 
 		[Required(ErrorMessage = "You cannot leave the labour Hours Blank")]
 		[Display(Name = "Labour Hours")]
-		public int Hours { get; set; }
+        private int _hours;
+        public int Hours
+        {
+            get { return _hours; }
+            set
+            {
+                _hours = value;
+                CalculateLabourCharge();
+            }
+        }
 
-		public double LabourCharge { get; set; }
+        public double LabourCharge { get; set; }
 
-		public void CalculateLabourCharge()
-		{
-			LabourCharge = Math.Round(Hours * LabourTypeInfo.PricePerHour, 2);
-		}
-	}
+        public void CalculateLabourCharge()
+        {
+            if (LabourTypeInfo != null && Hours > 0)
+            {
+                LabourCharge = Math.Round(Hours * LabourTypeInfo.PricePerHour, 2);
+            }
+            else
+            {
+                LabourCharge = 0; // Default value if Hours or LabourTypeInfo is null
+            }
+        }
+
+
+    }
 }

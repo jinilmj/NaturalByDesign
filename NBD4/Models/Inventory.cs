@@ -8,7 +8,7 @@ namespace NBD4.Models
 
         [Display(Name = "Four Letter Inventory Code")]
         [Required(ErrorMessage = "You cannot leave the Inventory code blank.")]
-        [RegularExpression("^[A-Z]{4}$", ErrorMessage = "Please enter four capital letters for the Inventory Code.")]
+        [RegularExpression("^[A-Za-z0-9]{4,7}$", ErrorMessage = "Please enter a code Between 4-7 You can use Letters and Numbers.")]
         public string Code { get; set; }
 
         [Display(Name = "Description")]
@@ -18,7 +18,7 @@ namespace NBD4.Models
 
         [Display(Name = "Size")]
         [Required(ErrorMessage = "You must enter a size.")]
-        [StringLength(15, ErrorMessage = "Description cannot be more than 15 characters long.")]
+        [StringLength(15, ErrorMessage = "Size cannot be more than 15 characters long.")]
         public string Size { get; set; }
 
         [Display(Name = "List Cost")]

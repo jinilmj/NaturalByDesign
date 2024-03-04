@@ -7,5 +7,6 @@
         public string DisplayText { get; set; }
         public bool Assigned { get; set; }
         public int Hours { get; set; }
+        public double LabourCharge { get; set; }
     }
 }

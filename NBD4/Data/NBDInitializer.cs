@@ -378,9 +378,25 @@ namespace NBD4.Data
                 {
                     var inventories = new List<Inventory>
                     {
-                        new Inventory { Code="LACC",Description="lacco australasica", ListCost=749.0,Size="15 gal", MaterialTypeID=1},
-                        new Inventory { Code="XXXX",Description="hibiscus", ListCost=100.0,Size="10 gal", MaterialTypeID=2},
-                        new Inventory { Code="YYYY",Description="turtle Vine", ListCost=150.0,Size="20 gal", MaterialTypeID=3}
+                        new Inventory { Code = "lacco", Description = "lacco australasica", Size = "15 gal", ListCost = 749.00, MaterialTypeID=1 },
+                        new Inventory { Code = "arenga", Description = "arenga pinnata", Size = "15 gal", ListCost = 516.00, MaterialTypeID=1 },
+                        new Inventory { Code = "cham", Description = "chamaedorea", Size = "15 gal", ListCost = 499.00 , MaterialTypeID=1},
+                        new Inventory { Code = "cera", Description = "ceratozamia molongo", Size = "14 in", ListCost = 400.00, MaterialTypeID=1},
+                        new Inventory { Code = "areca", Description = "arecastum coco", Size = "15 gal", ListCost = 458.00, MaterialTypeID=1},
+                        new Inventory { Code = "cary", Description = "caryota mitis", Size = "7 gal", ListCost = 233.00, MaterialTypeID=1 },
+                        new Inventory { Code = "gmti5", Description = "green ti 5 gal", Size = "5 gal",ListCost = 154.00, MaterialTypeID=1},
+                        new Inventory { Code = "gmti7", Description = "green ti 7 gal", Size = "7 gal", ListCost = 234.00, MaterialTypeID=1 },
+                        new Inventory { Code = "ficus", Description = "ficus green gem", Size = "14 in",  ListCost = 150.00, MaterialTypeID=1},
+                        new Inventory { Code = "ficusl7", Description = "ficus green gen 17", Size = "17 in", ListCost = 400.00, MaterialTypeID=1 },
+                        new Inventory { Code = "margi", Description = "marginata", Size = "2 gal", ListCost = 75.00, MaterialTypeID=1 },
+                        new Inventory { Code = "TCP50", Description = "t/c pot 50 gal", Size = "50 gal",  ListCost = 110.95, MaterialTypeID=2},
+                           new Inventory { Code = "GP50", Description = "granite pot 50 gal", Size = "50 gal",  ListCost = 195.00, MaterialTypeID=2 },
+                           new Inventory { Code = "TCF03", Description = "t/c figure-swan", Size = "Not specified", ListCost = 45.00, MaterialTypeID=2 },
+                           new Inventory { Code = "MBB30", Description = "marble bird bath 30 in", Size = "30 in", ListCost = 250.00, MaterialTypeID=2 },
+                           new Inventory { Code = "GFN48", Description = "granite foundation 48 in", Size = "48 in", ListCost = 750.00, MaterialTypeID=2 }
+
+
+
                     };
                     context.Inventories.AddRange(inventories);
                     context.SaveChanges();
@@ -393,21 +409,21 @@ namespace NBD4.Data
                     context.BidInventories.AddRange(
                         new BidInventory
                         {
-                            InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "LACC").ID,
+                            InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "lacco").ID,
                             BidID = bidId,
                             MaterialQuantity = 1,
                             MaterialExtendPrice = 749.0,
                         },
                         new BidInventory
                         {
-                            InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "XXXX").ID,
+                            InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "arenga").ID,
                             BidID = bidId,
                             MaterialQuantity = 2,
                             MaterialExtendPrice = 200.0,
                         },
                         new BidInventory
                         {
-                            InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "YYYY").ID,
+                            InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "cham").ID,
                             BidID = bidId,
                             MaterialQuantity = 3,
                             MaterialExtendPrice = 450.0,
