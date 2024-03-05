@@ -390,10 +390,19 @@ namespace NBD4.Data
                         new Inventory { Code = "ficusl7", Description = "ficus green gen 17", Size = "17 in", ListCost = 400.00, MaterialTypeID=1 },
                         new Inventory { Code = "margi", Description = "marginata", Size = "2 gal", ListCost = 75.00, MaterialTypeID=1 },
                         new Inventory { Code = "TCP50", Description = "t/c pot 50 gal", Size = "50 gal",  ListCost = 110.95, MaterialTypeID=2},
-                           new Inventory { Code = "GP50", Description = "granite pot 50 gal", Size = "50 gal",  ListCost = 195.00, MaterialTypeID=2 },
-                           new Inventory { Code = "TCF03", Description = "t/c figure-swan", Size = "Not specified", ListCost = 45.00, MaterialTypeID=2 },
-                           new Inventory { Code = "MBB30", Description = "marble bird bath 30 in", Size = "30 in", ListCost = 250.00, MaterialTypeID=2 },
-                           new Inventory { Code = "GFN48", Description = "granite foundation 48 in", Size = "48 in", ListCost = 750.00, MaterialTypeID=2 }
+                         new Inventory { Code = "GP50", Description = "granite pot 50 gal", Size = "50 gal",  ListCost = 195.00, MaterialTypeID=2 },
+                         new Inventory { Code = "TCF03", Description = "t/c figure-swan", Size = "Not specified", ListCost = 45.00, MaterialTypeID=2 },
+                         new Inventory { Code = "MBB30", Description = "marble bird bath 30 in", Size = "30 in", ListCost = 250.00, MaterialTypeID=2 },
+                         new Inventory { Code = "GFN48", Description = "granite foundation 48 in", Size = "48 in", ListCost = 750.00, MaterialTypeID=2 },
+                         new Inventory { Code = "CBRK5", Description = "Decorative cedar bark", Size = "Bag (5 cu ft)", ListCost = 15.95, MaterialTypeID= 3},
+                        new Inventory { Code = "CRGRN", Description = "Crushed granite",Size = "Not specified", ListCost = 14.00, MaterialTypeID=3},
+                        new Inventory { Code = "PGRV", Description = "Pea gravel",Size = "Not specified", ListCost = 20.00, MaterialTypeID=3 },
+                        new Inventory { Code = "GRV1", Description = "1\" gravel", Size = "Not specified",ListCost = 12.00, MaterialTypeID=3 },
+                        new Inventory { Code = "TSOIL", Description = "Topsoil", Size = "Not specified",ListCost = 20.00, MaterialTypeID=3},
+                        new Inventory { Code = "PBLKG", Description = "Patio block-grey",Size = "Not specified", ListCost = 0.84, MaterialTypeID=3 },
+                        new Inventory { Code = "PBLKR", Description = "Patio block-red",Size = "Not specified", ListCost = 0.84, MaterialTypeID=3 }
+
+
 
 
 

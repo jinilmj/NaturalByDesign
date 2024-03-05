@@ -54,8 +54,13 @@ namespace NBD4.Controllers
 		}
 		public PartialViewResult Inventory()
 		{
-			ViewData["InventoryID"] = new SelectList(_context.Inventories
-				.OrderBy(i => i.Description), "ID", "Description");
+            var invList = _context.Inventories.OrderBy(i => i.MaterialType).Select(s => new SelectListItem
+            {
+                Value = s.ID.ToString(),
+                Text = $"{s.Description} - {s.MaterialType.MaterialTypeName} "
+            });
+
+            ViewData["InventoryID"] = new SelectList(invList, "Value", "Text");
 			return PartialView("_Inventory");
 		}
         //public PartialViewResult Staff()
