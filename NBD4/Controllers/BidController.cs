@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using System.Security.Cryptography;
@@ -87,16 +88,25 @@ namespace NBD4.Controllers
             }
             if (selectedLabourOptions != null)
             {
-                foreach (var labourTypeInfo in selectedLabourOptions)
+                foreach (var labourTypeInfoId in selectedLabourOptions)
                 {
-					int labourId = int.Parse(labourTypeInfo);
-					var labourToAdd = new BidLabourTypeInfo { BidID = bid.ID, LabourTypeInfoID = labourId, Hours = int.Parse(Request.Form[$"selectedLabourHours[{labourId}]"]) };
-					bid.BidLabourTypeInfos.Add(labourToAdd);
-				}
+                   
+                    int labourId = int.Parse(labourTypeInfoId);
+                    var hours = int.Parse(Request.Form[$"selectedLabourHours[{labourId}]"]);
+
+                    // Fetch the LabourTypeInfo from the database
+                    var labourTypeInfo = await _context.LabourTypeInfos.FindAsync(labourId);
+
+                    var labourToAdd = new BidLabourTypeInfo { BidID = bid.ID, LabourTypeInfoID = labourId, Hours = hours, LabourTypeInfo = labourTypeInfo };
+                    bid.BidLabourTypeInfos.Add(labourToAdd);
+                    labourToAdd.CalculateLabourCharge(); // Calculate Labour Charge for the new labour
+                    
+                }
             }
             UpdateBidInventories(selectedOptions, bid);
             if (ModelState.IsValid)
             {
+                bid.CalculateTotalBidAmount();
                 _context.Add(bid);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Details", new { bid.ID });
@@ -160,15 +170,20 @@ namespace NBD4.Controllers
             {
                 try
                 {
-                    foreach (var labourTypeInfo in selectedLabourOptions)
+                    foreach (var labourTypeInfoId in selectedLabourOptions)
                     {
-                        int labourId = int.Parse(labourTypeInfo);
+                        int labourId = int.Parse(labourTypeInfoId);
+                        var hours = int.Parse(Request.Form[$"selectedLabourHours[{labourId}]"]);
+                        var labourTypeInfo = await _context.LabourTypeInfos.FindAsync(labourId);
                         var labourToUpdate = bidToUpdate.BidLabourTypeInfos.FirstOrDefault(b => b.LabourTypeInfoID == labourId);
                         if (labourToUpdate != null)
                         {
-                            labourToUpdate.Hours = int.Parse(Request.Form[$"selectedLabourHours[{labourId}]"]);
+                            labourToUpdate.Hours = hours;
+                            labourToUpdate.LabourTypeInfo = labourTypeInfo;
+                            labourToUpdate.CalculateLabourCharge();
                         }
                     }
+                    bidToUpdate.CalculateTotalBidAmount();
                     await _context.SaveChangesAsync();
                     return RedirectToAction("Details", new { bidToUpdate.ID });
                 }
