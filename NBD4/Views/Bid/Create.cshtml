@@ -17,9 +17,9 @@
                 <input asp-for="BidDate" class="form-control" />
                 <span asp-validation-for="BidDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="display:none;">
                 <label asp-for="BidAmount" class="control-label"></label>
-                <input asp-for="BidAmount" class="form-control" />
+                <input asp-for="BidAmount" class="form-control" value ="0"/>
                 <span asp-validation-for="BidAmount" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -128,42 +128,42 @@
                 </div>
             </div>
 
-            <div class="form-group form-check">
+            <div class="form-group form-check" style="display:none;">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="BidNBDApproved" /> @Html.DisplayNameFor(model => model.BidNBDApproved)
                 </label>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="display:none;">
                 <label asp-for="BidNBDApprovalNotes" class="control-label"></label>
                 <input asp-for="BidNBDApprovalNotes" class="form-control" />
                 <span asp-validation-for="BidNBDApprovalNotes" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
+            <div class="form-group form-check" style="display:none;">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="BidClientApproved" /> @Html.DisplayNameFor(model => model.BidClientApproved)
                 </label>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="display:none;">
                 <label asp-for="BidClientApprovalNotes" class="control-label"></label>
                 <input asp-for="BidClientApprovalNotes" class="form-control" />
                 <span asp-validation-for="BidClientApprovalNotes" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
+            <div class="form-group form-check" style="display:none;">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="BidMarkForRedesign" /> @Html.DisplayNameFor(model => model.BidMarkForRedesign)
                 </label>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="display:none;">
                 <label asp-for="ReviewDate" class="control-label"></label>
                 <input asp-for="ReviewDate" class="form-control" />
                 <span asp-validation-for="ReviewDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="display:none;">
                 <label asp-for="ReviewedBy" class="control-label"></label>
                 <input asp-for="ReviewedBy" class="form-control" />
                 <span asp-validation-for="ReviewedBy" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" >
                 <label asp-for="ProjectID" class="control-label"></label>
                 <select asp-for="ProjectID" class ="form-control" asp-items="ViewBag.ProjectID"></select>
             </div>
