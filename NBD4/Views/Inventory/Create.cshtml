@@ -7,28 +7,31 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Code" class="control-label"></label>
-                <input asp-for="Code" class="form-control" />
+                <label asp-for="Code" class="control-label">Four Letter Inventory Code<span class="mandatory">*</span></label>
+                <input asp-for="Code" class="form-control" placeholder="Enter Four Letter Inventory Code" />
                 <span asp-validation-for="Code" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <label asp-for="Description" class="control-label">Description<span class="mandatory">*</span></label>
+                <input asp-for="Description" class="form-control" placeholder="Enter Description" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Size" class="control-label"></label>
-                <input asp-for="Size" class="form-control" />
+                <label asp-for="Size" class="control-label">Size<span class="mandatory">*</span></label>
+                <input asp-for="Size" class="form-control" placeholder="Enter Size" />
                 <span asp-validation-for="Size" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ListCost" class="control-label"></label>
-                <input asp-for="ListCost" class="form-control" />
+                <label asp-for="ListCost" class="control-label">List Cost<span class="mandatory">*</span></label>
+                <input asp-for="ListCost" class="form-control" placeholder="Enter List Cost" />
                 <span asp-validation-for="ListCost" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MaterialTypeID" class="control-label"></label>
-                <select asp-for="MaterialTypeID" class ="form-control" asp-items="ViewBag.MaterialTypeID"></select>
+                <label asp-for="MaterialTypeID" class="control-label">Material Type<span class="mandatory">*</span></label>
+                <select asp-for="MaterialTypeID" class="form-control" asp-items="ViewBag.MaterialTypeID">
+                    <option value="0">Select Material Type</option>
+                </select>
+                <span asp-validation-for="MaterialTypeID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

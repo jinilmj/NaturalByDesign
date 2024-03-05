@@ -7,8 +7,8 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="StaffRoleName" class="control-label"></label>
-                <input asp-for="StaffRoleName" class="form-control" />
+                <label asp-for="StaffRoleName" class="control-label">Staff Role Name<span class="mandatory">*</span></label>
+                <input asp-for="StaffRoleName" class="form-control" placeholder="Enter Staff Role Name" />
                 <span asp-validation-for="StaffRoleName" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -21,4 +21,3 @@
 <div>
     <partial name="_BackToList" />
 </div>
-
