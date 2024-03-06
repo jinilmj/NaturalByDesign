@@ -13,6 +13,7 @@ using NBD4.CustomControllers;
 using NBD4.Data;
 using NBD4.Models;
 using NBD4.ViewModels;
+using NuGet.Packaging.Signing;
 
 namespace NBD4.Controllers
 {
@@ -26,15 +27,93 @@ namespace NBD4.Controllers
         }
 
         // GET: Bid
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string SearchStringPh, string SearchClient, string actionButton, int? page,
+            string sortDirection = "asc",string sortField = "Bid")
         {
-            var nBDContext = _context.Bids
+            ViewData["Filtering"] = "btn-outline-secondary";
+            int numberFilters = 0;
+
+            string[] sortOptions = new[] { "Bid Date", "Client", "Project" };
+
+            var bids = _context.Bids
                 .Include(b => b.Project).ThenInclude(p=>p.Client)
                 .Include(p=>p.BidInventories).ThenInclude(p=>p.Inventory)
                 .Include(b=>b.BidStaffs).ThenInclude(p=>p.Staff)
                 .Include(b => b.BidLabourTypeInfos).ThenInclude(p => p.LabourTypeInfo)
                 .AsNoTracking();
-            return View(await nBDContext.ToListAsync());
+            if (!String.IsNullOrEmpty(SearchStringPh))
+            {
+                bids = bids.Where(p => p.Project.Site.ToUpper().Contains(SearchStringPh.ToUpper()));
+                numberFilters++;
+            }
+            if (!String.IsNullOrEmpty(SearchClient))
+            {
+                bids = bids.Where(p => p.Project.Client.Name.ToUpper().Contains(SearchClient.ToUpper()));
+                numberFilters++;
+            }
+
+            if (numberFilters != 0)
+            {
+                //Toggle the Open/Closed state of the collapse depending on if we are filtering
+                ViewData["Filtering"] = " btn-danger";
+                //Show how many filters have been applied
+                ViewData["numberFilters"] = "(" + numberFilters.ToString()
+                    + " Filter" + (numberFilters > 1 ? "s" : "") + " Applied)";
+            }
+            if (!String.IsNullOrEmpty(actionButton)) //Form Submitted!
+            {
+                page = 1;
+
+                if (sortOptions.Contains(actionButton))//Change of sort is requested
+                {
+                    if (actionButton == sortField) //Reverse order on same field
+                    {
+                        sortDirection = sortDirection == "asc" ? "desc" : "asc";
+                    }
+                    sortField = actionButton;//Sort by the button clicked
+                }
+            }
+            //Now we know which field and direction to sort by
+            if (sortField == "Client")
+            {
+                if (sortDirection == "asc")
+                {
+                    bids = bids
+                        .OrderBy(p => p.Project.Client.Name);
+                }
+                else
+                {
+                    bids = bids
+                        .OrderByDescending(p => p.Project.Client.Name);
+                }
+            }
+            else if (sortField == "Bid Date")
+            {
+                if (sortDirection == "asc")
+                {
+                    bids = bids
+                        .OrderBy(p => p.BidDate);
+                }
+                else
+                {
+                    bids = bids
+                        .OrderByDescending(p => p.BidDate);
+                }
+            }
+            else
+            {
+                if (sortDirection == "asc")
+                {
+                    bids = bids
+                        .OrderBy(p => p.Project.Site);
+                }
+                else
+                {
+                    bids = bids
+                        .OrderByDescending(p => p.Project.Site);
+                }
+            }
+                return View(await bids.ToListAsync());
         }
 
         // GET: Bid/Details/5

@@ -39,7 +39,7 @@ nav .logo {
     color: red; /* Set text color to red */
 }
 
-.home-page {
+/*.home-page {
     background-image: url('../images/design.webp');
     background-size: cover;
     background-position: center;
@@ -47,14 +47,14 @@ nav .logo {
     border-radius: 5%; 
     margin: 20px;
     height: calc(100vh - 40px);
-}
+}*/
 
-.main-home {
+/*.main-home {
     background: rgba(204,215,212, 0.8);
     border-radius: 15px;
     margin: 5%;
     
-}
+}*/
 .home-header h1 {
     color: #096A2E; font-weight: bold;
 }
@@ -66,3 +66,61 @@ nav .logo {
 .main-home h2 {
     color: #243837;
 }
+
+.main-home h2, p {
+    color: #243837;
+    font-weight: bold;
+}
+
+.main-home p {
+    font-size: 23px;
+}
+
+.image-links {
+    text-align: center;
+    margin: 20px;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 50px;
+}
+
+.image-container {
+    width: calc(33.33% - 20px);
+    margin: 10px;
+    text-align: left;
+}
+
+
+    .image-container a {
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .image-container img {
+        border-style: solid;
+        border-color: aquamarine;
+        border-width: 10px;
+        max-width: 100%;
+        height: auto;
+        max-width: 180px;
+        max-height: 180px;
+        border-radius: 50%;
+        margin-top: 25px;
+    }
+
+.circle-name {
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+    padding: 5px 0;
+    width: 130px;
+    height: 35px;
+    color: #fff;
+    background-color: #3980FA;
+    border: 1px solid #3980FA;
+    border-radius: 5px;
+    margin-top: 7px;
+}
+

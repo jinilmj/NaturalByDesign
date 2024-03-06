@@ -7,19 +7,53 @@
     <h1>Natural By Design</h1>
     </header>
     <div class="main-home">
-        <section>
-            <h2>About Us</h2>
-            <p>Natural By Design (NBD) is a partnership that designs and develops 
-                interior and exterior landscapes for hotels, restaurants, condominiums, 
-                and large private estates. We use a mixture of commonly available plants, 
-                flowers, and shrubs, and imported rare and exotic plants, pottery, and other materials <br /> <br /></p>
-        </section>
-        <section>
-            <h2>Our Team</h2>
-            <p>NBD employs twenty-five people. Keri Yamaguchi, a designer, manages 
-                the artistic side of the business. Stan Fenton is the general manager 
-                who manages the inventory and supervises the sales and financial activities.  <br /> <br />
+        <div class="image-links">
+            <div class="image-container">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Client" asp-action="Index">
+                    <img src="../images/customer1.png" alt="Instruction">
+                    <span class="circle-name">Client</span>
+                </a>
+            </div>
+            <div class="image-container">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="Index">
+                    <img src="../images/project.webp" alt="Client">
+                    <span class="circle-name">Project</span>
+                </a>
+            </div>
+            <div class="image-container">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Bid" asp-action="Index">
+                    <img src="../images/Bid.jpeg" alt="Iventory">
+                    <span class="circle-name">Bid</span>
+                </a>
+            </div>
+        </div>
+        <div class="image-links">
+            <div class="image-container">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Lookup" asp-action="Index">
+                    <img src="../images/scope.png" alt="Link 3">
+                    <span class="circle-name">Lookup</span>
+                </a>
+            </div>
+            <div class="image-container">
+                <a href="#">
+                    <img src="../images/image.jpg" alt="Link 3">
+                </a>
+            </div>
+            <div class="image-container">
+                <a href="#">
+                    <img src="../images/image.jpg" alt="Link 3">
+                </a>
+            </div>
+        </div>
+        <div class="instruction">
+            <h2>Instructions</h2>
+            <p>-The user can get to the client page using the link above or by clicking
+                <a asp-controller="Client" asp-action="Index">here</a></p>
+           <p>-The user can create a project using the link abover or by clicking
+                <a asp-controller="Project" asp-action="Index">here</a></p>
+           <p>-The user can add a bid from the bid page using the link above or by clicking 
+                <a asp-controller="Bid" asp-action="Index">here</a></p>
             </p>
-        </section>
+        </div>
     </div>
 </div>
