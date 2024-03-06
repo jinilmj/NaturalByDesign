@@ -131,6 +131,7 @@ namespace NBD4.Controllers
 
             var project = await _context.Projects.AsNoTracking()
                 .Include(p => p.Client)
+                .Include(p => p.Bids)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (project == null)
             {

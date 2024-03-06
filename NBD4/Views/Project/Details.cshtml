@@ -30,6 +30,60 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Client.Name)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Bids)
+        </dt>
+        <dd class="col-sm-10">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Bids.FirstOrDefault().BidDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Bids.FirstOrDefault().BidAmount)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Bids.FirstOrDefault().BidClientApproved)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Bids.FirstOrDefault().BidNBDApproved)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Bids.FirstOrDefault().BidMarkForRedesign)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Bids)
+                    {
+                        <tr>
+                            <td>
+                                <a asp-controller="Bid" asp-action="Details"
+                                   asp-route-id="@item.ID">@Html.DisplayFor(modelItem => item.BidDate)</a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BidAmount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BidClientApproved)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BidNBDApproved)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BidMarkForRedesign)
+                            </td>
+                            <td>
+                                <a asp-controller="Bid" asp-action="Details"
+                                   asp-route-id="@item.ID">Details</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </dd>
     </dl>
 </div>
 <div>
