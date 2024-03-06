@@ -38,8 +38,11 @@
     <table class="table">
         <thead>
             <tr>
-                <th>
+                @* <th>
                     @Html.DisplayNameFor(model => model.BidDate)
+                </th> *@
+                <th>
+                    <input type="submit" name="actionButton" value="Bid Date" class="btn btn-link" />
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.BidNBDApproved)
@@ -50,11 +53,17 @@
                 <th>
                     @Html.DisplayNameFor(model => model.BidMarkForRedesign)
                 </th>
-                <th>
+                @* <th>
                     @Html.DisplayNameFor(model => model.Project.Client)
-                </th>
+                </th> *@
                 <th>
+                    <input type="submit" name="actionButton" value="Client" class="btn btn-link" />
+                </th>
+                @* <th>
                     @Html.DisplayNameFor(model => model.Project)
+                </th> *@
+                <th>
+                    <input type="submit" name="actionButton" value="Project" class="btn btn-link" />
                 </th>
                 <th class="text-center" style="min-width:120px">
                     <a asp-action="Create" class="btn btn-sm btn-outline-success"

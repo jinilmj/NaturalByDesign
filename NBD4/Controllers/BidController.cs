@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using NBD4.CustomControllers;
 using NBD4.Data;
 using NBD4.Models;
+using NBD4.Utilities;
 using NBD4.ViewModels;
 using NuGet.Packaging.Signing;
 
@@ -113,7 +114,10 @@ namespace NBD4.Controllers
                         .OrderByDescending(p => p.Project.Site);
                 }
             }
-                return View(await bids.ToListAsync());
+            ViewData["sortField"] = sortField;
+            ViewData["sortDirection"] = sortDirection;
+
+            return View(await bids.ToListAsync());
         }
 
         // GET: Bid/Details/5
