@@ -67,8 +67,8 @@ namespace NBD4.Data
                     };
                     context.Cities.AddRange(cities);
                     context.SaveChanges();
-                }                
-                
+                }
+
 
                 if (!context.Clients.Any())
                 {
@@ -76,9 +76,9 @@ namespace NBD4.Data
                     new Client
                     {
                         Name = "Tech Innovators Ltd",
-                        ContactFirstName="John",
-                        ContactMiddleName="N",
-                        ContactLastName="Doe",
+                        ContactFirstName = "John",
+                        ContactMiddleName = "N",
+                        ContactLastName = "Doe",
                         Email = "john.doe@example.com",
                         Phone = "5559876543",
                         Street = "123 Main St",
@@ -137,7 +137,7 @@ namespace NBD4.Data
                     ;
                     context.SaveChanges();
                 }
-                
+
                 if (!context.Projects.Any())
                 {
                     context.Projects.AddRange(
@@ -231,7 +231,7 @@ namespace NBD4.Data
                         new Bid
                         {
                             BidDate = DateTime.Parse("2024-04-25"),
-                            BidAmount = 2500.00,
+                            BidAmount = 6090.24,
                             BidNBDApproved = true,
                             BidNBDApprovalNotes = "Approved without issues",
                             BidClientApproved = true,
@@ -244,7 +244,7 @@ namespace NBD4.Data
                         new Bid
                         {
                             BidDate = DateTime.Parse("2024-05-15"),
-                            BidAmount = 1800.00,
+                            BidAmount = 6090.24,
                             BidNBDApproved = true,
                             BidNBDApprovalNotes = "Approved with minor revisions",
                             BidClientApproved = false,
@@ -257,7 +257,7 @@ namespace NBD4.Data
                         new Bid
                         {
                             BidDate = DateTime.Parse("2024-06-05"),
-                            BidAmount = 3200.00,
+                            BidAmount = 6090.24,
                             BidNBDApproved = false,
                             BidNBDApprovalNotes = "Under review by NBD team",
                             BidClientApproved = false,
@@ -270,7 +270,7 @@ namespace NBD4.Data
                         new Bid
                         {
                             BidDate = DateTime.Parse("2024-07-01"),
-                            BidAmount = 2800.00,
+                            BidAmount = 6090.24,
                             BidNBDApproved = true,
                             BidNBDApprovalNotes = "Approved without issues",
                             BidClientApproved = true,
@@ -283,7 +283,7 @@ namespace NBD4.Data
                         new Bid
                         {
                             BidDate = DateTime.Parse("2024-08-05"),
-                            BidAmount = 4000.00,
+                            BidAmount = 6090.24,
                             BidNBDApproved = true,
                             BidNBDApprovalNotes = "Approved with minor revisions",
                             BidClientApproved = false,
@@ -296,7 +296,7 @@ namespace NBD4.Data
                         new Bid
                         {
                             BidDate = DateTime.Parse("2024-09-25"),
-                            BidAmount = 3500.00,
+                            BidAmount = 6090.24,
                             BidNBDApproved = true,
                             BidNBDApprovalNotes = "Approved without issues",
                             BidClientApproved = true,
@@ -309,7 +309,7 @@ namespace NBD4.Data
                         new Bid
                         {
                             BidDate = DateTime.Parse("2024-11-01"),
-                            BidAmount = 3000.00,
+                            BidAmount = 6090.24,
                             BidNBDApproved = false,
                             BidNBDApprovalNotes = "Under review by NBD team",
                             BidClientApproved = false,
@@ -322,7 +322,7 @@ namespace NBD4.Data
                         new Bid
                         {
                             BidDate = DateTime.Parse("2024-12-10"),
-                            BidAmount = 2800.00,
+                            BidAmount = 6090.24,
                             BidNBDApproved = false,
                             BidNBDApprovalNotes = "Under review by NBD team",
                             BidClientApproved = false,
@@ -335,7 +335,7 @@ namespace NBD4.Data
                         new Bid
                         {
                             BidDate = DateTime.Parse("2025-01-15"),
-                            BidAmount = 3200.00,
+                            BidAmount = 6090.24,
                             BidNBDApproved = true,
                             BidNBDApprovalNotes = "Approved without issues",
                             BidClientApproved = true,
@@ -348,7 +348,7 @@ namespace NBD4.Data
                         new Bid
                         {
                             BidDate = DateTime.Parse("2025-02-01"),
-                            BidAmount = 3000.00,
+                            BidAmount = 6090.24,
                             BidNBDApproved = true,
                             BidNBDApprovalNotes = "Approved with minor revisions",
                             BidClientApproved = false,
@@ -403,42 +403,33 @@ namespace NBD4.Data
                         new Inventory { Code = "PBLKR", Description = "Patio block-red",Size = "Not specified", ListCost = 0.84, MaterialTypeID=3 }
 
 
-
-
-
                     };
                     context.Inventories.AddRange(inventories);
                     context.SaveChanges();
                 }
 
-                if (!context.BidInventories.Any())
+                for (int bidId = 1; bidId <= 10; bidId++)
                 {
-                    var bidId = 4; // Replace /* some condition */ with your actual condition to find the bid ID
-
-                    context.BidInventories.AddRange(
-                        new BidInventory
-                        {
-                            InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "lacco").ID,
-                            BidID = bidId,
-                            MaterialQuantity = 1,
-                            MaterialExtendPrice = 749.0,
-                        },
-                        new BidInventory
-                        {
-                            InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "arenga").ID,
-                            BidID = bidId,
-                            MaterialQuantity = 2,
-                            MaterialExtendPrice = 200.0,
-                        },
-                        new BidInventory
-                        {
-                            InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "cham").ID,
-                            BidID = bidId,
-                            MaterialQuantity = 3,
-                            MaterialExtendPrice = 450.0,
-                        });
-                    context.SaveChanges();
+                    if (!context.BidInventories.Any(b => b.BidID == bidId))
+                    {
+                        context.BidInventories.AddRange(
+                            new List<BidInventory>
+                            {
+                                new BidInventory { InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "lacco").ID, BidID = bidId, MaterialQuantity = 1, MaterialExtendPrice = 749.0 },
+                                new BidInventory { InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "arenga").ID, BidID = bidId, MaterialQuantity = 2, MaterialExtendPrice = 1032.0 },
+                                new BidInventory { InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "cham").ID, BidID = bidId, MaterialQuantity = 3, MaterialExtendPrice = 1497.0 },
+                                new BidInventory { InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "TCP50").ID, BidID = bidId, MaterialQuantity = 4, MaterialExtendPrice = 443.80 },
+                                new BidInventory { InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "GP50").ID, BidID = bidId, MaterialQuantity = 3, MaterialExtendPrice = 585.0 },
+                                new BidInventory { InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "TSOIL").ID, BidID = bidId, MaterialQuantity = 5, MaterialExtendPrice = 100.0 },
+                                new BidInventory { InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "PBLKG").ID, BidID = bidId, MaterialQuantity = 10, MaterialExtendPrice = 8.40 },
+                                new BidInventory { InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "PBLKR").ID, BidID = bidId, MaterialQuantity = 6, MaterialExtendPrice = 5.04 },
+                                new BidInventory { InventoryID = context.Inventories.FirstOrDefault(i => i.Code == "PGRV").ID, BidID = bidId, MaterialQuantity = 9, MaterialExtendPrice = 180.0 }
+                            });
+                        context.SaveChanges();
+                    }
                 }
+
+
                 if (!context.LabourTypeInfos.Any())
                 {
                     var labourTypeInfos = new List<LabourTypeInfo>
@@ -451,48 +442,107 @@ namespace NBD4.Data
                     context.LabourTypeInfos.AddRange(labourTypeInfos);
                     context.SaveChanges();
                 }
-				if (!context.StaffRoles.Any())
-				{
-					var staffRoles = new List<StaffRole>
-					{
-						new StaffRole { StaffRoleName= "Designer"}
-					};
-					context.StaffRoles.AddRange(staffRoles);
-					context.SaveChanges();
-				}
-				if (!context.Staffs.Any())
-				{
-					var staffs = new List<Staff>
-					{
-						new Staff { StaffFirstName = "Tamara",
+
+
+                if (!context.StaffRoles.Any())
+                {
+                    var staffRoles = new List<StaffRole>
+                    {
+                        new StaffRole { StaffRoleName= "Designer"},
+                        new StaffRole { StaffRoleName= "Sales Associate"}
+                    };
+                    context.StaffRoles.AddRange(staffRoles);
+                    context.SaveChanges();
+                }
+                if (!context.Staffs.Any())
+                {
+                    var staffs = new List<Staff>
+                    {
+                        new Staff { StaffFirstName = "Tamara",
                             StaffLastName = "Bakken",
-                            Email = "tamara@example.com", 
-                            Phone = "1234567890", 
+                            Email = "tamara@example.com",
+                            Phone = "1234567890",
                             StaffRoleID = 1},
-                        new Staff { StaffFirstName = "Sara",
-                            StaffLastName = "Bakken",
-                            Email = "tamara@examplse.com",
-                            Phone = "1234557890",
+                        new Staff { StaffFirstName = "Bob",
+                            StaffLastName = "Reinhardt",
+                            Email = "bob@example.com",
+                            Phone = "4087753652",
                             StaffRoleID = 1}
                     };
-					context.Staffs.AddRange(staffs);
-					context.SaveChanges();
-				}
-				//BidStaff
-				if (!context.BidsStaffs.Any())
-				{
+                    context.Staffs.AddRange(staffs);
+                    context.SaveChanges();
+                }
+                //BidStaff
+                if (!context.BidsStaffs.Any())
+                {
                     context.BidsStaffs.AddRange(
-                        new BidStaff
+                         new BidStaff { StaffID = context.Staffs.FirstOrDefault(c => c.StaffFirstName == "Tamara" && c.StaffLastName == "Bakken").ID, BidID = 4 },
+                         new BidStaff { StaffID = context.Staffs.FirstOrDefault(c => c.StaffFirstName == "Tamara" && c.StaffLastName == "Bakken").ID, BidID = 1 },
+                         new BidStaff { StaffID = context.Staffs.FirstOrDefault(c => c.StaffFirstName == "Tamara" && c.StaffLastName == "Bakken").ID, BidID = 3 },
+                         new BidStaff { StaffID = context.Staffs.FirstOrDefault(c => c.StaffFirstName == "Tamara" && c.StaffLastName == "Bakken").ID, BidID = 5 },
+                         new BidStaff { StaffID = context.Staffs.FirstOrDefault(c => c.StaffFirstName == "Tamara" && c.StaffLastName == "Bakken").ID, BidID = 2 },
+                         new BidStaff { StaffID = context.Staffs.FirstOrDefault(c => c.StaffFirstName == "Tamara" && c.StaffLastName == "Bakken").ID, BidID = 6 },
+                         new BidStaff { StaffID = context.Staffs.FirstOrDefault(c => c.StaffFirstName == "Tamara" && c.StaffLastName == "Bakken").ID, BidID = 7 },
+                         new BidStaff { StaffID = context.Staffs.FirstOrDefault(c => c.StaffFirstName == "Tamara" && c.StaffLastName == "Bakken").ID, BidID = 8 },
+                         new BidStaff { StaffID = context.Staffs.FirstOrDefault(c => c.StaffFirstName == "Tamara" && c.StaffLastName == "Bakken").ID, BidID = 9 },
+                         new BidStaff { StaffID = context.Staffs.FirstOrDefault(c => c.StaffFirstName == "Tamara" && c.StaffLastName == "Bakken").ID, BidID = 10 }
+                         );
+                    context.SaveChanges();
+                }
+                if (!context.BidLabourTypeInfos.Any())
+                {
+                    context.BidLabourTypeInfos.AddRange(
+                        new List<BidLabourTypeInfo>
                         {
-                            StaffID = context.Staffs.FirstOrDefault(c => c.StaffFirstName == "Tamara" && c.StaffLastName == "Bakken").ID,
-                            BidID = 4
+                             new BidLabourTypeInfo { BidID = 1, LabourTypeInfoID = 1, Hours = 8, LabourCharge = 240.00 },
+                             new BidLabourTypeInfo { BidID = 1, LabourTypeInfoID = 2, Hours = 6 ,LabourCharge = 390.00},
+                             new BidLabourTypeInfo { BidID = 1, LabourTypeInfoID = 3, Hours = 4,LabourCharge = 260.00 },
+                             new BidLabourTypeInfo { BidID = 1, LabourTypeInfoID = 4, Hours = 8,LabourCharge = 600.00 },
+                             new BidLabourTypeInfo { BidID = 2, LabourTypeInfoID = 1, Hours = 8, LabourCharge = 240.00 },
+                             new BidLabourTypeInfo { BidID = 2, LabourTypeInfoID = 2, Hours = 6 ,LabourCharge = 390.00},
+                             new BidLabourTypeInfo { BidID = 2, LabourTypeInfoID = 3, Hours = 4,LabourCharge = 260.00 },
+                             new BidLabourTypeInfo { BidID = 2, LabourTypeInfoID = 4, Hours = 8,LabourCharge = 600.00 },
+                             new BidLabourTypeInfo { BidID = 3, LabourTypeInfoID = 1, Hours = 8, LabourCharge = 240.00 },
+                             new BidLabourTypeInfo { BidID = 3, LabourTypeInfoID = 2, Hours = 6 ,LabourCharge = 390.00},
+                             new BidLabourTypeInfo { BidID = 3, LabourTypeInfoID = 3, Hours = 4,LabourCharge = 260.00 },
+                             new BidLabourTypeInfo { BidID = 3, LabourTypeInfoID = 4, Hours = 8,LabourCharge = 600.00 },
+                             new BidLabourTypeInfo { BidID = 4, LabourTypeInfoID = 1, Hours = 8, LabourCharge = 240.00 },
+                             new BidLabourTypeInfo { BidID = 4, LabourTypeInfoID = 2, Hours = 6 ,LabourCharge = 390.00},
+                             new BidLabourTypeInfo { BidID = 4, LabourTypeInfoID = 3, Hours = 4,LabourCharge = 260.00 },
+                             new BidLabourTypeInfo { BidID = 4, LabourTypeInfoID = 4, Hours = 8,LabourCharge = 600.00 },
+                             new BidLabourTypeInfo { BidID = 5, LabourTypeInfoID = 1, Hours = 8, LabourCharge = 240.00 },
+                             new BidLabourTypeInfo { BidID = 5, LabourTypeInfoID = 2, Hours = 6 ,LabourCharge = 390.00},
+                             new BidLabourTypeInfo { BidID = 5, LabourTypeInfoID = 3, Hours = 4,LabourCharge = 260.00 },
+                             new BidLabourTypeInfo { BidID = 5, LabourTypeInfoID = 4, Hours = 8,LabourCharge = 600.00 },
+                             new BidLabourTypeInfo { BidID = 6, LabourTypeInfoID = 1, Hours = 8, LabourCharge = 240.00 },
+                             new BidLabourTypeInfo { BidID = 6, LabourTypeInfoID = 2, Hours = 6 ,LabourCharge = 390.00},
+                             new BidLabourTypeInfo { BidID = 6, LabourTypeInfoID = 3, Hours = 4,LabourCharge = 260.00 },
+                             new BidLabourTypeInfo { BidID = 6, LabourTypeInfoID = 4, Hours = 8,LabourCharge = 600.00 },
+                             new BidLabourTypeInfo { BidID = 7, LabourTypeInfoID = 1, Hours = 8, LabourCharge = 240.00 },
+                             new BidLabourTypeInfo { BidID = 7, LabourTypeInfoID = 2, Hours = 6 ,LabourCharge = 390.00},
+                             new BidLabourTypeInfo { BidID = 7, LabourTypeInfoID = 3, Hours = 4,LabourCharge = 260.00 },
+                             new BidLabourTypeInfo { BidID = 7, LabourTypeInfoID = 4, Hours = 8,LabourCharge = 600.00 },
+                             new BidLabourTypeInfo { BidID = 8, LabourTypeInfoID = 1, Hours = 8, LabourCharge = 240.00 },
+                             new BidLabourTypeInfo { BidID = 8, LabourTypeInfoID = 2, Hours = 6 ,LabourCharge = 390.00},
+                             new BidLabourTypeInfo { BidID = 8, LabourTypeInfoID = 3, Hours = 4,LabourCharge = 260.00 },
+                             new BidLabourTypeInfo { BidID = 8, LabourTypeInfoID = 4, Hours = 8,LabourCharge = 600.00 },
+                             new BidLabourTypeInfo { BidID = 9, LabourTypeInfoID = 1, Hours = 8, LabourCharge = 240.00 },
+                             new BidLabourTypeInfo { BidID = 9, LabourTypeInfoID = 2, Hours = 6 ,LabourCharge = 390.00},
+                             new BidLabourTypeInfo { BidID = 9, LabourTypeInfoID = 3, Hours = 4,LabourCharge = 260.00 },
+                             new BidLabourTypeInfo { BidID = 9, LabourTypeInfoID = 4, Hours = 8,LabourCharge = 600.00 },
+                             new BidLabourTypeInfo { BidID = 10, LabourTypeInfoID = 1, Hours = 8, LabourCharge = 240.00 },
+                             new BidLabourTypeInfo { BidID = 10, LabourTypeInfoID = 2, Hours = 6 ,LabourCharge = 390.00},
+                             new BidLabourTypeInfo { BidID = 10, LabourTypeInfoID = 3, Hours = 4,LabourCharge = 260.00 },
+                             new BidLabourTypeInfo { BidID = 10, LabourTypeInfoID = 4, Hours = 8,LabourCharge = 600.00 }
 
                         });
-					context.SaveChanges();
-				}
+                    context.SaveChanges();
+                }
 
 
-			}
+
+
+            }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.GetBaseException().Message);

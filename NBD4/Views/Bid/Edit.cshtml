@@ -1,28 +1,24 @@
 ﻿@model NBD4.Models.Bid
 
-@{
-    ViewData["Title"] = "Edit";
-}
+<partial name="_ViewHeading" />
 
-<h1>Edit</h1>
-
-<h4>Bid</h4>
 <hr />
 <form asp-action="Edit">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="ID" />
     <div class="row">
-         <div class="col-md-4">
+         <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="BidDate" class="control-label"></label>
                 <input asp-for="BidDate" class="form-control" />
                 <span asp-validation-for="BidDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="BidAmount" class="control-label"></label>
-                <input asp-for="BidAmount" class="form-control" />
-                <span asp-validation-for="BidAmount" class="text-danger"></span>
+             <div class="form-group">
+                <label asp-for="ProjectID" class="control-label"></label>
+                <select asp-for="ProjectID" class="form-control" asp-items="ViewBag.ProjectID"></select>
+                <span asp-validation-for="ProjectID" class="text-danger"></span>
             </div>
+            
             <div class="form-group">
                 <label class="control-label">@Html.DisplayNameFor(model => model.BidStaffs)</label>
                 <div class="m-2">
@@ -117,14 +113,33 @@
                     </table>
                 </div>
             </div>
-            <div class="form-group form-check">
+             <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="control-label"> Materials Selected</label> <button type="button" id="btnRight" class="btn btn-danger btn-sm">
+                        <strong>-</strong>
+                    </button>
+                    @Html.ListBox("selectedOptions", (MultiSelectList)ViewBag.selOpts, new { @size = 10, @class = "form-control" })
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="control-label"> Choose Materials</label> <button type="button" id="btnLeft" class="btn btn-success btn-sm">
+                        <strong>+</strong>
+                    </button>
+                    @Html.ListBox("availOptions", (MultiSelectList)ViewBag.availOpts, new { @size = 10, @class = "form-control" })
+                </div>
+            </div>
+           
+           
+        </div>
+        <div class="col-md-6">
+             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="BidNBDApproved" /> @Html.DisplayNameFor(model => model.BidNBDApproved)
                 </label>
             </div>
             <div class="form-group">
                 <label asp-for="BidNBDApprovalNotes" class="control-label"></label>
-                <input asp-for="BidNBDApprovalNotes" class="form-control" />
+                <textarea asp-for="BidNBDApprovalNotes" class="form-control" > </textarea>
                 <span asp-validation-for="BidNBDApprovalNotes" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
@@ -134,7 +149,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="BidClientApprovalNotes" class="control-label"></label>
-                <input asp-for="BidClientApprovalNotes" class="form-control" />
+                 <textarea asp-for="BidClientApprovalNotes" class="form-control"  > </textarea>
                 <span asp-validation-for="BidClientApprovalNotes" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
@@ -153,27 +168,11 @@
                 <span asp-validation-for="ReviewedBy" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ProjectID" class="control-label"></label>
-                <select asp-for="ProjectID" class="form-control" asp-items="ViewBag.ProjectID"></select>
-                <span asp-validation-for="ProjectID" class="text-danger"></span>
+                <label asp-for="BidAmount" class="control-label"></label>
+                <input asp-for="BidAmount" class="form-control" />
+                <span asp-validation-for="BidAmount" class="text-danger"></span>
             </div>
-        </div>
-        <div class="col-md-8">
-            <div class="row">
-                <div class="form-group col-md-6">
-                    <label class="control-label"> Materials Selected</label> <button type="button" id="btnRight" class="btn btn-danger btn-sm">
-                        <strong>-</strong>
-                    </button>
-                    @Html.ListBox("selectedOptions", (MultiSelectList)ViewBag.selOpts, new { @size = 10, @class = "form-control" })
-                </div>
-
-                <div class="form-group col-md-6">
-                    <label class="control-label"> Choose Materials</label> <button type="button" id="btnLeft" class="btn btn-success btn-sm">
-                        <strong>+</strong>
-                    </button>
-                    @Html.ListBox("availOptions", (MultiSelectList)ViewBag.availOpts, new { @size = 10, @class = "form-control" })
-                </div>
-            </div>
+           
         </div>                  
     </div>
     <div class="form-group">

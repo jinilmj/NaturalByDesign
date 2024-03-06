@@ -13,6 +13,8 @@ namespace NBD4.Models
 		[Required(ErrorMessage = "You cannot leave the labour Hours Blank")]
 		[Display(Name = "Labour Hours")]
         private int _hours;
+        [Required(ErrorMessage = "You cannot leave the labour Hours Blank")]
+        [Display(Name = "Labour Hours")]
         public int Hours
         {
             get { return _hours; }

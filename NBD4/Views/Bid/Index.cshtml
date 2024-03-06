@@ -4,11 +4,8 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Bids</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -18,7 +15,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.BidAmount)
             </th>
-            <th>
+           @*  <th>
                 @Html.DisplayNameFor(model => model.BidStaffs)
             </th>
             <th>
@@ -26,7 +23,7 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BidInventories)
-            </th>
+            </th> *@
             <th>
                 @Html.DisplayNameFor(model => model.BidNBDApproved)
             </th>
@@ -39,7 +36,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Project)
             </th>
-            <th></th>
+            <th class="text-center" style="min-width:120px">
+                <a asp-action="Create" class="btn btn-sm btn-outline-success"
+                   role="button" data-bs-toggle="tooltip" title="Create New @ViewData["ControllerFriendlyName"]">
+                    <strong>&#x270D; Create</strong>
+                </a>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -51,7 +53,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.BidAmount)
             </td>
-                <td>
+               @*  <td>
                     @foreach (var c in item.BidStaffs)
                     {
                         @c.Staff.FullName <br />
@@ -68,7 +70,7 @@
                     {
                         @c.Inventory.Description <br />
                     }
-                </td>
+                </td> *@
 
             <td>
                 @Html.DisplayFor(modelItem => item.BidNBDApproved)
@@ -82,11 +84,24 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Project.Site)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
+                <td class="text-center">
+                    @* <a asp-action="Edit" asp-route-id="@item.ID"
+                role="button" data-bs-toggle="tooltip" title="Edit @ViewData["ControllerFriendlyName"]">
+                &#x270E;
+                </a> *@
+                    <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-primary"
+                       role="button" data-bs-toggle="tooltip" title="Edit @ViewData["ControllerFriendlyName"]">
+                        Edit
+                    </a>
+                    <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-primary"
+                       role="button" data-bs-toggle="tooltip" title="@ViewData["ControllerFriendlyName"] Details">
+                        Details
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-primary"
+                       role="button" data-bs-toggle="tooltip" title="Delete @ViewData["ControllerFriendlyName"]">
+                        Delete
+                    </a>
+                </td>
         </tr>
 }
     </tbody>

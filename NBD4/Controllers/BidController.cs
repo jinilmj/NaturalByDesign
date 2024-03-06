@@ -9,13 +9,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using NBD4.CustomControllers;
 using NBD4.Data;
 using NBD4.Models;
 using NBD4.ViewModels;
 
 namespace NBD4.Controllers
 {
-    public class BidController : Controller
+    public class BidController : ElephantController
     {
         private readonly NBDContext _context;
 
