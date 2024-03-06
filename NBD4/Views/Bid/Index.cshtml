@@ -13,18 +13,6 @@
                 @Html.DisplayNameFor(model => model.BidDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BidAmount)
-            </th>
-           @*  <th>
-                @Html.DisplayNameFor(model => model.BidStaffs)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BidLabourTypeInfos)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BidInventories)
-            </th> *@
-            <th>
                 @Html.DisplayNameFor(model => model.BidNBDApproved)
             </th>
             <th>
@@ -32,6 +20,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BidMarkForRedesign)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Project.Client)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Project)
@@ -45,33 +36,11 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.BidDate)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BidAmount)
-            </td>
-               @*  <td>
-                    @foreach (var c in item.BidStaffs)
-                    {
-                        @c.Staff.FullName <br />
-                    }
-                </td>
-                <td>
-                    @foreach (var c in item.BidLabourTypeInfos)
-                    {
-                        @c.LabourTypeInfo.LabourTypeName<br />
-                    }
-                </td>
-                <td>
-                    @foreach (var c in item.BidInventories)
-                    {
-                        @c.Inventory.Description <br />
-                    }
-                </td> *@
-
             <td>
                 @Html.DisplayFor(modelItem => item.BidNBDApproved)
             </td>
@@ -81,14 +50,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.BidMarkForRedesign)
             </td>
+             <td>
+                 @Html.DisplayFor(modelItem => item.Project.Client.Name)
+             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Project.Site)
             </td>
                 <td class="text-center">
-                    @* <a asp-action="Edit" asp-route-id="@item.ID"
-                role="button" data-bs-toggle="tooltip" title="Edit @ViewData["ControllerFriendlyName"]">
-                &#x270E;
-                </a> *@
+                   
                     <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-primary"
                        role="button" data-bs-toggle="tooltip" title="Edit @ViewData["ControllerFriendlyName"]">
                         Edit

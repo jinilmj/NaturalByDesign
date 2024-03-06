@@ -29,7 +29,7 @@ namespace NBD4.Controllers
         public async Task<IActionResult> Index()
         {
             var nBDContext = _context.Bids
-                .Include(b => b.Project)
+                .Include(b => b.Project).ThenInclude(p=>p.Client)
                 .Include(p=>p.BidInventories).ThenInclude(p=>p.Inventory)
                 .Include(b=>b.BidStaffs).ThenInclude(p=>p.Staff)
                 .Include(b => b.BidLabourTypeInfos).ThenInclude(p => p.LabourTypeInfo)
