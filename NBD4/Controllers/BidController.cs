@@ -28,7 +28,7 @@ namespace NBD4.Controllers
         }
 
         // GET: Bid
-        public async Task<IActionResult> Index(string SearchStringPh, string SearchClient, string actionButton, int? page,
+        public async Task<IActionResult> Index(string SearchStringPh, string SearchClient, int? pageSizeID, string actionButton, int? page,
             string sortDirection = "asc",string sortField = "Bid")
         {
             ViewData["Filtering"] = "btn-outline-secondary";
@@ -116,6 +116,10 @@ namespace NBD4.Controllers
             }
             ViewData["sortField"] = sortField;
             ViewData["sortDirection"] = sortDirection;
+
+            int pageSize = PageSizeHelper.SetPageSize(HttpContext, pageSizeID, ControllerName());
+            ViewData["pageSizeID"] = PageSizeHelper.PageSizeList(pageSize);
+            var pagedData = await PaginatedList<Bid>.CreateAsync(bids.AsNoTracking(), page ?? 1, pageSize);
 
             return View(await bids.ToListAsync());
         }
