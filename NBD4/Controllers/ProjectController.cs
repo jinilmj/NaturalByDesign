@@ -140,6 +140,19 @@ namespace NBD4.Controllers
 
             return View(project);
         }
+        public IActionResult GetClients(string searchString)
+        {
+            searchString ??= ""; // Ensure searchString is not null
+            var clients = _context.Clients
+                .AsEnumerable()
+                .Where(c => c.Name.StartsWith(searchString, StringComparison.OrdinalIgnoreCase))
+                .OrderBy(c => c.Name)
+                .Select(c => new { id = c.ID, name = c.Name })
+                .ToList();
+
+            return Json(clients);
+        }
+
 
         // GET: Project/Create
         public IActionResult Create()

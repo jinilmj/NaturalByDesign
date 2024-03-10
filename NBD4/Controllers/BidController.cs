@@ -147,6 +147,18 @@ namespace NBD4.Controllers
             return View(bid);
         }
 
+        public IActionResult GetProjects(string searchString)
+        {
+            searchString ??= ""; // Ensure searchString is not null
+            var projects = _context.Projects
+                .AsEnumerable()
+                .Where(c => c.Site.StartsWith(searchString, StringComparison.OrdinalIgnoreCase))
+                .OrderBy(c => c.Site)
+                .Select(c => new { id = c.ID, name = c.Site })
+                .ToList();
+
+            return Json(projects);
+        }
         // GET: Bid/Create
         public IActionResult Create()
         {
