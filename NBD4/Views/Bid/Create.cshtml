@@ -12,13 +12,7 @@
                 <input asp-for="BidDate" class="form-control" />
                 <span asp-validation-for="BidDate" class="text-danger"></span>
             </div>
-            @*  <div class="form-group">
-                <label asp-for="ClientID" class="control-label">Client<span class="mandatory">*</span></label>
-                <input type="hidden" id="clientId" name="ClientID" />
-                <input type="text" id="clientSearch" class="form-control" placeholder="Search for a client" />
-                <div id="clientDropdown" class="dropdown-menu" aria-labelledby="clientSearch"></div>
-                <span asp-validation-for="ClientID" class="text-danger"></span>
-            </div> *@
+            
             <div class="form-group">
                 <label asp-for="ProjectID" class="control-label">Project<span class="mandatory">*</span></label>
                 <input type="hidden" id="projectId" name="ProjectID" />
@@ -26,10 +20,7 @@
                 <div id="projectDropdown" class="dropdown-menu" aria-labelledby="projectSearch"></div>
                 <span asp-validation-for="ProjectID" class="text-danger"></span>
             </div>
-            @*  <div class="form-group" >
-                <label asp-for="ProjectID" class="control-label"></label>
-                <select asp-for="ProjectID" class ="form-control" asp-items="ViewBag.ProjectID"></select>
-            </div> *@
+            
             <div class="form-group" style="display:none;">
                 <label asp-for="BidAmount" class="control-label"></label>
                 <input asp-for="BidAmount" class="form-control" value ="0"/>
@@ -67,42 +58,7 @@
                     </table>
                 </div>
             </div>
-            @*  <div class="form-group">
-                <label class="control-label">@Html.DisplayNameFor(model => model.BidLabourTypeInfos)</label>
-                <div class="m-2">
-                    <table>
-                        <tr>
-                            @{
-                                int cntw = 0;
-                                List<NBD4.ViewModels.CheckOptionVM> checkboxes1 = ViewBag.LabourTypeInfoOptions;
-                                
-                                if (checkboxes != null)
-                                {
-                                     foreach (var checkbox in checkboxes1)
-                                {
-                                    if (cntw++ % 2 == 0)
-                                    {
-                                    @:</tr><tr>
-                                    }
-                                    @:<td>
-                                        <input type="checkbox"
-                                               name="selectedLabourOptions"
-                                               value="@checkbox.ID"
-                                               @(Html.Raw(checkbox.Assigned ? "checked=\"checked\"" : "")) />
-                                        @checkbox.DisplayText @:&nbsp;&nbsp;
-                                        <input type="number"
-                                               name="selectedLabourHours[@checkbox.ID]"
-                                               value="@checkbox.Hours"
-                                               min="0" />
-                                    @:</td>
-                                }
-                                }
-                               
-                        @:</tr>
-                        }
-                    </table>
-                </div>
-            </div> *@
+
             <div class="form-group">
                 <label class="control-label">Labour and Hours</label>
                 <div class="m-2">
@@ -215,7 +171,7 @@
     <script>
 
         $(document).ready(function () {
-            $('#projectDropdown').hide(); // Hide the dropdown initially
+            $('#projectDropdown').hide();
         });
 
         $('#projectSearch').click(function () {
@@ -235,13 +191,13 @@
                     }
                 });
             } else {
-                $('#projectDropdown').show(); // Show the dropdown when the input field is clicked
+                $('#projectDropdown').show(); 
             }
         });
 
         $(document).click(function (e) {
             if (!$(e.target).closest('#projectSearch').length) {
-                $('#projectDropdown').hide(); // Hide the dropdown when clicking outside the input field
+                $('#projectDropdown').hide(); 
             }
         });
 
@@ -267,7 +223,7 @@
             var siteName = $(this).text();
             $('#projectSearch').val(siteName);
             $('#projectId').val(ProjectId);
-            $('#projectDropdown').hide(); // Hide the dropdown when a client is selected
+            $('#projectDropdown').hide(); 
         });
 
     </script>
