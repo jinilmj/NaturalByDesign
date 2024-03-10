@@ -211,7 +211,9 @@ namespace NBD4.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             //Go get the patient to update
-            var projectToUpdate = await _context.Projects.FirstOrDefaultAsync(p => p.ID == id);
+            var projectToUpdate = await _context.Projects
+                .Include(p => p.Client)
+                .FirstOrDefaultAsync(p => p.ID == id);
 
             if (projectToUpdate == null)
             {

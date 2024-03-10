@@ -23,17 +23,9 @@
                 <input asp-for="Site" class="form-control" />
                 <span asp-validation-for="Site" class="text-danger"></span>
             </div>
-           @*  <div class="form-group">
+            <div class="form-group">
                 <label asp-for="ClientID" class="control-label"></label>
                 <select asp-for="ClientID" class="form-control" asp-items="ViewBag.ClientID"></select>
-                <span asp-validation-for="ClientID" class="text-danger"></span>
-            </div> *@
-            <div class="form-group">
-                <label asp-for="ClientID" class="control-label">Client<span class="mandatory">*</span></label>
-                <input type="hidden" id="clientId" name="ClientID" value="@Model.ClientID" />
-                <input type="text" id="clientSearch" class="form-control" @* placeholder="Search for a client"  *@value="@Model.Client?.Name" />
-
-                <div id="clientDropdown" class="dropdown-menu" aria-labelledby="clientSearch"></div>
                 <span asp-validation-for="ClientID" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -49,63 +41,5 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script>
 
-        $(document).ready(function () {
-            $('#clientDropdown').hide(); // Hide the dropdown initially
-        });
-
-        $('#clientSearch').click(function () {
-            var searchString = $('#clientSearch').val();
-            if (searchString === '') {
-                $.ajax({
-                    url: '/Project/GetClients',
-                    type: 'GET',
-                    data: { searchString: searchString },
-                    success: function (data) {
-                        var dropdown = $('#clientDropdown');
-                        dropdown.empty();
-                        $.each(data, function (key, entry) {
-                            dropdown.append($('<a class="dropdown-item" href="#">').attr('data-id', entry.id).text(entry.name));
-                        });
-                        dropdown.show();
-                    }
-                });
-            } else {
-                $('#clientDropdown').show(); // Show the dropdown when the input field is clicked
-            }
-        });
-
-        $(document).click(function (e) {
-            if (!$(e.target).closest('#clientSearch').length) {
-                $('#clientDropdown').hide(); // Hide the dropdown when clicking outside the input field
-            }
-        });
-
-        $('#clientSearch').on('input', function () {
-            var searchString = $(this).val();
-            $.ajax({
-                url: '/Project/GetClients',
-                type: 'GET',
-                data: { searchString: searchString },
-                success: function (data) {
-                    var dropdown = $('#clientDropdown');
-                    dropdown.empty();
-                    $.each(data, function (key, entry) {
-                        dropdown.append($('<a class="dropdown-item" href="#">').attr('data-id', entry.id).text(entry.name));
-                    });
-                    dropdown.show();
-                }
-            });
-        });
-
-        $('#clientDropdown').on('click', '.dropdown-item', function () {
-            var clientId = $(this).data('id');
-            var clientName = $(this).text();
-            $('#clientSearch').val(clientName);
-            $('#clientId').val(clientId);
-            $('#clientDropdown').hide(); // Hide the dropdown when a client is selected
-        });
-
-    </script>
 }
