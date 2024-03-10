@@ -23,6 +23,11 @@
                 <span asp-validation-for="Site" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Amount" class="control-label">Project Amount<span class="mandatory">*</span></label>
+                <input asp-for="Amount" class="form-control" placeholder="Enter Project Amount" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="ClientID" class="control-label">Client<span class="mandatory">*</span></label>
                 <input type="hidden" id="clientId" name="ClientID" />
                 <input type="text" id="clientSearch" class="form-control" placeholder="Search for a client" />

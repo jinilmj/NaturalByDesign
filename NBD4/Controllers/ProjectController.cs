@@ -166,7 +166,7 @@ namespace NBD4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,StartDate,EndDate,Site,ClientID")] Project project)
+        public async Task<IActionResult> Create([Bind("ID,StartDate,EndDate,Site,Amount,ClientID")] Project project)
         {
             try
             {
@@ -220,7 +220,7 @@ namespace NBD4.Controllers
                 return NotFound();
             }
             if (await TryUpdateModelAsync<Project>(projectToUpdate, "",
-                p => p.StartDate, p => p.EndDate, p => p.Site, p => p.ClientID))
+                p => p.StartDate, p => p.EndDate, p => p.Site,p=>p.Amount, p => p.ClientID))
             {
                 try
                 {

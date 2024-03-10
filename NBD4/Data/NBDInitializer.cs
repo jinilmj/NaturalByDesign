@@ -146,6 +146,7 @@ namespace NBD4.Data
                         StartDate = DateTime.Parse("2024-04-23"),
                         EndDate = DateTime.Parse("2024-05-23"),
                         Site = "Main entrance Mall Dr./Cinema Lane",
+                        Amount=7000d,
                         ClientID = context.Clients.FirstOrDefault(c => c.Name == "Tech Innovators Ltd").ID
                     },
                     new Project
@@ -153,6 +154,7 @@ namespace NBD4.Data
                         StartDate = DateTime.Parse("2024-05-10"),
                         EndDate = DateTime.Parse("2024-06-10"),
                         Site = "Downtown Plaza",
+                        Amount = 7000d,
                         ClientID = context.Clients.FirstOrDefault(c => c.Name == "Tech Innovators Ltd").ID
                     },
                     new Project
@@ -160,6 +162,7 @@ namespace NBD4.Data
                         StartDate = DateTime.Parse("2024-06-01"),
                         EndDate = DateTime.Parse("2024-07-01"),
                         Site = "Shopping Center Avenue",
+                        Amount = 7000d,
                         ClientID = context.Clients.FirstOrDefault(c => c.Name == "Global Solutions Inc").ID
                     },
                     new Project
@@ -167,6 +170,7 @@ namespace NBD4.Data
                         StartDate = DateTime.Parse("2024-07-15"),
                         EndDate = DateTime.Parse("2024-08-15"),
                         Site = "Tech Park Tower",
+                        Amount = 7000d,
                         ClientID = context.Clients.FirstOrDefault(c => c.Name == "Global Solutions Inc").ID
                     },
                     new Project
@@ -174,6 +178,7 @@ namespace NBD4.Data
                         StartDate = DateTime.Parse("2024-08-05"),
                         EndDate = DateTime.Parse("2024-09-05"),
                         Site = "Riverside Gardens",
+                        Amount = 7000d,
                         ClientID = context.Clients.FirstOrDefault(c => c.Name == "Pinnacle Enterprises").ID
                     },
                     new Project
@@ -181,6 +186,7 @@ namespace NBD4.Data
                         StartDate = DateTime.Parse("2024-09-20"),
                         EndDate = DateTime.Parse("2024-10-20"),
                         Site = "Harbor View Plaza",
+                        Amount = 7000d,
                         ClientID = context.Clients.FirstOrDefault(c => c.Name == "Pinnacle Enterprises").ID
                     },
                     new Project
@@ -188,6 +194,7 @@ namespace NBD4.Data
                         StartDate = DateTime.Parse("2024-10-15"),
                         EndDate = DateTime.Parse("2024-11-15"),
                         Site = "Green Park Street",
+                        Amount = 7000d,
                         ClientID = context.Clients.FirstOrDefault(c => c.Name == "Infinite Dynamics Co").ID
                     },
                     new Project
@@ -195,6 +202,7 @@ namespace NBD4.Data
                         StartDate = DateTime.Parse("2024-11-01"),
                         EndDate = DateTime.Parse("2024-12-01"),
                         Site = "Metro Center Square",
+                        Amount = 7000d,
                         ClientID = context.Clients.FirstOrDefault(c => c.Name == "Infinite Dynamics Co").ID
                     },
                     new Project
@@ -202,6 +210,7 @@ namespace NBD4.Data
                         StartDate = DateTime.Parse("2024-12-10"),
                         EndDate = DateTime.Parse("2025-01-10"),
                         Site = "Sunset Ridge Avenue",
+                        Amount = 7000d,
                         ClientID = context.Clients.FirstOrDefault(c => c.Name == "EagleEye Technologies").ID
                     },
                     new Project
@@ -209,6 +218,7 @@ namespace NBD4.Data
                         StartDate = DateTime.Parse("2025-01-05"),
                         EndDate = DateTime.Parse("2025-02-05"),
                         Site = "Oakwood Terrace",
+                        Amount = 7000d,
                         ClientID = context.Clients.FirstOrDefault(c => c.Name == "EagleEye Technologies").ID
                     }
                     );

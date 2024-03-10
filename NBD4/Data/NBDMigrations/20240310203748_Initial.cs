@@ -167,6 +167,7 @@ namespace NBD4.Data.NBDMigrations
                     StartDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     EndDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Site = table.Column<string>(type: "TEXT", maxLength: 150, nullable: false),
+                    Amount = table.Column<double>(type: "REAL", nullable: false),
                     ClientID = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>

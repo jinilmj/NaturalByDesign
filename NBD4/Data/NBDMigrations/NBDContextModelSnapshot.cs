@@ -274,6 +274,9 @@ namespace NBD4.Data.NBDMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<double>("Amount")
+                        .HasColumnType("REAL");
+
                     b.Property<int>("ClientID")
                         .HasColumnType("INTEGER");
 

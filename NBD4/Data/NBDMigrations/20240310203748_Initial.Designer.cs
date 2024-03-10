@@ -11,7 +11,7 @@ using NBD4.Data;
 namespace NBD4.Data.NBDMigrations
 {
     [DbContext(typeof(NBDContext))]
-    [Migration("20240303192312_Initial")]
+    [Migration("20240310203748_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -276,6 +276,9 @@ namespace NBD4.Data.NBDMigrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("REAL");
 
                     b.Property<int>("ClientID")
                         .HasColumnType("INTEGER");

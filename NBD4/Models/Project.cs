@@ -26,6 +26,11 @@ namespace NBD4.Models
         [StringLength(150, ErrorMessage = "Site name cannot exceed 150 characters.")]
         public string Site { get; set; }
 
+        [Display(Name = "Amount")]
+        [Required(ErrorMessage = "Amount is required.")]
+        [DataType(DataType.Currency)]
+        public double Amount { get; set; } = 0d;
+
         [Required(ErrorMessage = "You must select a Client.")]
         [Display(Name = "Client")]
         public int ClientID { get; set; }
