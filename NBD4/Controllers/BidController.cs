@@ -203,7 +203,24 @@ namespace NBD4.Controllers
                     
                 }
             }
-            UpdateBidInventories(selectedOptions, bid);
+            if (selectedOptions != null)
+            {
+                foreach (var inventoryId in selectedOptions)
+                {
+
+                    int invId = int.Parse(inventoryId);
+                    var quantity = int.Parse(Request.Form[$"selectedInventoryQuantities[{invId}]"]);
+
+                    // Fetch the Inventory from the database
+                    var inventory = await _context.Inventories.FindAsync(invId);
+
+                    var inventoryToAdd = new BidInventory { BidID = bid.ID, InventoryID = invId, MaterialQuantity = quantity, Inventory = inventory };
+                    bid.BidInventories.Add(inventoryToAdd);
+                    inventoryToAdd.CalculateExtendPrice(); 
+
+                }
+            }
+            //UpdateBidInventories(selectedOptions, bid);
             if (ModelState.IsValid)
             {
                 bid.CalculateTotalBidAmount();
@@ -281,6 +298,19 @@ namespace NBD4.Controllers
                             labourToUpdate.Hours = hours;
                             labourToUpdate.LabourTypeInfo = labourTypeInfo;
                             labourToUpdate.CalculateLabourCharge();
+                        }
+                    }
+                    foreach (var inventoryId in selectedOptions)
+                    {
+                        int invId = int.Parse(inventoryId);
+                        var quantities = int.Parse(Request.Form[$"selectedInventoryQuantities[{invId}]"]);
+                        var inventory = await _context.Inventories.FindAsync(invId);
+                        var inventoryToUpdate = bidToUpdate.BidInventories.FirstOrDefault(b => b.InventoryID == invId);
+                        if (inventoryToUpdate != null)
+                        {
+                            inventoryToUpdate.MaterialQuantity = quantities;
+                            inventoryToUpdate.Inventory = inventory;
+                            inventoryToUpdate.CalculateExtendPrice();
                         }
                     }
                     bidToUpdate.CalculateTotalBidAmount();
@@ -421,6 +451,50 @@ namespace NBD4.Controllers
             }).ToList();
             ViewData["LabourTypeInfoOptions"] = dropdownOptions;
         }
+        private void PopulateAssignedInventoryData(Bid bid)
+        {
+            var allOptions = _context.Inventories.ToList();
+            var currentOptionIDs = new HashSet<int>(bid.BidInventories.Select(b => b.InventoryID));
+            var dropdownOptions = allOptions.Select(option => new SelectListVM
+            {
+                ID = option.ID,
+                DisplayText = option.Description,
+                Assigned = currentOptionIDs.Contains(option.ID),
+                Quantities = bid.BidInventories.FirstOrDefault(b => b.InventoryID == option.ID)?.MaterialQuantity ?? 0
+            }).ToList();
+            ViewData["InventoryOptions"] = dropdownOptions;
+        }
+        private void UpdateBidInventories(string[] selectedOptions, Bid bidToUpdate)
+        {
+            if (selectedOptions == null)
+            {
+                bidToUpdate.BidInventories = new List<BidInventory>();
+                return;
+            }
+
+            var selectedInventoryOptionsHS = new HashSet<string>(selectedOptions);
+            var bidOptionsHS = new HashSet<int>
+                (bidToUpdate.BidInventories.Select(c => c.InventoryID));
+            foreach (var option in _context.Inventories)
+            {
+                if (selectedInventoryOptionsHS.Contains(option.ID.ToString())) //It is checked
+                {
+                    if (!bidOptionsHS.Contains(option.ID))
+                    {
+                        bidToUpdate.BidInventories.Add(new BidInventory { BidID = bidToUpdate.ID, InventoryID = option.ID });
+                    }
+                }
+                else
+                {
+                    //Checkbox Not checked
+                    if (bidOptionsHS.Contains(option.ID))
+                    {
+                        BidInventory inventoryToRemove = bidToUpdate.BidInventories.SingleOrDefault(c => c.InventoryID == option.ID);
+                        _context.Remove(inventoryToRemove);
+                    }
+                }
+            }
+        }
 
         private void UpdateBidLabours(string[] selectedLabourOptions, Bid bidToUpdate)
         {
@@ -453,70 +527,71 @@ namespace NBD4.Controllers
                 }
             }
         }
-        private void PopulateAssignedInventoryData(Bid bid)
-        {
-            //For this to work, you must have Included the child collection in the parent object
-            var allOptions = _context.Inventories;
-            var currentOptionsHS = new HashSet<int>(bid.BidInventories.Select(b => b.InventoryID));
-            //Instead of one list with a boolean, we will make two lists
-            var selected = new List<ListOptionVM>();
-            var available = new List<ListOptionVM>();
-            foreach (var s in allOptions)
-            {
-                if (currentOptionsHS.Contains(s.ID))
-                {
-                    selected.Add(new ListOptionVM
-                    {
-                        ID = s.ID,
-                        DisplayText = s.Description
-                    });
-                }
-                else
-                {
-                    available.Add(new ListOptionVM
-                    {
-                        ID = s.ID,
-                        DisplayText = s.Description
-                    });
-                }
-            }
+        
+        //private void PopulateAssignedInventoryData(Bid bid)
+        //{
+        //    //For this to work, you must have Included the child collection in the parent object
+        //    var allOptions = _context.Inventories;
+        //    var currentOptionsHS = new HashSet<int>(bid.BidInventories.Select(b => b.InventoryID));
+        //    //Instead of one list with a boolean, we will make two lists
+        //    var selected = new List<ListOptionVM>();
+        //    var available = new List<ListOptionVM>();
+        //    foreach (var s in allOptions)
+        //    {
+        //        if (currentOptionsHS.Contains(s.ID))
+        //        {
+        //            selected.Add(new ListOptionVM
+        //            {
+        //                ID = s.ID,
+        //                DisplayText = s.Description
+        //            });
+        //        }
+        //        else
+        //        {
+        //            available.Add(new ListOptionVM
+        //            {
+        //                ID = s.ID,
+        //                DisplayText = s.Description
+        //            });
+        //        }
+        //    }
 
-            ViewData["selOpts"] = new MultiSelectList(selected.OrderBy(s => s.DisplayText), "ID", "DisplayText");
-            ViewData["availOpts"] = new MultiSelectList(available.OrderBy(s => s.DisplayText), "ID", "DisplayText");
-        }
-        private void UpdateBidInventories(string[] selectedOptions, Bid bidToUpdate)
-        {
-            if (selectedOptions == null)
-            {
-                bidToUpdate.BidInventories = new List<BidInventory>();
-                return;
-            }
+        //    ViewData["selOpts"] = new MultiSelectList(selected.OrderBy(s => s.DisplayText), "ID", "DisplayText");
+        //    ViewData["availOpts"] = new MultiSelectList(available.OrderBy(s => s.DisplayText), "ID", "DisplayText");
+        //}
+        //private void UpdateBidInventories(string[] selectedOptions, Bid bidToUpdate)
+        //{
+        //    if (selectedOptions == null)
+        //    {
+        //        bidToUpdate.BidInventories = new List<BidInventory>();
+        //        return;
+        //    }
 
-            var selectedOptionsHS = new HashSet<string>(selectedOptions);
-            var currentOptionsHS = new HashSet<int>(bidToUpdate.BidInventories.Select(b => b.InventoryID));
-            foreach (var s in _context.Inventories)
-            {
-                if (selectedOptionsHS.Contains(s.ID.ToString()))//it is selected
-                {
-                    if (!currentOptionsHS.Contains(s.ID))
-                    {
-                        bidToUpdate.BidInventories.Add(new BidInventory
-                        {
-                            InventoryID = s.ID,
-                            BidID = bidToUpdate.ID
-                        });
-                    }
-                }
-                //else //not selected
-                //{
-                //    if (currentOptionsHS.Contains(s.ID))//but is currently in the Doctor's collection - Remove it!
-                //    {
-                //        BidInventory invToRemove = bidToUpdate.BidInventories.FirstOrDefault(d => d.InventoryID == s.ID);
-                //        _context.Remove(invToRemove);
-                //    }
-                //}
-            }
-        }
+        //    var selectedOptionsHS = new HashSet<string>(selectedOptions);
+        //    var currentOptionsHS = new HashSet<int>(bidToUpdate.BidInventories.Select(b => b.InventoryID));
+        //    foreach (var s in _context.Inventories)
+        //    {
+        //        if (selectedOptionsHS.Contains(s.ID.ToString()))//it is selected
+        //        {
+        //            if (!currentOptionsHS.Contains(s.ID))
+        //            {
+        //                bidToUpdate.BidInventories.Add(new BidInventory
+        //                {
+        //                    InventoryID = s.ID,
+        //                    BidID = bidToUpdate.ID
+        //                });
+        //            }
+        //        }
+        //        //else //not selected
+        //        //{
+        //        //    if (currentOptionsHS.Contains(s.ID))//but is currently in the Doctor's collection - Remove it!
+        //        //    {
+        //        //        BidInventory invToRemove = bidToUpdate.BidInventories.FirstOrDefault(d => d.InventoryID == s.ID);
+        //        //        _context.Remove(invToRemove);
+        //        //    }
+        //        //}
+        //    }
+        //}
 
         private bool BidExists(int id)
         {
