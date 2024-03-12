@@ -82,9 +82,9 @@
                 <div class="m-2">
                     <table>
                         <thead>
-                            <tr>
-                                <th>Labour</th>
-                                <th>Hours</th>
+                             <tr>
+                                <th style=" width: 250px;">Labour</th>
+                                <th style="width:100px;">Hours</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -114,82 +114,63 @@
                 </div>
             </div>
            <div class="form-group">
-    <label class="control-label">Materials and Quantities</label>
-    <div class="m-2">
-        <table id="materialsTable">
-            <thead>
-                <tr>
-                    <th>Material</th>
-                    <th>Quantity</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @{
-                    int index = 0;
-                    foreach (var bidInventory in Model.BidInventories)
-                    {
-                        <tr>
-                            <td>
-                                <input type="hidden" name="selectedOptions" value="@bidInventory.InventoryID" />
-                                @bidInventory.Inventory.Description
-                            </td>
-                            <td>
-                                <input type="number" name="selectedInventoryQuantities[@bidInventory.InventoryID]" value="@bidInventory.MaterialQuantity" min="0" />
-                            </td>
-                            <td>
-                                @if (index > 0)
-                                {
+                <label class="control-label">Materials and Quantities</label>
+                <div class="m-2">
+                    <table id="materialsTable">
+                        <thead>
+                            <tr>
+                                <th style="width: 350px;">Material</th>
+                                <th style="width:100px;">Quantity</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             <tr>
+                                <td>
+                                    <select id="materialDropdown" class="form-control">
+                                        <option value="">Select Material</option>
+                                        @foreach (var inventoryOption in ViewBag.InventoryOptions)
+                                        {
+                                            <option value="@inventoryOption.ID">@inventoryOption.DisplayText</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="number" id="quantityInput" class="form-control" name="selectedInventoryQuantities[new]" min="0" />
+                                </td>
+                                <td>
                                     <button class="btn btn-danger btn-sm removeRowBtn">Remove</button>
+                                    <button id="addRowBtn" class="button-10">Add </button>
+                                </td>
+                            </tr>
+                            @{
+                                int index = 0;
+                                foreach (var bidInventory in Model.BidInventories)
+                                {
+                                    <tr>
+                                        <td>
+                                            <input type="hidden" name="selectedOptions" value="@bidInventory.InventoryID" />
+                                            @bidInventory.Inventory.Description
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control" name="selectedInventoryQuantities[@bidInventory.InventoryID]" value="@bidInventory.MaterialQuantity" min="0" />
+                                        </td>
+                                        <td>
+                                            
+                                           <button class="btn btn-danger btn-sm removeRowBtn">Remove</button>
+                                            
+                                        </td>
+                                    </tr>
+                                    index++;
                                 }
-                            </td>
-                        </tr>
-                        index++;
-                    }
-                }
-                <!-- Empty row for adding a new inventory -->
-                <tr>
-                    <td>
-                        <select id="materialDropdown" class="form-control">
-                            <option value="">Select Material</option>
-                            @foreach (var inventoryOption in ViewBag.InventoryOptions)
-                            {
-                                <option value="@inventoryOption.ID">@inventoryOption.DisplayText</option>
                             }
-                        </select>
-                    </td>
-                    <td>
-                        <input type="number" id="quantityInput" class="form-control" name="selectedInventoryQuantities[new]" min="0" />
-                    </td>
-                    <td>
-                        <button class="btn btn-danger btn-sm removeRowBtn">Remove</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <button id="addRowBtn" class="btn btn-secondary mt-2">Add Row</button>
-    </div>
-</div>
-
-
-
-            @*  <div class="row">
-                <div class="form-group col-md-6">
-                    <label class="control-label"> Materials Selected</label> <button type="button" id="btnRight" class="btn btn-danger btn-sm">
-                        <strong>-</strong>
-                    </button>
-                    @Html.ListBox("selectedOptions", (MultiSelectList)ViewBag.selOpts, new { @size = 10, @class = "form-control" })
+                            <!-- Empty row for adding a new inventory -->
+               
+                        </tbody>
+                    </table>
+       
                 </div>
-
-                <div class="form-group col-md-6">
-                    <label class="control-label"> Choose Materials</label> <button type="button" id="btnLeft" class="btn btn-success btn-sm">
-                        <strong>+</strong>
-                    </button>
-                    @Html.ListBox("availOptions", (MultiSelectList)ViewBag.availOpts, new { @size = 10, @class = "form-control" })
-                </div>
-            </div> *@
-           
-           
+            </div>
         </div>
         <div class="col-md-6">
              <div class="form-group form-check">
@@ -266,7 +247,8 @@ $(document).ready(function () {
             $('#materialsTable tbody').append(
                 '<tr>' +
                 '<td>' + materialName + '<input type="hidden" name="selectedOptions" value="' + materialId + '"></td>' +
-                '<td>' + quantity + '<input type="hidden" name="selectedInventoryQuantities[' + materialId + ']" value="' + quantity + '"></td>' +
+                '<td><input type="number" class="form-control" name="selectedInventoryQuantities[' + materialId + ']" value="' + quantity + '" min="0"></td>' +
+                // '<td>' + quantity + '<input type="hidden" name="selectedInventoryQuantities[' + materialId + ']" value="' + quantity + '"></td>' +
                 '<td>' + removeBtnHtml + '</td>' +
                 '</tr>'
             );
@@ -288,6 +270,8 @@ $(document).ready(function () {
             $('#addRowBtn').click(); // Simulate click
         }
     });
+     // Hide Remove button in the first row
+    $('#materialsTable tbody tr:first-child .removeRowBtn').hide();
 });
 
 

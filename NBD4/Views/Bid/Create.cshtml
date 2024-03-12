@@ -65,8 +65,8 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Labour</th>
-                                <th>Hours</th>
+                                <th style=" width: 250px;">Labour</th>
+                                <th style="width:100px;">Hours</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -84,7 +84,7 @@
 
                                         </td>
                                         <td>
-                                            <input type="number"
+                                            <input class="form-control" type="number"
                                                    name="selectedLabourHours[@checkbox.ID]"
                                                    value="@checkbox.Hours"
                                                    min="0" />
@@ -96,80 +96,6 @@
                     </table>
                 </div>
             </div>
-           @*  <div class="form-group">
-                <label class="control-label">Materials and Quantities</label>
-                <div class="m-2">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Material</th>
-                                <th>Quantity</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @{
-                                List<NBD4.ViewModels.SelectListVM> checkBoxes2 = ViewBag.InventoryOptions;
-                                foreach (var checkbox in checkBoxes2)
-                                {
-                                    <tr>
-                                        <td>
-                                             <input type="checkbox"
-                                                   name="selectedOptions"
-                                                   value="@checkbox.ID"
-                                                   @(Html.Raw(checkbox.Assigned ? "checked=\"checked\"" : "")) />
-                                            @checkbox.DisplayText
-                                        </td>
-                                        <td>
-                                            <input type="number"
-                                                   name="selectedInventoryQuantities[@checkbox.ID]"
-                                                   value="@checkbox.Quantities"
-                                                   min="0" />
-                                        </td>
-                                    </tr>
-                                }
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div> *@
-            <div class="form-group">
-                <label class="control-label">Materials and Quantities</label>
-                <div class="m-2">
-                    <table id="materialsTable">
-                        <thead>
-                            <tr>
-                                <th>Material</th>
-                                <th>Quantity</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <select id="materialDropdown" class="form-control">
-                                        <option value="">Select Material</option>
-                                        @foreach (var inventoryOption in ViewBag.InventoryOptions)
-                                        {
-                                            <option value="@inventoryOption.ID">@inventoryOption.DisplayText</option>
-                                        }
-                                    </select>
-                                </td>
-                                <td>
-                                    <input type="number" id="quantityInput" class="form-control" name="selectedInventoryQuantities[@((ViewBag.InventoryOptions.Count > 0 ? ViewBag.InventoryOptions[0].ID : ""))]" min="0" />
-
-                                </td>
-                                <td>
-                                    <button class="btn btn-danger btn-sm removeRowBtn">Remove</button>
-                                </td>
-
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button id="addRowBtn" class="btn btn-secondary mt-2">Add Row</button>
-                </div>
-            </div>
-
-
             <div class="form-group form-check" style="display:none;">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="BidNBDApproved" /> @Html.DisplayNameFor(model => model.BidNBDApproved)
@@ -207,24 +133,47 @@
             </div>
            
         </div>
-        @* <div class="col-md-6">
+        <div class="col-md-6">
             <div class="row">
-                <div class="form-group col-md-6">
-                    <label class="control-label"> Selected Materials </label> <button type="button" id="btnRight" class="btn btn-danger btn-sm">
-                        <strong>-</strong>
-                    </button>
-                    @Html.ListBox("selectedOptions", (MultiSelectList)ViewBag.selOpts, new { @size = 10, @class = "form-control"/* ,style = "width: 200px;" */  })
-                </div>
-
-                <div class="form-group col-md-6">
-                    <label class="control-label"> Choose Materials</label> <button type="button" id="btnLeft" class="btn btn-success btn-sm">
-                        <strong>+</strong>
-                    </button>
-                    @Html.ListBox("availOptions", (MultiSelectList)ViewBag.availOpts, new { @size = 10, @class = "form-control" })
+                <div class="form-group">
+                    <label class="control-label">Materials and Quantities</label>
+                    <div class="m-2">
+                        <table id="materialsTable">
+                            <thead>
+                                <tr>
+                                    <th style="width: 350px;">Material</th>
+                                    <th style="width:100px;">Quantity</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <select id="materialDropdown" class="form-control">
+                                            <option value="">Select Material</option>
+                                            @foreach (var inventoryOption in ViewBag.InventoryOptions)
+                                            {
+                                                <option value="@inventoryOption.ID">@inventoryOption.DisplayText</option>
+                                            }
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input type="number" id="quantityInput" class="form-control" name="selectedInventoryQuantities[@((ViewBag.InventoryOptions.Count > 0 ? ViewBag.InventoryOptions[0].ID : ""))]" min="0" />
+                                
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-danger btn-sm removeRowBtn">Remove</button>
+                                        <button id="addRowBtn" class="button-10 ">Add </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div> *@
+        </div>
 
+ 
     </div>
     <div class="row">
         <div class="col-md-6">
@@ -301,47 +250,7 @@
 
     </script>
 <script>
-//   $(document).ready(function () {
-//     $('#addRowBtn').click(function (e) {
-//         e.preventDefault(); // Prevent the default form submission behavior
 
-//         var materialId = $('#materialDropdown').val();
-//         var materialName = $('#materialDropdown option:selected').text();
-//         var quantity = $('#quantityInput').val();
-
-//         if (materialId && quantity) {
-//             var rowCount = $('#materialsTable tbody tr').length;
-//             var removeBtnHtml = '';
-//             if (rowCount > 0) {
-//                 removeBtnHtml = '<button class="btn btn-danger btn-sm removeRowBtn">Remove</button>';
-//             }
-
-//             $('#materialsTable tbody').append(
-//                 '<tr>' +
-//                 '<td>' + materialName + '<input type="hidden" name="selectedOptions" value="' + materialId + '"></td>' +
-//                 '<td>' + quantity + '<input type="hidden" name="selectedInventoryQuantities[' + materialId + ']" value="' + quantity + '"></td>' +
-//                 '<td>' + removeBtnHtml + '</td>' +
-//                 '</tr>'
-//             );
-
-//             $('#materialDropdown').val('');
-//             $('#quantityInput').val('');
-//         }
-//     });
-
-//     // Remove row when remove button is clicked
-//     $('#materialsTable tbody').on('click', '.removeRowBtn', function () {
-//         $(this).closest('tr').remove();
-//     });
-
-//     // Prevent form submission on Enter key press in quantity input
-//     $('#quantityInput').keydown(function (e) {
-//         if (e.keyCode == 13) {
-//             e.preventDefault();
-//             $('#addRowBtn').click(); // Simulate click
-//         }
-//     });
-// });
 $(document).ready(function () {
     $('#addRowBtn').click(function (e) {
         e.preventDefault(); // Prevent the default form submission behavior
