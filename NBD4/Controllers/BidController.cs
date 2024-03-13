@@ -205,19 +205,61 @@ namespace NBD4.Controllers
             }
             if (selectedOptions != null)
             {
-                foreach (var inventoryId in selectedOptions)
-                {
+                List<int> plantIDs = new List<int>();
+                List<int> potteryIDs = new List<int>();
+                List<int> otherIDs = new List<int>();
 
-                    int invId = int.Parse(inventoryId);
-                    var quantity = int.Parse(Request.Form[$"selectedInventoryQuantities[{invId}]"]);
+                for (int j = 0; j < selectedOptions.Count(); j++)
+                {
+                    int matID = int.Parse(selectedOptions[j]);
+                    int invID = ((Inventory)await _context.Inventories.FindAsync(matID)).MaterialTypeID;
+
+                    if (invID == 1)
+                    {
+                        plantIDs.Add(matID);
+                    }
+                    else if (invID == 2)
+                    {
+                        potteryIDs.Add(matID);
+                    }
+                    else if (invID == 3)
+                    {
+                        otherIDs.Add(matID);
+                    }
+                }
+
+                foreach (int invId in plantIDs)
+                {
+                    var quantityPlant = int.Parse(Request.Form[$"selectedInventoryQuantitiesPlant[{invId}]"]);
 
                     // Fetch the Inventory from the database
                     var inventory = await _context.Inventories.FindAsync(invId);
 
-                    var inventoryToAdd = new BidInventory { BidID = bid.ID, InventoryID = invId, MaterialQuantity = quantity, Inventory = inventory };
+                    var inventoryToAdd = new BidInventory { BidID = bid.ID, InventoryID = invId, MaterialQuantity = quantityPlant, Inventory = inventory };
                     bid.BidInventories.Add(inventoryToAdd);
-                    inventoryToAdd.CalculateExtendPrice(); 
+                    inventoryToAdd.CalculateExtendPrice();
+                }
+                foreach (int invId in potteryIDs)
+                {
+                    var quantityPottery = int.Parse(Request.Form[$"selectedInventoryQuantitiesPottery[{invId}]"]);
 
+                    // Fetch the Inventory from the database
+                    var inventory = await _context.Inventories.FindAsync(invId);
+
+                    var inventoryToAdd = new BidInventory { BidID = bid.ID, InventoryID = invId, MaterialQuantity = quantityPottery, Inventory = inventory };
+                    bid.BidInventories.Add(inventoryToAdd);
+                    inventoryToAdd.CalculateExtendPrice();
+                }
+                foreach (int invId in otherIDs)
+                {
+                    var quantityOther = int.Parse(Request.Form[$"selectedInventoryQuantitiesOther[{invId}]"]);
+
+                    // Fetch the Inventory from the database
+                    var inventory = await _context.Inventories.FindAsync(invId);
+
+                    var inventoryToAdd = new BidInventory { BidID = bid.ID, InventoryID = invId, MaterialQuantity = quantityOther, Inventory = inventory };
+                    bid.BidInventories.Add(inventoryToAdd);
+                    inventoryToAdd.CalculateExtendPrice();
                 }
             }
             //UpdateBidInventories(selectedOptions, bid);
@@ -300,19 +342,83 @@ namespace NBD4.Controllers
                             labourToUpdate.CalculateLabourCharge();
                         }
                     }
-                    foreach (var inventoryId in selectedOptions)
+
+                    List<int> plantIDs = new List<int>();
+                    List<int> potteryIDs = new List<int>();
+                    List<int> otherIDs = new List<int>();
+
+                    bidToUpdate.BidInventories.Clear();                    
+
+                    for (int j = 0; j < selectedOptions.Count(); j++)
                     {
-                        int invId = int.Parse(inventoryId);
-                        var quantities = int.Parse(Request.Form[$"selectedInventoryQuantities[{invId}]"]);
-                        var inventory = await _context.Inventories.FindAsync(invId);
-                        var inventoryToUpdate = bidToUpdate.BidInventories.FirstOrDefault(b => b.InventoryID == invId);
-                        if (inventoryToUpdate != null)
+                        int matID = int.Parse(selectedOptions[j]);
+                        int invID = ((Inventory)await _context.Inventories.FindAsync(matID)).MaterialTypeID;
+
+                        if (invID == 1)
                         {
-                            inventoryToUpdate.MaterialQuantity = quantities;
-                            inventoryToUpdate.Inventory = inventory;
-                            inventoryToUpdate.CalculateExtendPrice();
+                            plantIDs.Add(matID);
+                        }
+                        else if (invID == 2)
+                        {
+                            potteryIDs.Add(matID);
+                        }
+                        else if (invID == 3)
+                        {
+                            otherIDs.Add(matID);
                         }
                     }
+
+                    foreach (int invId in plantIDs)
+                    {
+                        var quantityPlant = int.Parse(Request.Form[$"selectedInventoryQuantitiesPlant[{invId}]"]);
+
+                        //var inventoryToUpdate = bidToUpdate.BidInventories.FirstOrDefault(b => b.InventoryID == invId);
+
+                        // Fetch the Inventory from the database
+                        var inventory = await _context.Inventories.FindAsync(invId);
+
+                        var inventoryToAdd = new BidInventory { BidID = bidToUpdate.ID, InventoryID = invId, MaterialQuantity = quantityPlant, Inventory = inventory };
+                        bidToUpdate.BidInventories.Add(inventoryToAdd);
+                        inventoryToAdd.CalculateExtendPrice();
+                    }
+                    foreach (int invId in potteryIDs)
+                    {
+                        var quantityPottery = int.Parse(Request.Form[$"selectedInventoryQuantitiesPottery[{invId}]"]);
+
+                        //var inventoryToUpdate = bidToUpdate.BidInventories.FirstOrDefault(b => b.InventoryID == invId);
+
+                        // Fetch the Inventory from the database
+                        var inventory = await _context.Inventories.FindAsync(invId);
+
+                        var inventoryToAdd = new BidInventory { BidID = bidToUpdate.ID, InventoryID = invId, MaterialQuantity = quantityPottery, Inventory = inventory };
+                        bidToUpdate.BidInventories.Add(inventoryToAdd);
+                        inventoryToAdd.CalculateExtendPrice();
+                    }
+                    foreach (int invId in otherIDs)
+                    {
+                        var quantityOther = int.Parse(Request.Form[$"selectedInventoryQuantitiesOther[{invId}]"]);
+
+                        //var inventoryToUpdate = bidToUpdate.BidInventories.FirstOrDefault(b => b.InventoryID == invId);
+
+                        // Fetch the Inventory from the database
+                        var inventory = await _context.Inventories.FindAsync(invId);
+
+                        var inventoryToAdd = new BidInventory { BidID = bidToUpdate.ID, InventoryID = invId, MaterialQuantity = quantityOther, Inventory = inventory };
+                        bidToUpdate.BidInventories.Add(inventoryToAdd);
+                        inventoryToAdd.CalculateExtendPrice();
+
+                        //////// KEEPING THIS AS A TEMPORYARY BACKUP ///////
+                        //var inventoryToUpdate = bidToUpdate.BidInventories.FirstOrDefault(b => b.InventoryID == invId);
+                        //var inventory = await _context.Inventories.FindAsync(invId);
+
+                        //if (inventoryToUpdate != null)
+                        //{
+                        //    inventoryToUpdate.MaterialQuantity = quantityOther;
+                        //    inventoryToUpdate.Inventory = inventory;
+                        //    inventoryToUpdate.CalculateExtendPrice();
+                        //}
+                    }
+
                     bidToUpdate.CalculateTotalBidAmount();
                     await _context.SaveChangesAsync();
                     return RedirectToAction("Details", new { bidToUpdate.ID });
@@ -460,9 +566,13 @@ namespace NBD4.Controllers
                 ID = option.ID,
                 DisplayText = option.Description,
                 Assigned = currentOptionIDs.Contains(option.ID),
-                Quantities = bid.BidInventories.FirstOrDefault(b => b.InventoryID == option.ID)?.MaterialQuantity ?? 0
+                Quantities = bid.BidInventories.FirstOrDefault(b => b.InventoryID == option.ID)?.MaterialQuantity ?? 0,
+                MaterialTypeID = option.MaterialTypeID
             }).ToList();
-            ViewData["InventoryOptions"] = dropdownOptions;
+
+            ViewData["InventoryOptionsPlant"] = dropdownOptions.FindAll(i => i.MaterialTypeID == 1);
+            ViewData["InventoryOptionsPottery"] = dropdownOptions.FindAll(i => i.MaterialTypeID == 2);
+            ViewData["InventoryOptionsOther"] = dropdownOptions.FindAll(i => i.MaterialTypeID == 3);
         }
         private void UpdateBidInventories(string[] selectedOptions, Bid bidToUpdate)
         {

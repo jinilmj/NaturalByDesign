@@ -116,10 +116,10 @@
            <div class="form-group">
                 <label class="control-label">Materials and Quantities</label>
                 <div class="m-2">
-                    <table id="materialsTable">
+                    <table id="materialsTablePlant">
                         <thead>
                             <tr>
-                                <th style="width: 350px;">Material</th>
+                                <th style="width: 350px;">Plants</th>
                                 <th style="width:100px;">Quantity</th>
                                 <th></th>
                             </tr>
@@ -127,25 +127,25 @@
                         <tbody>
                              <tr>
                                 <td>
-                                    <select id="materialDropdown" class="form-control">
-                                        <option value="">Select Material</option>
-                                        @foreach (var inventoryOption in ViewBag.InventoryOptions)
+                                    <select id="materialDropdownPlant" class="form-control">
+                                        <option value="">Select Plant</option>
+                                        @foreach (var inventoryOption in ViewBag.InventoryOptionsPlant)
                                         {
                                             <option value="@inventoryOption.ID">@inventoryOption.DisplayText</option>
                                         }
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="number" id="quantityInput" class="form-control" name="selectedInventoryQuantities[new]" min="0" />
+                                    <input type="number" id="quantityInputPlant" class="form-control" name="selectedInventoryQuantitiesPlant[new]" min="0" />
                                 </td>
                                 <td>
-                                    <button class="btn btn-danger btn-sm removeRowBtn">Remove</button>
-                                    <button id="addRowBtn" class="button-10">Add </button>
+                                    <button class="btn btn-danger btn-sm removeRowBtnPlant">Remove</button>
+                                    <button id="addRowBtnPlant" class="button-10">Add </button>
                                 </td>
                             </tr>
                             @{
-                                int index = 0;
-                                foreach (var bidInventory in Model.BidInventories)
+                                int indexPlant = 0;
+                                foreach (var bidInventory in Model.BidInventories.Where(i => i.Inventory.MaterialTypeID == 1))
                                 {
                                     <tr>
                                         <td>
@@ -153,19 +153,125 @@
                                             @bidInventory.Inventory.Description
                                         </td>
                                         <td>
-                                            <input type="number" class="form-control" name="selectedInventoryQuantities[@bidInventory.InventoryID]" value="@bidInventory.MaterialQuantity" min="0" />
+                                            <input type="number" class="form-control" name="selectedInventoryQuantitiesPlant[@bidInventory.InventoryID]" value="@bidInventory.MaterialQuantity" min="0" />
                                         </td>
                                         <td>
                                             
-                                           <button class="btn btn-danger btn-sm removeRowBtn">Remove</button>
+                                           <button class="btn btn-danger btn-sm removeRowBtnPlant">Remove</button>
                                             
                                         </td>
                                     </tr>
-                                    index++;
+                                    indexPlant++;
                                 }
                             }
                             <!-- Empty row for adding a new inventory -->
                
+                        </tbody>
+                    </table>
+
+                    <table id="materialsTablePottery">
+                        <thead>
+                            <tr>
+                                <th style="width: 350px;">Pottery</th>
+                                <th style="width:100px;">Quantity</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             <tr>
+                                <td>
+                                    <select id="materialDropdownPottery" class="form-control">
+                                        <option value="">Select Pottery</option>
+                                        @foreach (var inventoryOption in ViewBag.InventoryOptionsPottery)
+                                        {
+                                                <option value="@inventoryOption.ID">@inventoryOption.DisplayText</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="number" id="quantityInputPottery" class="form-control" name="selectedInventoryQuantitiesPottery[new]" min="0" />
+                                </td>
+                                <td>
+                                    <button class="btn btn-danger btn-sm removeRowBtnPottery">Remove</button>
+                                    <button id="addRowBtnPottery" class="button-10">Add </button>
+                                </td>
+                            </tr>
+                            @{
+                                int indexPottery = 0;
+                                foreach (var bidInventory in Model.BidInventories.Where(i => i.Inventory.MaterialTypeID == 2))
+                                {
+                                            <tr>
+                                                <td>
+                                                    <input type="hidden" name="selectedOptions" value="@bidInventory.InventoryID" />
+                                            @bidInventory.Inventory.Description
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control" name="selectedInventoryQuantitiesPottery[@bidInventory.InventoryID]" value="@bidInventory.MaterialQuantity" min="0" />
+                                                </td>
+                                                <td>
+
+                                                   <button class="btn btn-danger btn-sm removeRowBtnPottery">Remove</button>
+
+                                                </td>
+                                            </tr>
+                                    indexPottery++;
+                                }
+                            }
+                            <!-- Empty row for adding a new inventory -->
+
+                        </tbody>
+                    </table>
+
+                    <table id="materialsTableOther">
+                        <thead>
+                            <tr>
+                                <th style="width: 350px;">Others</th>
+                                <th style="width:100px;">Quantity</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             <tr>
+                                <td>
+                                    <select id="materialDropdownOther" class="form-control">
+                                        <option value="">Select Other</option>
+                                        @foreach (var inventoryOption in ViewBag.InventoryOptionsOther)
+                                        {
+                                                <option value="@inventoryOption.ID">@inventoryOption.DisplayText</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="number" id="quantityInputOther" class="form-control" name="selectedInventoryQuantitiesOther[new]" min="0" />
+                                </td>
+                                <td>
+                                    <button class="btn btn-danger btn-sm removeRowBtnOther">Remove</button>
+                                    <button id="addRowBtnOther" class="button-10">Add </button>
+                                </td>
+                            </tr>
+                            @{
+                                int indexOther = 0;
+                                foreach (var bidInventory in Model.BidInventories.Where(i => i.Inventory.MaterialTypeID == 3))
+                                {
+                                            <tr>
+                                                <td>
+                                                    <input type="hidden" name="selectedOptions" value="@bidInventory.InventoryID" />
+                                            @bidInventory.Inventory.Description
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control" name="selectedInventoryQuantitiesOther[@bidInventory.InventoryID]" value="@bidInventory.MaterialQuantity" min="0" />
+                                                </td>
+                                                <td>
+
+                                                   <button class="btn btn-danger btn-sm removeRowBtnOther">Remove</button>
+
+                                                </td>
+                                            </tr>
+                                    indexOther++;
+                                }
+                            }
+                            <!-- Empty row for adding a new inventory -->
+
                         </tbody>
                     </table>
        
@@ -230,50 +336,143 @@
     <script src="~/js/multiselect.js"></script>
     <script>
 $(document).ready(function () {
-    $('#addRowBtn').click(function (e) {
+    $('#addRowBtnPlant').click(function (e) {
         e.preventDefault(); // Prevent the default form submission behavior
 
-        var materialId = $('#materialDropdown').val();
-        var materialName = $('#materialDropdown option:selected').text();
-        var quantity = $('#quantityInput').val();
+        var materialId = $('#materialDropdownPlant').val();
+        var materialName = $('#materialDropdownPlant option:selected').text();
+        var quantity = $('#quantityInputPlant').val();
 
         if (materialId && quantity) {
-            var rowCount = $('#materialsTable tbody tr').length;
+            var rowCount = $('#materialsTablePlant tbody tr').length;
             var removeBtnHtml = '';
             if (rowCount > 0) {
-                removeBtnHtml = '<button class="btn btn-danger btn-sm removeRowBtn">Remove</button>';
+                removeBtnHtml = '<button class="btn btn-danger btn-sm removeRowBtnPlant">Remove</button>';
             }
 
-            $('#materialsTable tbody').append(
+            $('#materialsTablePlant tbody').append(
                 '<tr>' +
                 '<td>' + materialName + '<input type="hidden" name="selectedOptions" value="' + materialId + '"></td>' +
-                '<td><input type="number" class="form-control" name="selectedInventoryQuantities[' + materialId + ']" value="' + quantity + '" min="0"></td>' +
+                '<td><input type="number" class="form-control" name="selectedInventoryQuantitiesPlant[' + materialId + ']" value="' + quantity + '" min="0"></td>' +
                 // '<td>' + quantity + '<input type="hidden" name="selectedInventoryQuantities[' + materialId + ']" value="' + quantity + '"></td>' +
                 '<td>' + removeBtnHtml + '</td>' +
                 '</tr>'
             );
 
-            $('#materialDropdown').val('');
-            $('#quantityInput').val('');
+            $('#materialDropdownPlant').val('');
+            $('#quantityInputPlant').val('');
         }
     });
 
     // Remove row when remove button is clicked
-    $('#materialsTable tbody').on('click', '.removeRowBtn', function () {
+    $('#materialsTablePlant tbody').on('click', '.removeRowBtnPlant', function () {
         $(this).closest('tr').remove();
     });
 
     // Prevent form submission on Enter key press in quantity input
-    $('#quantityInput').keydown(function (e) {
+    $('#quantityInputPlant').keydown(function (e) {
         if (e.keyCode == 13) {
             e.preventDefault();
-            $('#addRowBtn').click(); // Simulate click
+            $('#addRowBtnPlant').click(); // Simulate click
         }
     });
      // Hide Remove button in the first row
-    $('#materialsTable tbody tr:first-child .removeRowBtn').hide();
+    $('#materialsTablePlant tbody tr:first-child .removeRowBtnPlant').hide();
 });
 
+/////////////////////////////////////
+
+$(document).ready(function () {
+    $('#addRowBtnPottery').click(function (e) {
+        e.preventDefault(); // Prevent the default form submission behavior
+
+        var materialId = $('#materialDropdownPottery').val();
+        var materialName = $('#materialDropdownPottery option:selected').text();
+        var quantity = $('#quantityInputPottery').val();
+
+        if (materialId && quantity) {
+            var rowCount = $('#materialsTablePottery tbody tr').length;
+            var removeBtnHtml = '';
+            if (rowCount > 0) {
+                removeBtnHtml = '<button class="btn btn-danger btn-sm removeRowBtnPottery">Remove</button>';
+            }
+
+            $('#materialsTablePottery tbody').append(
+                '<tr>' +
+                '<td>' + materialName + '<input type="hidden" name="selectedOptions" value="' + materialId + '"></td>' +
+                '<td><input type="number" class="form-control" name="selectedInventoryQuantitiesPottery[' + materialId + ']" value="' + quantity + '" min="0"></td>' +
+                // '<td>' + quantity + '<input type="hidden" name="selectedInventoryQuantities[' + materialId + ']" value="' + quantity + '"></td>' +
+                '<td>' + removeBtnHtml + '</td>' +
+                '</tr>'
+            );
+
+            $('#materialDropdownPottery').val('');
+            $('#quantityInputPottery').val('');
+        }
+    });
+
+    // Remove row when remove button is clicked
+    $('#materialsTablePottery tbody').on('click', '.removeRowBtnPottery', function () {
+        $(this).closest('tr').remove();
+    });
+
+    // Prevent form submission on Enter key press in quantity input
+    $('#quantityInputPottery').keydown(function (e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
+            $('#addRowBtnPottery').click(); // Simulate click
+        }
+    });
+     // Hide Remove button in the first row
+    $('#materialsTablePottery tbody tr:first-child .removeRowBtnPottery').hide();
+});
+
+/////////////////////////////////////
+
+    $(document).ready(function () {
+    $('#addRowBtnOther').click(function (e) {
+        e.preventDefault(); // Prevent the default form submission behavior
+
+        var materialId = $('#materialDropdownOther').val();
+        var materialName = $('#materialDropdownOther option:selected').text();
+        var quantity = $('#quantityInputOther').val();
+
+        if (materialId && quantity) {
+            var rowCount = $('#materialsTableOther tbody tr').length;
+            var removeBtnHtml = '';
+            if (rowCount > 0) {
+                removeBtnHtml = '<button class="btn btn-danger btn-sm removeRowBtnOther">Remove</button>';
+            }
+
+            $('#materialsTableOther tbody').append(
+                '<tr>' +
+                '<td>' + materialName + '<input type="hidden" name="selectedOptions" value="' + materialId + '"></td>' +
+                '<td><input type="number" class="form-control" name="selectedInventoryQuantitiesOther[' + materialId + ']" value="' + quantity + '" min="0"></td>' +
+                // '<td>' + quantity + '<input type="hidden" name="selectedInventoryQuantities[' + materialId + ']" value="' + quantity + '"></td>' +
+                '<td>' + removeBtnHtml + '</td>' +
+                '</tr>'
+            );
+
+            $('#materialDropdownOther').val('');
+            $('#quantityInputOther').val('');
+        }
+    });
+
+    // Remove row when remove button is clicked
+    $('#materialsTableOther tbody').on('click', '.removeRowBtnOther', function () {
+        $(this).closest('tr').remove();
+    });
+
+    // Prevent form submission on Enter key press in quantity input
+    $('#quantityInputOther').keydown(function (e) {
+        if (e.keyCode == 13) {
+            e.preventDefault();
+            $('#addRowBtnOther').click(); // Simulate click
+        }
+    });
+     // Hide Remove button in the first row
+    $('#materialsTableOther tbody tr:first-child .removeRowBtnOther').hide();
+});
 
 </script>
 }

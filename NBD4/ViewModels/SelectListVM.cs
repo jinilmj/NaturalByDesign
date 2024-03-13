@@ -7,5 +7,6 @@
         public bool Assigned { get; set; }    
         public int Quantities { get; set; }
         public double MaterialExtendPrice { get; set; }
+        public int MaterialTypeID { get; set; }
     }
 }
