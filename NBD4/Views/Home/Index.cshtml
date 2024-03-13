@@ -9,19 +9,22 @@
     <div class="main-home">
         <div class="image-links">
             <div class="image-container">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Client" asp-action="Index">
-                    <img src="../images/customer1.png" alt="Instruction">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Client" asp-action="Index"
+                   data-bs-toggle="tooltip" title="Click to go to Client Page">
+                    <img src="../images/customer1.png" alt="Client logo">
                     <span class="circle-name">Client</span>
                 </a>
             </div>
             <div class="image-container">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="Index">
-                    <img src="../images/project.webp" alt="Client">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="Index"
+                   data-bs-toggle="tooltip" title="Click to go to Project Page">
+                    <img src="../images/project.webp" alt="Project log">
                     <span class="circle-name">Project</span>
                 </a>
             </div>
             <div class="image-container">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Bid" asp-action="Index">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Bid" asp-action="Index"
+                   data-bs-toggle="tooltip" title="Click to go to Bid Page">
                     <img src="../images/Bid.jpeg" alt="Iventory">
                     <span class="circle-name">Bid</span>
                 </a>
@@ -29,7 +32,8 @@
         </div>
         <div class="image-links">
             <div class="image-container">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Lookup" asp-action="Index">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Lookup" asp-action="Index"
+                   data-bs-toggle="tooltip" title="Click to go to Lookup Page">
                     <img src="../images/scope.png" alt="Link 3">
                     <span class="circle-name">Lookup</span>
                 </a>
@@ -45,15 +49,28 @@
                 </a>
             </div>
         </div>
-        <div class="instruction">
-            <h2>Instructions</h2>
-            <p>-The user can get to the client page using the link above or by clicking
-                <a asp-controller="Client" asp-action="Index">here</a></p>
-           <p>-The user can create a project using the link abover or by clicking
-                <a asp-controller="Project" asp-action="Index">here</a></p>
-           <p>-The user can add a bid from the bid page using the link above or by clicking 
-                <a asp-controller="Bid" asp-action="Index">here</a></p>
-            </p>
-        </div>
+
+    </div>
+        
     </div>
 </div>
+
+
+@section Styles {
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+}
+@section Scripts {
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript">
+        $('#SearchClient').autocomplete({
+            minLength: 1,
+            source: '@Url.Action("GetClients", "Client")'
+        });
+    </script>
+    <script type="text/javascript">
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
+}
