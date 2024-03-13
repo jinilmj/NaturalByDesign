@@ -36,6 +36,7 @@ namespace NBD4.Data
                     };
                     context.Provinces.AddRange(provinces);
                     context.SaveChanges();
+
                 }
                 if (!context.Cities.Any())
                 {

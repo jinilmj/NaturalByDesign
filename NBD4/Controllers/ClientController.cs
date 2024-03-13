@@ -322,8 +322,8 @@ namespace NBD4.Controllers
             }
             else
             {
-                ViewData["ProvinceID"] = ProvinceSelectList(null);
-                ViewData["CityID"] = CitySelectList(null, null);
+                ViewData["ProvinceID"] = ProvinceSelectList("ON");
+                ViewData["CityID"] = CitySelectList("ON", null);
             }
         }
 
