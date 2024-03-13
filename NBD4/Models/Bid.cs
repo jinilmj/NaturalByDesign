@@ -31,6 +31,9 @@ namespace NBD4.Models
         [Display(Name = "Mark for Redesign/Review")]
         public bool BidMarkForRedesign { get; set; }
 
+        [Display(Name = "Mark For Review/Redesign Notes")]
+        public string BidMarkForRedisignNotes { get; set; }
+
         [Display(Name = "Review Date")]
         public DateTime? ReviewDate { get; set; }
 

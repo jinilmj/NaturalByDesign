@@ -11,7 +11,7 @@ using NBD4.Data;
 namespace NBD4.Data.NBDMigrations
 {
     [DbContext(typeof(NBDContext))]
-    [Migration("20240310203748_Initial")]
+    [Migration("20240313122429_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -40,6 +40,9 @@ namespace NBD4.Data.NBDMigrations
 
                     b.Property<bool>("BidMarkForRedesign")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("BidMarkForRedisignNotes")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("BidNBDApprovalNotes")
                         .HasColumnType("TEXT");

@@ -194,6 +194,7 @@ namespace NBD4.Data.NBDMigrations
                     BidClientApproved = table.Column<bool>(type: "INTEGER", nullable: false),
                     BidClientApprovalNotes = table.Column<string>(type: "TEXT", nullable: true),
                     BidMarkForRedesign = table.Column<bool>(type: "INTEGER", nullable: false),
+                    BidMarkForRedisignNotes = table.Column<string>(type: "TEXT", nullable: true),
                     ReviewDate = table.Column<DateTime>(type: "TEXT", nullable: true),
                     ReviewedBy = table.Column<string>(type: "TEXT", nullable: true),
                     ProjectID = table.Column<int>(type: "INTEGER", nullable: false)

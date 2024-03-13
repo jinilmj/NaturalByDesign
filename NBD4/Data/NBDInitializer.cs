@@ -248,6 +248,7 @@ namespace NBD4.Data
                             BidClientApproved = true,
                             BidClientApprovalNotes = "Client accepted the bid",
                             BidMarkForRedesign = false,
+                            BidMarkForRedisignNotes = " ",
                             ReviewDate = DateTime.Parse("2024-04-22"),
                             ReviewedBy = "Jane Doe",
                             ProjectID = projectTechInnovators1.ID
@@ -261,6 +262,7 @@ namespace NBD4.Data
                             BidClientApproved = false,
                             BidClientApprovalNotes = "Client requested further clarification",
                             BidMarkForRedesign = true,
+                            BidMarkForRedisignNotes=" ",
                             ReviewDate = null,
                             ReviewedBy = null,
                             ProjectID = projectTechInnovators2.ID
@@ -274,6 +276,7 @@ namespace NBD4.Data
                             BidClientApproved = false,
                             BidClientApprovalNotes = "Awaiting client response",
                             BidMarkForRedesign = false,
+                            BidMarkForRedisignNotes = " ",
                             ReviewDate = null,
                             ReviewedBy = null,
                             ProjectID = projectGlobalSolutions1.ID
@@ -287,6 +290,7 @@ namespace NBD4.Data
                             BidClientApproved = true,
                             BidClientApprovalNotes = "Client accepted the bid",
                             BidMarkForRedesign = false,
+                            BidMarkForRedisignNotes = " ",
                             ReviewDate = DateTime.Parse("2024-06-25"),
                             ReviewedBy = "John Smith",
                             ProjectID = projectGlobalSolutions2.ID
@@ -300,6 +304,7 @@ namespace NBD4.Data
                             BidClientApproved = false,
                             BidClientApprovalNotes = "Client requested further clarification",
                             BidMarkForRedesign = true,
+                            BidMarkForRedisignNotes = " ",
                             ReviewDate = null,
                             ReviewedBy = null,
                             ProjectID = projectPinnacleEnterprises1.ID
@@ -313,6 +318,7 @@ namespace NBD4.Data
                             BidClientApproved = true,
                             BidClientApprovalNotes = "Client accepted the bid",
                             BidMarkForRedesign = false,
+                            BidMarkForRedisignNotes = " ",
                             ReviewDate = DateTime.Parse("2024-09-20"),
                             ReviewedBy = "Alice Johnson",
                             ProjectID = projectPinnacleEnterprises2.ID
@@ -326,6 +332,7 @@ namespace NBD4.Data
                             BidClientApproved = false,
                             BidClientApprovalNotes = "Awaiting client response",
                             BidMarkForRedesign = true,
+                            BidMarkForRedisignNotes = " ",
                             ReviewDate = null,
                             ReviewedBy = null,
                             ProjectID = projectInfiniteDynamics1.ID
@@ -339,6 +346,7 @@ namespace NBD4.Data
                             BidClientApproved = false,
                             BidClientApprovalNotes = "Awaiting client response",
                             BidMarkForRedesign = true,
+                            BidMarkForRedisignNotes = " ",
                             ReviewDate = null,
                             ReviewedBy = null,
                             ProjectID = projectInfiniteDynamics2.ID
@@ -365,6 +373,7 @@ namespace NBD4.Data
                             BidClientApproved = false,
                             BidClientApprovalNotes = "Client requested further clarification",
                             BidMarkForRedesign = true,
+                            BidMarkForRedisignNotes = " ",
                             ReviewDate = null,
                             ReviewedBy = null,
                             ProjectID = projectEagleEyeTechnologies2.ID

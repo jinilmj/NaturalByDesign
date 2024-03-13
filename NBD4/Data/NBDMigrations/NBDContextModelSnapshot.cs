@@ -38,6 +38,9 @@ namespace NBD4.Data.NBDMigrations
                     b.Property<bool>("BidMarkForRedesign")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("BidMarkForRedisignNotes")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("BidNBDApprovalNotes")
                         .HasColumnType("TEXT");
 

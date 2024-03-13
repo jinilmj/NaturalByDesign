@@ -176,7 +176,7 @@ namespace NBD4.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,BidDate,BidAmount,BidNBDApproved,BidNBDApprovalNotes,BidClientApproved,BidClientApprovalNotes," +
-            "BidMarkForRedesign,ReviewDate,ReviewedBy,ProjectID")] Bid bid, string[] selectedStaffOptions, string[] selectedLabourOptions, string[] selectedOptions)
+            "BidMarkForRedesign,BidMarkForRedisignNotes,ReviewDate,ReviewedBy,ProjectID")] Bid bid, string[] selectedStaffOptions, string[] selectedLabourOptions, string[] selectedOptions)
         {
             if (selectedStaffOptions != null)
             {
@@ -325,7 +325,7 @@ namespace NBD4.Controllers
             UpdateBidInventories(selectedOptions, bidToUpdate);
 
             if (await TryUpdateModelAsync<Bid>(bidToUpdate, "", b => b.BidDate, b => b.BidAmount, b => b.BidNBDApproved, b => b.BidNBDApprovalNotes, b => b.BidClientApproved, b => b.BidClientApprovalNotes
-                    , b => b.BidMarkForRedesign, b => b.ReviewDate, b => b.ReviewedBy, b => b.ProjectID))
+                    , b => b.BidMarkForRedesign,b=>b.BidMarkForRedisignNotes ,b => b.ReviewDate, b => b.ReviewedBy, b => b.ProjectID))
             {
                 try
                 {
