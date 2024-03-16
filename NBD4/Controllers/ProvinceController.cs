@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -26,11 +27,12 @@ namespace NBD4.Controllers
 			return Redirect(ViewData["returnURL"].ToString());
 		}
 
-		// GET: Province/Details/5
+        // GET: Province/Details/5
 
 
-		// GET: Province/Create
-		public IActionResult Create()
+        // GET: Province/Create
+        [Authorize(Roles = "Admin, Designer")]
+        public IActionResult Create()
         {
             return View();
         }
@@ -40,6 +42,7 @@ namespace NBD4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Designer")]
         public async Task<IActionResult> Create([Bind("Name,ID")] Province province)
         {
             try
@@ -61,6 +64,7 @@ namespace NBD4.Controllers
         }
 
         // GET: Province/Edit/5
+        [Authorize(Roles = "Admin, Designer")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null || _context.Provinces == null)
@@ -81,6 +85,7 @@ namespace NBD4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Designer")]
         public async Task<IActionResult> Edit(string id, [Bind("ID,Name")] Province province)
         {
             
@@ -121,6 +126,7 @@ namespace NBD4.Controllers
         }
 
         // GET: Province/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null || _context.Provinces == null)
@@ -141,6 +147,7 @@ namespace NBD4.Controllers
         // POST: Province/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             if (_context.Provinces == null)

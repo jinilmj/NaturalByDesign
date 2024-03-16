@@ -5,6 +5,7 @@ using System.Linq;
 using System.Numerics;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -125,6 +126,7 @@ namespace NBD4.Controllers
         }
 
         // GET: Bid/Details/5
+        [Authorize(Roles = "Admin, Designer, Sales Associate")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Bids == null)
@@ -160,6 +162,7 @@ namespace NBD4.Controllers
             return Json(projects);
         }
         // GET: Bid/Create
+        [Authorize(Roles = "Admin, Designer")]
         public IActionResult Create()
         {
             var bid = new Bid();
@@ -175,6 +178,7 @@ namespace NBD4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Designer")]
         public async Task<IActionResult> Create([Bind("ID,BidDate,BidAmount,BidNBDApproved,BidNBDApprovalNotes,BidClientApproved,BidClientApprovalNotes," +
             "BidMarkForRedesign,BidMarkForRedisignNotes,ReviewDate,ReviewedBy,ProjectID")] Bid bid, string[] selectedStaffOptions, string[] selectedLabourOptions, string[] selectedOptions)
         {
@@ -278,6 +282,7 @@ namespace NBD4.Controllers
         }
 
         // GET: Bid/Edit/5
+        [Authorize(Roles = "Admin, Designer")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Bids == null)
@@ -307,6 +312,7 @@ namespace NBD4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Designer")]
         public async Task<IActionResult> Edit(int id, string[] selectedStaffOptions, string[] selectedLabourOptions, string[] selectedOptions)
         {
             var bidToUpdate = await _context.Bids
@@ -450,6 +456,7 @@ namespace NBD4.Controllers
             return View(bidToUpdate);
         }
         // GET: Bid/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Bids == null)
@@ -475,6 +482,7 @@ namespace NBD4.Controllers
         // POST: Bid/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Bids == null)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -122,6 +123,7 @@ namespace NBD4.Controllers
         }
 
         // GET: Project/Details/5
+        [Authorize(Roles = "Admin, Designer, Sales Associate")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Projects == null)
@@ -155,6 +157,7 @@ namespace NBD4.Controllers
 
 
         // GET: Project/Create
+        [Authorize(Roles = "Admin, Designer")]
         public IActionResult Create()
         {
             PopulateDropDownLists();
@@ -166,6 +169,7 @@ namespace NBD4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Designer")]
         public async Task<IActionResult> Create([Bind("ID,StartDate,EndDate,Site,Amount,ClientID")] Project project)
         {
             try
@@ -187,6 +191,7 @@ namespace NBD4.Controllers
         }
 
         // GET: Project/Edit/5
+        [Authorize(Roles = "Admin, Designer")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Projects == null)
@@ -208,6 +213,7 @@ namespace NBD4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Designer")]
         public async Task<IActionResult> Edit(int id)
         {
             //Go get the patient to update
@@ -249,6 +255,7 @@ namespace NBD4.Controllers
         }
 
         // GET: Project/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Projects == null)
@@ -271,6 +278,7 @@ namespace NBD4.Controllers
         // POST: Project/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Projects == null)

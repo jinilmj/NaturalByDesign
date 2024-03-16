@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -26,11 +27,12 @@ namespace NBD4.Controllers
 			return Redirect(ViewData["returnURL"].ToString());
 		}
 
-		// GET: City/Details/5
+        // GET: City/Details/5
 
 
-		// GET: City/Create
-		public IActionResult Create()
+        // GET: City/Create
+        [Authorize(Roles = "Admin, Designer, Sales Associate")]
+        public IActionResult Create()
         {
             ViewData["ProvinceID"] = new SelectList(_context.Provinces, "ID", "Name");
             return View();
@@ -41,6 +43,7 @@ namespace NBD4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Designer, Sales Associate")]
         public async Task<IActionResult> Create([Bind("ID,Name,ProvinceID")] City city)
         {
             try
@@ -62,6 +65,7 @@ namespace NBD4.Controllers
         }
 
         // GET: City/Edit/5
+        [Authorize(Roles = "Admin, Designer, Sales Associate")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Cities == null)
@@ -83,6 +87,7 @@ namespace NBD4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Designer, Sales Associate")]
         public async Task<IActionResult> Edit(int id)
         {
             var cityToUpdate = await _context.Cities.FirstOrDefaultAsync(p => p.ID == id);
@@ -120,6 +125,7 @@ namespace NBD4.Controllers
         }
 
         // GET: City/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Cities == null)
@@ -141,6 +147,7 @@ namespace NBD4.Controllers
         // POST: City/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Cities == null)

@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NBD4.CustomControllers;
 using NBD4.Data;
 
 namespace NBD4.Controllers
 {
-	public class LookupController : CognizantController
+    [Authorize(Roles = "Admin, Designer, Sales Associate")]
+    public class LookupController : CognizantController
 	{
 		private readonly NBDContext _context;
 
