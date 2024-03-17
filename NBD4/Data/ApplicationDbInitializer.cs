@@ -36,7 +36,8 @@ namespace NBD4.Data
                     IdentityUser user = new IdentityUser
                     {
                         UserName = "admin@outlook.com",
-                        Email = "admin@outlook.com"
+                        Email = "admin@outlook.com",
+                        EmailConfirmed = true
                     };
 
                     IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
@@ -51,7 +52,8 @@ namespace NBD4.Data
                     IdentityUser user = new IdentityUser
                     {
                         UserName = "designer@outlook.com",
-                        Email = "designer@outlook.com"
+                        Email = "designer@outlook.com",
+                        EmailConfirmed = true
                     };
 
                     IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
@@ -66,7 +68,8 @@ namespace NBD4.Data
                     IdentityUser user = new IdentityUser
                     {
                         UserName = "sales@outlook.com",
-                        Email = "sales@outlook.com"
+                        Email = "sales@outlook.com",
+                        EmailConfirmed = true
                     };
 
                     IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;
@@ -81,7 +84,8 @@ namespace NBD4.Data
                     IdentityUser user = new IdentityUser
                     {
                         UserName = "user@outlook.com",
-                        Email = "user@outlook.com"
+                        Email = "user@outlook.com",
+                        EmailConfirmed = true
                     };
 
                     IdentityResult result = userManager.CreateAsync(user, "Pa55w@rd").Result;

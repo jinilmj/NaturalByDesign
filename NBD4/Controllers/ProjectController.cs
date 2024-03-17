@@ -13,6 +13,7 @@ using NBD4.Utilities;
 
 namespace NBD4.Controllers
 {
+    [Authorize]
     public class ProjectController : ElephantController
     {
         private readonly NBDContext _context;

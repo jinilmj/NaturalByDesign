@@ -12,6 +12,7 @@ using NBD4.Models;
 
 namespace NBD4.Controllers
 {
+    [Authorize]
     public class CityController : LookupsController
     {
         private readonly NBDContext _context;

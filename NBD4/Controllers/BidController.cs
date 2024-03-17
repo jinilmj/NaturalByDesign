@@ -19,6 +19,7 @@ using NuGet.Packaging.Signing;
 
 namespace NBD4.Controllers
 {
+    [Authorize]
     public class BidController : ElephantController
     {
         private readonly NBDContext _context;

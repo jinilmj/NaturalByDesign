@@ -77,29 +77,39 @@
 					<td>
 						@Html.DisplayFor(modelItem => item.Summary)
 					</td>
-					<td class="text-center">
-						@* <a asp-action="Edit" asp-route-id="@item.ID" 
-						   role="button" data-bs-toggle="tooltip" title="Edit @ViewData["ControllerFriendlyName"]">
-							&#x270E;
-						</a> *@
-						<a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-primary"
-						   role="button" data-bs-toggle="tooltip" title="Edit @ViewData["ControllerFriendlyName"]">
-							Edit
-						</a>
-						<a asp-action="Details" asp-route-id="@item.ID" class="btn btn-primary"
-						   role="button" data-bs-toggle="tooltip" title="@ViewData["ControllerFriendlyName"] Details">
-							Details
-						</a>
-						<a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-primary"
-						   role="button" data-bs-toggle="tooltip" title="Delete @ViewData["ControllerFriendlyName"]">
-							Delete
-						</a>
-					</td>
-					@* <td>
-						<a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-						<a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-						<a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-					</td> *@
+					@{
+						if (User.IsInRole("Designer"))
+						{
+							<td class="text-center">
+								<a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-primary"
+								   role="button" data-bs-toggle="tooltip" title="Edit @ViewData["ControllerFriendlyName"]">
+									Edit
+								</a>
+								<a asp-action="Details" asp-route-id="@item.ID" class="btn btn-primary"
+								   role="button" data-bs-toggle="tooltip" title="@ViewData["ControllerFriendlyName"] Details">
+									Details
+								</a>
+							</td>
+						}
+						else if (User.IsInRole("Admin"))
+						{
+							<td class="text-center">
+								<a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-primary"
+								   role="button" data-bs-toggle="tooltip" title="Edit @ViewData["ControllerFriendlyName"]">
+									Edit
+								</a>
+								<a asp-action="Details" asp-route-id="@item.ID" class="btn btn-primary"
+								   role="button" data-bs-toggle="tooltip" title="@ViewData["ControllerFriendlyName"] Details">
+									Details
+								</a>
+								<a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-primary"
+								   role="button" data-bs-toggle="tooltip" title="Delete @ViewData["ControllerFriendlyName"]">
+									Delete
+								</a>
+							</td>
+						}
+					}
+					
 				</tr>
 			}
 		</tbody>
