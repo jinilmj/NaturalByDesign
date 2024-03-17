@@ -59,8 +59,16 @@ namespace NBD4.Data
 
 		public DbSet<BidStaff> BidsStaffs { get; set; }
 
+		public DbSet<Employee> Employees { get; set; }
+		public DbSet<Subscription> Subscriptions { get; set; }
+
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+			//Add a unique index to the Employee Email
+			modelBuilder.Entity<Employee>()
+			.HasIndex(a => new { a.Email })
+			.IsUnique();
+
 			modelBuilder.Entity<BidStaff>()
 				.HasKey(t => new { t.StaffID, t.BidID });
 

@@ -12,6 +12,27 @@ namespace NBD4.Data.NBDMigrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Employees",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    FirstName = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Phone = table.Column<string>(type: "TEXT", maxLength: 10, nullable: true),
+                    Email = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    Active = table.Column<bool>(type: "INTEGER", nullable: false),
+                    CreatedBy = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    UpdatedOn = table.Column<DateTime>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Employees", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "LabourTypeInfos",
                 columns: table => new
                 {
@@ -62,6 +83,28 @@ namespace NBD4.Data.NBDMigrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_StaffRoles", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Subscriptions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    PushEndpoint = table.Column<string>(type: "TEXT", maxLength: 512, nullable: true),
+                    PushP256DH = table.Column<string>(type: "TEXT", maxLength: 512, nullable: true),
+                    PushAuth = table.Column<string>(type: "TEXT", maxLength: 512, nullable: true),
+                    EmployeeID = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Subscriptions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Subscriptions_Employees_EmployeeID",
+                        column: x => x.EmployeeID,
+                        principalTable: "Employees",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -331,6 +374,12 @@ namespace NBD4.Data.NBDMigrations
                 column: "CityID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Employees_Email",
+                table: "Employees",
+                column: "Email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Inventories_MaterialTypeID",
                 table: "Inventories",
                 column: "MaterialTypeID");
@@ -344,6 +393,11 @@ namespace NBD4.Data.NBDMigrations
                 name: "IX_Staffs_StaffRoleID",
                 table: "Staffs",
                 column: "StaffRoleID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Subscriptions_EmployeeID",
+                table: "Subscriptions",
+                column: "EmployeeID");
         }
 
         /// <inheritdoc />
@@ -359,6 +413,9 @@ namespace NBD4.Data.NBDMigrations
                 name: "BidsStaffs");
 
             migrationBuilder.DropTable(
+                name: "Subscriptions");
+
+            migrationBuilder.DropTable(
                 name: "Inventories");
 
             migrationBuilder.DropTable(
@@ -369,6 +426,9 @@ namespace NBD4.Data.NBDMigrations
 
             migrationBuilder.DropTable(
                 name: "Staffs");
+
+            migrationBuilder.DropTable(
+                name: "Employees");
 
             migrationBuilder.DropTable(
                 name: "MaterialTypes");

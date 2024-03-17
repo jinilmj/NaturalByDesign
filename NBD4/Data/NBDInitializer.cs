@@ -16,6 +16,41 @@ namespace NBD4.Data
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
 
+                if (!context.Employees.Any())
+                {
+                    context.Employees.AddRange(
+                     new Employee
+                     {
+                         FirstName = "Keri",
+                         LastName = "Yamaguchi",
+                         Phone = "7845784578",
+                         Email = "admin@outlook.com"
+                     },
+                     new Employee
+                     {
+                         FirstName = "Tamara",
+                         LastName = "Bakken",
+                         Phone = "7000000008",
+                         Email = "designer@outlook.com"
+                     },
+                     new Employee
+                     {
+                         FirstName = "Bob",
+                         LastName = "Reinhardt",
+                         Phone = "7111111118",
+                         Email = "sales@outlook.com"
+                     },
+                    new Employee
+                    {
+                        FirstName = "Monica",
+                        LastName = "Goce",
+                        Phone = "7222222228",
+                        Email = "user@outlook.com"
+                    });
+
+                    context.SaveChanges();
+                }
+
                 if (!context.Provinces.Any())
                 {
                     var provinces = new List<Province>
@@ -147,7 +182,7 @@ namespace NBD4.Data
                         StartDate = DateTime.Parse("2024-04-23"),
                         EndDate = DateTime.Parse("2024-05-23"),
                         Site = "Main entrance Mall Dr./Cinema Lane",
-                        Amount=7000d,
+                        Amount = 7000d,
                         ClientID = context.Clients.FirstOrDefault(c => c.Name == "Tech Innovators Ltd").ID
                     },
                     new Project
@@ -262,7 +297,7 @@ namespace NBD4.Data
                             BidClientApproved = false,
                             BidClientApprovalNotes = "Client requested further clarification",
                             BidMarkForRedesign = true,
-                            BidMarkForRedisignNotes=" ",
+                            BidMarkForRedisignNotes = " ",
                             ReviewDate = null,
                             ReviewedBy = null,
                             ProjectID = projectTechInnovators2.ID

@@ -1,0 +1,72 @@
+﻿@model IEnumerable<NBD4.ViewModels.EmployeeAdminVM>
+
+<partial name="_ViewHeading" />
+
+<div class="text-danger">@TempData["message"]</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserRoles)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Active)
+            </th>
+            <th class="text-center" style="min-width:120px">
+                <a asp-action="Create" class="btn btn-sm btn-outline-success"
+                   role="button" data-bs-toggle="tooltip" title="Create New @ViewData["ControllerFriendlyName"]">
+                    <strong>&#x270D; Create</strong>
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)<br />
+                    Email: @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    @{
+                        foreach (var r in item.UserRoles)
+                        {
+                            @:  @r <br />
+                        }
+                    }
+                </td>
+                <td>
+                    <div class="form-group form-switch">
+                        <input class="form-check-input" type="checkbox" disabled="disabled"
+                        @(Html.Raw(item.Active ? "checked=\"checked\"" : "")) />
+                    </div>
+                </td>
+                <td class="text-center">
+                    <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-sm btn-outline-primary"
+                       role="button" data-bs-toggle="tooltip" title="Edit @ViewData["ControllerFriendlyName"]">
+                        &#x270E; Edit
+                    </a>
+                    @if (item.NumberOfPushSubscriptions > 0)
+                    {
+                        @:| @{
+                            <a asp-controller="WebPush" asp-action="Send" asp-route-id="@item.ID">Send Notification</a>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
