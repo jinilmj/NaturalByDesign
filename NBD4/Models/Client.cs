@@ -4,7 +4,7 @@ using System.Reflection.Emit;
 
 namespace NBD4.Models
 {
-    public class Client
+    public class Client:Auditable
     {
         public int ID { get; set; }
 

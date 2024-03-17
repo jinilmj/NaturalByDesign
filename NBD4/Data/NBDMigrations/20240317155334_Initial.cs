@@ -145,7 +145,11 @@ namespace NBD4.Data.NBDMigrations
                     Phone = table.Column<string>(type: "TEXT", maxLength: 10, nullable: false),
                     Street = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
                     PostalCode = table.Column<string>(type: "TEXT", nullable: false),
-                    CityID = table.Column<int>(type: "INTEGER", nullable: false)
+                    CityID = table.Column<int>(type: "INTEGER", nullable: false),
+                    CreatedBy = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    UpdatedOn = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -168,7 +172,11 @@ namespace NBD4.Data.NBDMigrations
                     EndDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Site = table.Column<string>(type: "TEXT", maxLength: 150, nullable: false),
                     Amount = table.Column<double>(type: "REAL", nullable: false),
-                    ClientID = table.Column<int>(type: "INTEGER", nullable: false)
+                    ClientID = table.Column<int>(type: "INTEGER", nullable: false),
+                    CreatedBy = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
+                    UpdatedOn = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using NBD4.Data;
 using NBD4.Utilities;
 using NBD4.ViewModels;
@@ -19,6 +20,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDbContext<NBDContext>(options =>
     options.UseSqlite(connectionString));
 
+//To give access to IHttpContextAccessor for Audit Data with IAuditable
+builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

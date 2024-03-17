@@ -3,7 +3,7 @@ using System;
 
 namespace NBD4.Models
 {
-    public class Project :IValidatableObject
+    public class Project :Auditable,IValidatableObject
     {
         public int ID { get; set; }
 
