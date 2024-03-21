@@ -286,7 +286,8 @@ namespace NBD4.Data
                             BidMarkForRedisignNotes = " ",
                             ReviewDate = DateTime.Parse("2024-04-22"),
                             ReviewedBy = "Jane Doe",
-                            ProjectID = projectTechInnovators1.ID
+                            ProjectID = projectTechInnovators1.ID,
+                            BidReadyForApproval = true
                         },
                         new Bid
                         {
@@ -300,7 +301,8 @@ namespace NBD4.Data
                             BidMarkForRedisignNotes = " ",
                             ReviewDate = null,
                             ReviewedBy = null,
-                            ProjectID = projectTechInnovators2.ID
+                            ProjectID = projectTechInnovators2.ID,
+                            BidReadyForApproval = true
                         },
                         new Bid
                         {
@@ -314,7 +316,8 @@ namespace NBD4.Data
                             BidMarkForRedisignNotes = " ",
                             ReviewDate = null,
                             ReviewedBy = null,
-                            ProjectID = projectGlobalSolutions1.ID
+                            ProjectID = projectGlobalSolutions1.ID,
+                            BidReadyForApproval = false
                         },
                         new Bid
                         {
@@ -328,7 +331,8 @@ namespace NBD4.Data
                             BidMarkForRedisignNotes = " ",
                             ReviewDate = DateTime.Parse("2024-06-25"),
                             ReviewedBy = "John Smith",
-                            ProjectID = projectGlobalSolutions2.ID
+                            ProjectID = projectGlobalSolutions2.ID,
+                            BidReadyForApproval = true
                         },
                         new Bid
                         {
@@ -342,7 +346,8 @@ namespace NBD4.Data
                             BidMarkForRedisignNotes = " ",
                             ReviewDate = null,
                             ReviewedBy = null,
-                            ProjectID = projectPinnacleEnterprises1.ID
+                            ProjectID = projectPinnacleEnterprises1.ID,
+                            BidReadyForApproval = true
                         },
                         new Bid
                         {
@@ -356,7 +361,8 @@ namespace NBD4.Data
                             BidMarkForRedisignNotes = " ",
                             ReviewDate = DateTime.Parse("2024-09-20"),
                             ReviewedBy = "Alice Johnson",
-                            ProjectID = projectPinnacleEnterprises2.ID
+                            ProjectID = projectPinnacleEnterprises2.ID,
+                            BidReadyForApproval = true
                         },
                         new Bid
                         {
@@ -370,7 +376,8 @@ namespace NBD4.Data
                             BidMarkForRedisignNotes = " ",
                             ReviewDate = null,
                             ReviewedBy = null,
-                            ProjectID = projectInfiniteDynamics1.ID
+                            ProjectID = projectInfiniteDynamics1.ID,
+                            BidReadyForApproval = false
                         },
                         new Bid
                         {
@@ -384,7 +391,8 @@ namespace NBD4.Data
                             BidMarkForRedisignNotes = " ",
                             ReviewDate = null,
                             ReviewedBy = null,
-                            ProjectID = projectInfiniteDynamics2.ID
+                            ProjectID = projectInfiniteDynamics2.ID,
+                            BidReadyForApproval = true
                         },
                         new Bid
                         {
@@ -397,7 +405,8 @@ namespace NBD4.Data
                             BidMarkForRedesign = false,
                             ReviewDate = DateTime.Parse("2024-12-28"),
                             ReviewedBy = "Alex Johnson",
-                            ProjectID = projectEagleEyeTechnologies1.ID
+                            ProjectID = projectEagleEyeTechnologies1.ID,
+                            BidReadyForApproval = true
                         },
                         new Bid
                         {
@@ -411,7 +420,8 @@ namespace NBD4.Data
                             BidMarkForRedisignNotes = " ",
                             ReviewDate = null,
                             ReviewedBy = null,
-                            ProjectID = projectEagleEyeTechnologies2.ID
+                            ProjectID = projectEagleEyeTechnologies2.ID,
+                            BidReadyForApproval = true
                         }
                     );
                     context.SaveChanges();

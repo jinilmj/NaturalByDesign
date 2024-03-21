@@ -55,6 +55,9 @@ namespace NBD4.Models
 
         [Display(Name = "Designer/SalePerson")]
         public ICollection<BidStaff> BidStaffs { get; set; } = new HashSet<BidStaff>();
+        
+        [Display(Name = "Ready For Approval")]
+        public bool BidReadyForApproval { get; set; }
 
         public double CalculateTotalMaterialCost()
         {

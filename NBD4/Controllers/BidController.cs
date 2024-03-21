@@ -31,7 +31,7 @@ namespace NBD4.Controllers
 
         // GET: Bid
         public async Task<IActionResult> Index(string SearchStringPh, string SearchClient, int? pageSizeID, string actionButton, int? page,
-            string sortDirection = "asc",string sortField = "Bid")
+            string approvalButton, string sortDirection = "asc",string sortField = "Bid")
         {
             ViewData["Filtering"] = "btn-outline-secondary";
             int numberFilters = 0;
@@ -54,8 +54,11 @@ namespace NBD4.Controllers
                 bids = bids.Where(p => p.Project.Client.Name.ToUpper().Contains(SearchClient.ToUpper()));
                 numberFilters++;
             }
-
-            if (numberFilters != 0)
+            if (!String.IsNullOrEmpty(approvalButton))
+            {
+                bids = bids.Where(p => p.BidReadyForApproval == true);
+            }
+                if (numberFilters != 0)
             {
                 //Toggle the Open/Closed state of the collapse depending on if we are filtering
                 ViewData["Filtering"] = " btn-danger";
@@ -116,6 +119,7 @@ namespace NBD4.Controllers
                         .OrderByDescending(p => p.Project.Site);
                 }
             }
+
             ViewData["sortField"] = sortField;
             ViewData["sortDirection"] = sortDirection;
 
@@ -332,7 +336,7 @@ namespace NBD4.Controllers
             UpdateBidInventories(selectedOptions, bidToUpdate);
 
             if (await TryUpdateModelAsync<Bid>(bidToUpdate, "", b => b.BidDate, b => b.BidAmount, b => b.BidNBDApproved, b => b.BidNBDApprovalNotes, b => b.BidClientApproved, b => b.BidClientApprovalNotes
-                    , b => b.BidMarkForRedesign,b=>b.BidMarkForRedisignNotes ,b => b.ReviewDate, b => b.ReviewedBy, b => b.ProjectID))
+                    , b => b.BidMarkForRedesign,b=>b.BidMarkForRedisignNotes ,b => b.ReviewDate, b => b.ReviewedBy, b => b.ProjectID, b => b.BidReadyForApproval))
             {
                 try
                 {

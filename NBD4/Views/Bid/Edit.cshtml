@@ -279,6 +279,11 @@
             </div>
         </div>
         <div class="col-md-6">
+            <div class="form-group">
+               <label class="form-check-label">
+                    <input class="form-check-input" asp-for="BidReadyForApproval" /> @Html.DisplayNameFor(model => model.BidReadyForApproval)
+                </label>
+            </div>
              <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="BidNBDApproved" /> @Html.DisplayNameFor(model => model.BidNBDApproved)
@@ -324,7 +329,6 @@
                 <input asp-for="BidAmount" class="form-control" />
                 <span asp-validation-for="BidAmount" class="text-danger"></span>
             </div>
-           
         </div>                  
     </div>
     <div class="form-group">
