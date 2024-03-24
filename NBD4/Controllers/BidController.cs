@@ -56,7 +56,7 @@ namespace NBD4.Controllers
             }
             if (!String.IsNullOrEmpty(approvalButton))
             {
-                bids = bids.Where(p => p.BidReadyForApproval == true);
+                bids = bids.Where(p => p.ApprovalStage != ApprovalStage.NEW && p.ApprovalStage != ApprovalStage.APPROVED);
             }
                 if (numberFilters != 0)
             {
@@ -336,7 +336,7 @@ namespace NBD4.Controllers
             UpdateBidInventories(selectedOptions, bidToUpdate);
 
             if (await TryUpdateModelAsync<Bid>(bidToUpdate, "", b => b.BidDate, b => b.BidAmount, b => b.BidNBDApproved, b => b.BidNBDApprovalNotes, b => b.BidClientApproved, b => b.BidClientApprovalNotes
-                    , b => b.BidMarkForRedesign,b=>b.BidMarkForRedisignNotes ,b => b.ReviewDate, b => b.ReviewedBy, b => b.ProjectID, b => b.BidReadyForApproval))
+                    , b => b.BidMarkForRedesign,b=>b.BidMarkForRedisignNotes ,b => b.ReviewDate, b => b.ReviewedBy, b => b.ProjectID, b => b.ApprovalStage))
             {
                 try
                 {

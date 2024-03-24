@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using NBD4.Utilities;
+using System.ComponentModel.DataAnnotations;
 
 namespace NBD4.Models
 {
@@ -56,8 +57,8 @@ namespace NBD4.Models
         [Display(Name = "Designer/SalePerson")]
         public ICollection<BidStaff> BidStaffs { get; set; } = new HashSet<BidStaff>();
         
-        [Display(Name = "Ready For Approval")]
-        public bool BidReadyForApproval { get; set; }
+        [Display(Name = "Approval Stage")]
+        public ApprovalStage ApprovalStage { get; set; }
 
         public double CalculateTotalMaterialCost()
         {

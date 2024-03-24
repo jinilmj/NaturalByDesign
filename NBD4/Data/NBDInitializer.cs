@@ -287,7 +287,7 @@ namespace NBD4.Data
                             ReviewDate = DateTime.Parse("2024-04-22"),
                             ReviewedBy = "Jane Doe",
                             ProjectID = projectTechInnovators1.ID,
-                            BidReadyForApproval = true
+                            ApprovalStage = Utilities.ApprovalStage.APPROVED
                         },
                         new Bid
                         {
@@ -302,7 +302,7 @@ namespace NBD4.Data
                             ReviewDate = null,
                             ReviewedBy = null,
                             ProjectID = projectTechInnovators2.ID,
-                            BidReadyForApproval = true
+                            ApprovalStage = Utilities.ApprovalStage.WAITING_FOR_CLIENT
                         },
                         new Bid
                         {
@@ -317,7 +317,7 @@ namespace NBD4.Data
                             ReviewDate = null,
                             ReviewedBy = null,
                             ProjectID = projectGlobalSolutions1.ID,
-                            BidReadyForApproval = false
+                            ApprovalStage = Utilities.ApprovalStage.WAITING_FOR_MANAGEMENT
                         },
                         new Bid
                         {
@@ -332,7 +332,7 @@ namespace NBD4.Data
                             ReviewDate = DateTime.Parse("2024-06-25"),
                             ReviewedBy = "John Smith",
                             ProjectID = projectGlobalSolutions2.ID,
-                            BidReadyForApproval = true
+                            ApprovalStage = Utilities.ApprovalStage.APPROVED
                         },
                         new Bid
                         {
@@ -347,7 +347,7 @@ namespace NBD4.Data
                             ReviewDate = null,
                             ReviewedBy = null,
                             ProjectID = projectPinnacleEnterprises1.ID,
-                            BidReadyForApproval = true
+                            ApprovalStage = Utilities.ApprovalStage.WAITING_FOR_CLIENT
                         },
                         new Bid
                         {
@@ -362,7 +362,7 @@ namespace NBD4.Data
                             ReviewDate = DateTime.Parse("2024-09-20"),
                             ReviewedBy = "Alice Johnson",
                             ProjectID = projectPinnacleEnterprises2.ID,
-                            BidReadyForApproval = true
+                            ApprovalStage = Utilities.ApprovalStage.APPROVED
                         },
                         new Bid
                         {
@@ -377,7 +377,7 @@ namespace NBD4.Data
                             ReviewDate = null,
                             ReviewedBy = null,
                             ProjectID = projectInfiniteDynamics1.ID,
-                            BidReadyForApproval = false
+                            ApprovalStage = Utilities.ApprovalStage.WAITING_FOR_CLIENT
                         },
                         new Bid
                         {
@@ -392,7 +392,7 @@ namespace NBD4.Data
                             ReviewDate = null,
                             ReviewedBy = null,
                             ProjectID = projectInfiniteDynamics2.ID,
-                            BidReadyForApproval = true
+                            ApprovalStage = Utilities.ApprovalStage.WAITING_FOR_CLIENT
                         },
                         new Bid
                         {
@@ -406,7 +406,7 @@ namespace NBD4.Data
                             ReviewDate = DateTime.Parse("2024-12-28"),
                             ReviewedBy = "Alex Johnson",
                             ProjectID = projectEagleEyeTechnologies1.ID,
-                            BidReadyForApproval = true
+                            ApprovalStage = Utilities.ApprovalStage.APPROVED
                         },
                         new Bid
                         {
@@ -421,7 +421,7 @@ namespace NBD4.Data
                             ReviewDate = null,
                             ReviewedBy = null,
                             ProjectID = projectEagleEyeTechnologies2.ID,
-                            BidReadyForApproval = true
+                            ApprovalStage = Utilities.ApprovalStage.WAITING_FOR_CLIENT
                         }
                     );
                     context.SaveChanges();
