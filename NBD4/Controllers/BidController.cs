@@ -47,11 +47,11 @@ namespace NBD4.Controllers
                 .Include(b => b.BidLabourTypeInfos).ThenInclude(p => p.LabourTypeInfo)
                 .AsNoTracking();
 
-            if (loggedInEmployeeDesigner )
-            {
-                string loggedInEmployeeFullName = "Tamara"; 
-                bids = bids.Where(b => b.BidStaffs.Any(s => s.Staff.StaffFirstName == loggedInEmployeeFullName));
-            }
+            //if (loggedInEmployeeDesigner )
+            //{
+            //    string loggedInEmployeeFullName = "Tamara"; 
+            //    bids = bids.Where(b => b.BidStaffs.Any(s => s.Staff.StaffFirstName == loggedInEmployeeFullName));
+            //}
             if (loggedInEmployeeSales)
             {
                 string loggedInEmployeeFullName = "Bob"; 
