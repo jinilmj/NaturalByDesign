@@ -9,7 +9,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="BidDate" class="control-label"></label>
-                <input asp-for="BidDate" class="form-control" />
+                <input asp-for="BidDate" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
                 <span asp-validation-for="BidDate" class="text-danger"></span>
             </div>
             
@@ -87,7 +87,8 @@
                                             <input class="form-control" type="number"
                                                    name="selectedLabourHours[@checkbox.ID]"
                                                    value="@checkbox.Hours"
-                                                   min="0" />
+                                                   min="0"
+                                                   oninput="this.value = Math.abs(this.value)"/>
                                         </td>
                                     </tr>
                                 }
@@ -163,7 +164,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input type="number" id="quantityInputPlant" class="form-control" name="selectedInventoryQuantitiesPlant[@((ViewBag.InventoryOptionsPlant.Count > 0 ? ViewBag.InventoryOptionsPlant[0].ID : ""))]" min="0" />
+                                        <input type="number" id="quantityInputPlant" class="form-control" name="selectedInventoryQuantitiesPlant[@((ViewBag.InventoryOptionsPlant.Count > 0 ? ViewBag.InventoryOptionsPlant[0].ID : ""))]" min="0" oninput="this.value = Math.abs(this.value)"/>
                                 
                                     </td>
                                     <td>
@@ -194,7 +195,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input type="number" id="quantityInputPottery" class="form-control" name="selectedInventoryQuantitiesPottery[@((ViewBag.InventoryOptionsPottery.Count > 0 ? ViewBag.InventoryOptionsPottery[0].ID : ""))]" min="0" />
+                                        <input type="number" id="quantityInputPottery" class="form-control" name="selectedInventoryQuantitiesPottery[@((ViewBag.InventoryOptionsPottery.Count > 0 ? ViewBag.InventoryOptionsPottery[0].ID : ""))]" min="0" oninput="this.value = Math.abs(this.value)" />
 
                                     </td>
                                     <td>
@@ -225,7 +226,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input type="number" id="quantityInputOther" class="form-control" name="selectedInventoryQuantitiesOther[@((ViewBag.InventoryOptionsOther.Count > 0 ? ViewBag.InventoryOptionsOther[0].ID : ""))]" min="0" />
+                                        <input type="number" id="quantityInputOther" class="form-control" name="selectedInventoryQuantitiesOther[@((ViewBag.InventoryOptionsOther.Count > 0 ? ViewBag.InventoryOptionsOther[0].ID : ""))]" min="0" oninput="this.value = Math.abs(this.value)" />
 
                                     </td>
                                     <td>
