@@ -33,6 +33,8 @@ namespace NBD4.Controllers
         public async Task<IActionResult> Index(string SearchStringPh, string SearchClient, int? pageSizeID, string actionButton, int? page,
             string approvalButton, string sortDirection = "asc",string sortField = "Bid")
         {
+            var loggedInEmployeeDesigner = User.IsInRole("Designer");
+            var loggedInEmployeeSales = User.IsInRole("Sales Associate");
             ViewData["Filtering"] = "btn-outline-secondary";
             int numberFilters = 0;
 
@@ -44,6 +46,17 @@ namespace NBD4.Controllers
                 .Include(b=>b.BidStaffs).ThenInclude(p=>p.Staff)
                 .Include(b => b.BidLabourTypeInfos).ThenInclude(p => p.LabourTypeInfo)
                 .AsNoTracking();
+
+            if (loggedInEmployeeDesigner )
+            {
+                string loggedInEmployeeFullName = "Tamara"; 
+                bids = bids.Where(b => b.BidStaffs.Any(s => s.Staff.StaffFirstName == loggedInEmployeeFullName));
+            }
+            if (loggedInEmployeeSales)
+            {
+                string loggedInEmployeeFullName = "Bob"; 
+                bids = bids.Where(b => b.BidStaffs.Any(s => s.Staff.StaffFirstName == loggedInEmployeeFullName));
+            }
             if (!String.IsNullOrEmpty(SearchStringPh))
             {
                 bids = bids.Where(p => p.Project.Site.ToUpper().Contains(SearchStringPh.ToUpper()));

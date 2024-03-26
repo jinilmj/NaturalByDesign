@@ -64,6 +64,10 @@
                 <select asp-for="CityID" class="form-control" asp-items="ViewBag.CityID">
                     <option value="0"><span class="mandatory">Select City</span></option>
                 </select> 
+                <a asp-action="Create" asp-controller="City" class="btn btn-sm btn-outline-secondary" id="nowAddCity"
+                   >
+                    <strong>Add City</strong>
+                </a>
                @*  <span asp-validation-for="CityID" class="text-danger"></span>  *@
              </div>
             @* 
