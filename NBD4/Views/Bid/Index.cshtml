@@ -116,7 +116,16 @@
                 @Html.DisplayFor(modelItem => item.Project.Site)
             </td>
             @{
-                    if (User.IsInRole("Designer"))
+                    if (User.IsInRole("Sales Associate"))
+                    {
+                            <td class="text-center">
+                                <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-primary"
+                                   role="button" data-bs-toggle="tooltip" title="@ViewData["ControllerFriendlyName"] Details">
+                                    Details
+                                </a>
+                            </td>
+                    }
+                    else if (User.IsInRole("Designer"))
                     {
                             <td class="text-center">
 
