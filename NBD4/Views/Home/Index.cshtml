@@ -14,7 +14,7 @@
                     <img src="../images/customer1.png" alt="Client logo">
                     <span class="circle-name">Client</span>
                 </a>
-            </div>
+            </div>            
             <div class="image-container">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="Index"
                    data-bs-toggle="tooltip" title="Click to go to Project Page">
@@ -30,7 +30,51 @@
                 </a>
             </div>
         </div>
-        <div class="image-links">
+        @{
+            if (User.IsInRole("Admin") || User.IsInRole("Designer") || User.IsInRole("Sales Associate"))
+            {
+                <div class="image-links">
+                    <div class="image-container">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Lookup" asp-action="Index"
+                           data-bs-toggle="tooltip" title="Click to go to Lookup Page">
+                            <img src="../images/scope.png" alt="Link 3">
+                            <span class="circle-name">Lookup</span>
+                        </a>
+                    </div>
+                    <div class="image-container">
+                        <a href="#">
+                            <img src="../images/image.jpg" alt="Link 3">
+                        </a>
+                    </div>
+                    <div class="image-container">
+                        <a href="#">
+                            <img src="../images/image.jpg" alt="Link 3">
+                        </a>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="image-links">
+                    <div class="image-container">
+                        <a href="#">
+                            <img src="../images/image.jpg" alt="Link 3">
+                        </a>
+                    </div>
+                    <div class="image-container">
+                        <a href="#">
+                            <img src="../images/image.jpg" alt="Link 3">
+                        </a>
+                    </div>
+                    <div class="image-container">
+                        <a href="#">
+                            <img src="../images/image.jpg" alt="Link 3">
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+        @* <div class="image-links">
             <div class="image-container">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Lookup" asp-action="Index"
                    data-bs-toggle="tooltip" title="Click to go to Lookup Page">
@@ -48,7 +92,7 @@
                     <img src="../images/image.jpg" alt="Link 3">
                 </a>
             </div>
-        </div>
+        </div> *@
 
     </div>
         

@@ -164,7 +164,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input type="number" id="quantityInputPlant" class="form-control" name="selectedInventoryQuantitiesPlant[@((ViewBag.InventoryOptionsPlant.Count > 0 ? ViewBag.InventoryOptionsPlant[0].ID : ""))]" min="0" oninput="this.value = Math.abs(this.value)"/>
+                                        <input type="number" id="quantityInputPlant" class="form-control" name="selectedInventoryQuantitiesPlant[@((ViewBag.InventoryOptionsPlant.Count > 0 ? ViewBag.InventoryOptionsPlant[0].ID : ""))]" min="1" oninput="this.value = Math.abs(this.value)"/>
                                 
                                     </td>
                                     <td>
@@ -195,7 +195,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input type="number" id="quantityInputPottery" class="form-control" name="selectedInventoryQuantitiesPottery[@((ViewBag.InventoryOptionsPottery.Count > 0 ? ViewBag.InventoryOptionsPottery[0].ID : ""))]" min="0" oninput="this.value = Math.abs(this.value)" />
+                                        <input type="number" id="quantityInputPottery" class="form-control" name="selectedInventoryQuantitiesPottery[@((ViewBag.InventoryOptionsPottery.Count > 0 ? ViewBag.InventoryOptionsPottery[0].ID : ""))]" min="1" oninput="this.value = Math.abs(this.value)" />
 
                                     </td>
                                     <td>
@@ -226,7 +226,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input type="number" id="quantityInputOther" class="form-control" name="selectedInventoryQuantitiesOther[@((ViewBag.InventoryOptionsOther.Count > 0 ? ViewBag.InventoryOptionsOther[0].ID : ""))]" min="0" oninput="this.value = Math.abs(this.value)" />
+                                        <input type="number" id="quantityInputOther" class="form-control" name="selectedInventoryQuantitiesOther[@((ViewBag.InventoryOptionsOther.Count > 0 ? ViewBag.InventoryOptionsOther[0].ID : ""))]" min="1" oninput="this.value = Math.abs(this.value)" />
 
                                     </td>
                                     <td>
@@ -337,7 +337,7 @@ $(document).ready(function () {
             $('#materialsTablePlant tbody').append(
                 '<tr>' +
                 '<td>' + materialName + '<input type="hidden" name="selectedOptions" value="' + materialId + '"></td>' +
-                '<td><input type="number" class="form-control" name="selectedInventoryQuantitiesPlant[' + materialId + ']" value="' + quantity + '" min="0"></td>' +
+                '<td><input type="number" class="form-control" name="selectedInventoryQuantitiesPlant[' + materialId + ']" value="' + quantity + '" min="1"></td>' +
                 '<td>' + removeBtnHtml + '</td>' +
                 '</tr>'
             );
@@ -384,7 +384,7 @@ $(document).ready(function () {
             $('#materialsTablePottery tbody').append(
                 '<tr>' +
                 '<td>' + materialName + '<input type="hidden" name="selectedOptions" value="' + materialId + '"></td>' +
-                '<td><input type="number" class="form-control" name="selectedInventoryQuantitiesPottery[' + materialId + ']" value="' + quantity + '" min="0"></td>' +
+                '<td><input type="number" class="form-control" name="selectedInventoryQuantitiesPottery[' + materialId + ']" value="' + quantity + '" min="1"></td>' +
                 '<td>' + removeBtnHtml + '</td>' +
                 '</tr>'
             );
@@ -431,7 +431,7 @@ $(document).ready(function () {
             $('#materialsTableOther tbody').append(
                 '<tr>' +
                 '<td>' + materialName + '<input type="hidden" name="selectedOptions" value="' + materialId + '"></td>' +
-                '<td><input type="number" class="form-control" name="selectedInventoryQuantitiesOther[' + materialId + ']" value="' + quantity + '" min="0"></td>' +
+                '<td><input type="number" class="form-control" name="selectedInventoryQuantitiesOther[' + materialId + ']" value="' + quantity + '" min="1"></td>' +
                 '<td>' + removeBtnHtml + '</td>' +
                 '</tr>'
             );

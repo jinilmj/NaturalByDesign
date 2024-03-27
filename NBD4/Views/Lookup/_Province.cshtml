@@ -4,9 +4,26 @@
     <div class="card-body">
         @Html.DropDownList("ProvinceID", null, htmlAttributes: new { @size = 6, @class = "form-control" })
     </div>
-    <div class="card-footer">
-        <a asp-controller="Province" asp-action="Create">Create</a> |
-        <a asp-controller="Province" asp-action="Edit" class="linkClick">Edit</a> |
-        <a asp-controller="Province" asp-action="Delete" class="linkClick">Delete</a>
-    </div>
+    @{
+        if (User.IsInRole("Designer"))
+        {
+            <div class="card-footer">
+                <a asp-controller="Province" asp-action="Create">Create</a> |
+                <a asp-controller="Province" asp-action="Edit" class="linkClick">Edit</a> 
+            </div>
+        }
+        else if (User.IsInRole("Admin"))
+        {
+            <div class="card-footer">
+                <a asp-controller="Province" asp-action="Create">Create</a> |
+                <a asp-controller="Province" asp-action="Edit" class="linkClick">Edit</a> |
+                <a asp-controller="Province" asp-action="Delete" class="linkClick">Delete</a>
+            </div>
+        }
+    }
+    @* <div class="card-footer">
+    <a asp-controller="Province" asp-action="Create">Create</a> |
+    <a asp-controller="Province" asp-action="Edit" class="linkClick">Edit</a> |
+    <a asp-controller="Province" asp-action="Delete" class="linkClick">Delete</a>
+    </div> *@
 </div>
