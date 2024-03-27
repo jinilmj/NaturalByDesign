@@ -50,12 +50,23 @@
 				<th>
 					<input type="submit" name="actionButton" value="Clients" class="btn btn-link" />
 				</th>
-				<th class="text-center" style="min-width:120px">
+				@{
+					if (User.IsInRole("Designer") || User.IsInRole("Admin"))
+					{
+						<th class="text-center" style="min-width:120px">
+							<a asp-action="Create" class="btn btn-sm btn-outline-success"
+							   role="button" data-bs-toggle="tooltip" title="Create New @ViewData["ControllerFriendlyName"]">
+								<strong>&#x270D; Create</strong>
+							</a>
+						</th>
+					}
+				}
+				@* <th class="text-center" style="min-width:120px">
 					<a asp-action="Create" class="btn btn-sm btn-outline-success"
 					   role="button" data-bs-toggle="tooltip" title="Create New @ViewData["ControllerFriendlyName"]">
 						<strong>&#x270D; Create</strong>
 					</a>
-				</th>
+				</th> *@
 			</tr>
 		</thead>
 		<tbody>
@@ -74,7 +85,48 @@
 					<td>
 						@Html.DisplayFor(modelItem => item.Client.Name)
 					</td>
-					<td class="text-center">
+					@{
+						if (User.IsInRole("Sales Associate"))
+						{
+							<td class="text-center">
+								<a asp-action="Details" asp-route-id="@item.ID" class="btn  btn-primary"
+								   role="button" data-bs-toggle="tooltip" title="Details @ViewData["ControllerFriendlyName"]">
+									Details
+								</a>
+							</td>
+						}
+						else if (User.IsInRole("Designer"))
+						{
+							<td class="text-center">
+								<a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-primary"
+								   role="button" data-bs-toggle="tooltip" title="Edit @ViewData["ControllerFriendlyName"]">
+									Edit
+								</a>
+								<a asp-action="Details" asp-route-id="@item.ID" class="btn  btn-primary"
+								   role="button" data-bs-toggle="tooltip" title="Details @ViewData["ControllerFriendlyName"]">
+									Details
+								</a>
+							</td>
+						}
+						else if (User.IsInRole("Admin"))
+						{
+							<td class="text-center">
+								<a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-primary"
+								   role="button" data-bs-toggle="tooltip" title="Edit @ViewData["ControllerFriendlyName"]">
+									Edit
+								</a>
+								<a asp-action="Details" asp-route-id="@item.ID" class="btn  btn-primary"
+								   role="button" data-bs-toggle="tooltip" title="Details @ViewData["ControllerFriendlyName"]">
+									Details
+								</a>
+								<a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-primary"
+								   role="button" data-bs-toggle="tooltip" title="Delete @ViewData["ControllerFriendlyName"]">
+									Delete
+								</a>
+							</td>
+						}
+					}
+					@* <td class="text-center">
 						<a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-primary"
 						   role="button" data-bs-toggle="tooltip" title="Edit @ViewData["ControllerFriendlyName"]">
 							Edit
@@ -87,7 +139,7 @@
 						   role="button" data-bs-toggle="tooltip" title="Delete @ViewData["ControllerFriendlyName"]">
 							Delete
 						</a>
-					</td>
+					</td> *@
 				</tr>
 			}
 		</tbody>

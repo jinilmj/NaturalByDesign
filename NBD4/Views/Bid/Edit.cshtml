@@ -137,7 +137,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="number" id="quantityInputPlant" class="form-control" name="selectedInventoryQuantitiesPlant[new]" min="0" />
+                                    <input type="number" id="quantityInputPlant" class="form-control" name="selectedInventoryQuantitiesPlant[new]" min="1" />
                                 </td>
                                 <td>
                                     <button class="btn btn-danger btn-sm removeRowBtnPlant">Remove</button>
@@ -154,7 +154,7 @@
                                             @bidInventory.Inventory.Description
                                         </td>
                                         <td>
-                                            <input type="number" class="form-control" name="selectedInventoryQuantitiesPlant[@bidInventory.InventoryID]" value="@bidInventory.MaterialQuantity" min="0" />
+                                            <input type="number" class="form-control" name="selectedInventoryQuantitiesPlant[@bidInventory.InventoryID]" value="@bidInventory.MaterialQuantity" min="1" />
                                         </td>
                                         <td>
                                             
@@ -190,7 +190,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="number" id="quantityInputPottery" class="form-control" name="selectedInventoryQuantitiesPottery[new]" min="0" />
+                                    <input type="number" id="quantityInputPottery" class="form-control" name="selectedInventoryQuantitiesPottery[new]" min="1" />
                                 </td>
                                 <td>
                                     <button class="btn btn-danger btn-sm removeRowBtnPottery">Remove</button>
@@ -207,7 +207,7 @@
                                             @bidInventory.Inventory.Description
                                                 </td>
                                                 <td>
-                                                    <input type="number" class="form-control" name="selectedInventoryQuantitiesPottery[@bidInventory.InventoryID]" value="@bidInventory.MaterialQuantity" min="0" />
+                                                    <input type="number" class="form-control" name="selectedInventoryQuantitiesPottery[@bidInventory.InventoryID]" value="@bidInventory.MaterialQuantity" min="1" />
                                                 </td>
                                                 <td>
 
@@ -243,7 +243,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="number" id="quantityInputOther" class="form-control" name="selectedInventoryQuantitiesOther[new]" min="0" />
+                                    <input type="number" id="quantityInputOther" class="form-control" name="selectedInventoryQuantitiesOther[new]" min="1" />
                                 </td>
                                 <td>
                                     <button class="btn btn-danger btn-sm removeRowBtnOther">Remove</button>
@@ -260,7 +260,7 @@
                                             @bidInventory.Inventory.Description
                                                 </td>
                                                 <td>
-                                                    <input type="number" class="form-control" name="selectedInventoryQuantitiesOther[@bidInventory.InventoryID]" value="@bidInventory.MaterialQuantity" min="0" />
+                                                    <input type="number" class="form-control" name="selectedInventoryQuantitiesOther[@bidInventory.InventoryID]" value="@bidInventory.MaterialQuantity" min="1" />
                                                 </td>
                                                 <td>
 
@@ -278,9 +278,12 @@
        
                 </div>
             </div>
-        </div>
+        </div>       
         <div class="col-md-6">
-            <div class="form-group">
+             @{
+                if (User.IsInRole("Admin"))
+                {
+                     <div class="form-group">
                 <label asp-for="ApprovalStage" class="control-label"></label>
                 <select asp-for="ApprovalStage" class="form-control" asp-items="Html.GetEnumSelectList<ApprovalStage>()"></select>
                 <span asp-validation-for="ApprovalStage" class="text-danger"></span>
@@ -325,6 +328,53 @@
                 <input asp-for="ReviewedBy" class="form-control" />
                 <span asp-validation-for="ReviewedBy" class="text-danger"></span>
             </div>
+                }
+            }
+            @* <div class="form-group">
+                <label asp-for="ApprovalStage" class="control-label"></label>
+                <select asp-for="ApprovalStage" class="form-control" asp-items="Html.GetEnumSelectList<ApprovalStage>()"></select>
+                <span asp-validation-for="ApprovalStage" class="text-danger"></span>
+            </div>
+             <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="BidNBDApproved" /> @Html.DisplayNameFor(model => model.BidNBDApproved)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="BidNBDApprovalNotes" class="control-label"></label>
+                <textarea asp-for="BidNBDApprovalNotes" class="form-control" > </textarea>
+                <span asp-validation-for="BidNBDApprovalNotes" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="BidClientApproved" /> @Html.DisplayNameFor(model => model.BidClientApproved)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="BidClientApprovalNotes" class="control-label"></label>
+                 <textarea asp-for="BidClientApprovalNotes" class="form-control"  > </textarea>
+                <span asp-validation-for="BidClientApprovalNotes" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="BidMarkForRedesign" /> @Html.DisplayNameFor(model => model.BidMarkForRedesign)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="BidMarkForRedisignNotes" class="control-label"></label>
+                <textarea asp-for="BidMarkForRedisignNotes" class="form-control" > </textarea>
+                <span asp-validation-for="BidMarkForRedisignNotes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReviewDate" class="control-label"></label>
+                <input asp-for="ReviewDate" class="form-control" />
+                <span asp-validation-for="ReviewDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ReviewedBy" class="control-label"></label>
+                <input asp-for="ReviewedBy" class="form-control" />
+                <span asp-validation-for="ReviewedBy" class="text-danger"></span>
+            </div> *@
             <div class="form-group">
                 <label asp-for="BidAmount" class="control-label"></label>
                 <input asp-for="BidAmount" class="form-control" />
@@ -363,7 +413,7 @@ $(document).ready(function () {
             $('#materialsTablePlant tbody').append(
                 '<tr>' +
                 '<td>' + materialName + '<input type="hidden" name="selectedOptions" value="' + materialId + '"></td>' +
-                '<td><input type="number" class="form-control" name="selectedInventoryQuantitiesPlant[' + materialId + ']" value="' + quantity + '" min="0"></td>' +
+                '<td><input type="number" class="form-control" name="selectedInventoryQuantitiesPlant[' + materialId + ']" value="' + quantity + '" min="1"></td>' +
                 // '<td>' + quantity + '<input type="hidden" name="selectedInventoryQuantities[' + materialId + ']" value="' + quantity + '"></td>' +
                 '<td>' + removeBtnHtml + '</td>' +
                 '</tr>'
@@ -410,7 +460,7 @@ $(document).ready(function () {
             $('#materialsTablePottery tbody').append(
                 '<tr>' +
                 '<td>' + materialName + '<input type="hidden" name="selectedOptions" value="' + materialId + '"></td>' +
-                '<td><input type="number" class="form-control" name="selectedInventoryQuantitiesPottery[' + materialId + ']" value="' + quantity + '" min="0"></td>' +
+                '<td><input type="number" class="form-control" name="selectedInventoryQuantitiesPottery[' + materialId + ']" value="' + quantity + '" min="1"></td>' +
                 // '<td>' + quantity + '<input type="hidden" name="selectedInventoryQuantities[' + materialId + ']" value="' + quantity + '"></td>' +
                 '<td>' + removeBtnHtml + '</td>' +
                 '</tr>'
@@ -457,7 +507,7 @@ $(document).ready(function () {
             $('#materialsTableOther tbody').append(
                 '<tr>' +
                 '<td>' + materialName + '<input type="hidden" name="selectedOptions" value="' + materialId + '"></td>' +
-                '<td><input type="number" class="form-control" name="selectedInventoryQuantitiesOther[' + materialId + ']" value="' + quantity + '" min="0"></td>' +
+                '<td><input type="number" class="form-control" name="selectedInventoryQuantitiesOther[' + materialId + ']" value="' + quantity + '" min="1"></td>' +
                 // '<td>' + quantity + '<input type="hidden" name="selectedInventoryQuantities[' + materialId + ']" value="' + quantity + '"></td>' +
                 '<td>' + removeBtnHtml + '</td>' +
                 '</tr>'

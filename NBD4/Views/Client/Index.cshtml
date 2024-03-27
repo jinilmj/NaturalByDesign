@@ -52,12 +52,23 @@
 				<th>
 					<input type="submit" value="Address" class="btn btn-toolbar" />
 				</th>
-				<th class="text-center" style="min-width:120px">
+				@{
+					if (User.IsInRole("Designer") || User.IsInRole("Designer"))
+					{
+						<th class="text-center" style="min-width:120px">
+							<a asp-action="Create" class="btn btn-sm btn-outline-success"
+							   role="button" data-bs-toggle="tooltip" title="Create New @ViewData["ControllerFriendlyName"]">
+								<strong>&#x270D; Create</strong>
+							</a>
+						</th>
+					}
+				}
+				@* <th class="text-center" style="min-width:120px">
 					<a asp-action="Create" class="btn btn-sm btn-outline-success"
 					   role="button" data-bs-toggle="tooltip" title="Create New @ViewData["ControllerFriendlyName"]">
 						<strong>&#x270D; Create</strong>
 					</a>
-				</th>
+				</th> *@
 
 			</tr>
 		</thead>

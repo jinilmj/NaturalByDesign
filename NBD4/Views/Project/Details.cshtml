@@ -81,10 +81,19 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.BidMarkForRedesign)
                             </td>
-                            <td>
+                            @{
+                                if (User.IsInRole("Designer") || User.IsInRole("Admin"))
+                                {
+                                    <td>
+                                        <a asp-controller="Bid" asp-action="Details"
+                                           asp-route-id="@item.ID">Details</a>
+                                    </td>
+                                }
+                            }
+                           @*  <td>
                                 <a asp-controller="Bid" asp-action="Details"
                                    asp-route-id="@item.ID">Details</a>
-                            </td>
+                            </td> *@
                         </tr>
                     }
                 </tbody>
@@ -92,7 +101,19 @@
         </dd>
     </dl>
 </div>
+@{
+    if (User.IsInRole("Designer") || User.IsInRole("Admin"))
+    {
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model?.ID">Edit</a> |
+            <a href='@ViewData["returnURL"]'>Back to the @ViewData["ControllerName"] List</a>
+        </div>
+    }
+}
 <div>
+    <a href='@ViewData["returnURL"]'>Back to the @ViewData["ControllerName"] List</a>
+</div>
+@* <div>
     <a asp-action="Edit" asp-route-id="@Model?.ID">Edit</a> |
      <a href='@ViewData["returnURL"]'>Back to the @ViewData["ControllerName"] List</a>
-</div>
+</div> *@
