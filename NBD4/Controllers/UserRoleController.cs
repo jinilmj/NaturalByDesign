@@ -8,7 +8,7 @@ using NBD4.ViewModels;
 
 namespace NBD4.Controllers
 {
-    [Authorize(Roles = "Admin")]
+  [Authorize(Roles = "Admin")]
     public class UserRoleController : CognizantController
     {
         private readonly ApplicationDbContext _context;

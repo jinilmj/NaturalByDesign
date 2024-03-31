@@ -15,7 +15,7 @@ using NBD4.Utilities;
 
 namespace NBD4.Controllers
 {
-    [Authorize]
+ [Authorize]
     public class ClientController : ElephantController
     {
         private readonly NBDContext _context;
@@ -117,7 +117,7 @@ namespace NBD4.Controllers
         }
 
         // GET: Client/Details/5
-        [Authorize(Roles = "Admin, Designer, Sales Associate")]
+      [Authorize(Roles = "Admin, Designer, Sales Associate")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Clients == null)
@@ -138,7 +138,7 @@ namespace NBD4.Controllers
         }
 
         // GET: Client/Create
-        [Authorize(Roles = "Admin, Designer")]
+      [Authorize(Roles = "Admin, Designer")]
         public IActionResult Create()
         {
             //ViewData["CityID"] = new SelectList(_context.Cities, "ID", "Name");
@@ -151,7 +151,7 @@ namespace NBD4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin, Designer")]
+      [Authorize(Roles = "Admin, Designer")]
         public async Task<IActionResult> Create([Bind("ID,Name,ContactFirstName,ContactMiddleName,ContactLastName,Email,Phone,Street,PostalCode,CityID")] Client client)
         {
             try
@@ -173,7 +173,7 @@ namespace NBD4.Controllers
         }
 
         // GET: Client/Edit/5
-        [Authorize(Roles = "Admin, Designer")]
+      [Authorize(Roles = "Admin, Designer")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Clients == null)
@@ -196,7 +196,7 @@ namespace NBD4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin, Designer")]
+      [Authorize(Roles = "Admin, Designer")]
         public async Task<IActionResult> Edit(int id)
         {
             var clientToUpdate = await _context.Clients
@@ -241,7 +241,7 @@ namespace NBD4.Controllers
         }
 
         // GET: Client/Delete/5
-        [Authorize(Roles = "Admin")]
+      [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Clients == null)
@@ -264,7 +264,7 @@ namespace NBD4.Controllers
         // POST: Client/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+      [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Clients == null)
@@ -338,6 +338,12 @@ namespace NBD4.Controllers
 
         [HttpGet]
         public JsonResult GetCities(string ProvinceID)
+        {
+            return Json(CitySelectList(ProvinceID, null));
+        }
+
+        [HttpGet]
+        public JsonResult GetCitiesnew(string ProvinceID)
         {
             return Json(CitySelectList(ProvinceID, null));
         }

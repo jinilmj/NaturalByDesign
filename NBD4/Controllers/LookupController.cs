@@ -6,7 +6,7 @@ using NBD4.Data;
 
 namespace NBD4.Controllers
 {
-    [Authorize(Roles = "Admin, Designer, Sales Associate")]
+  [Authorize(Roles = "Admin, Designer, Sales Associate")]
     public class LookupController : CognizantController
 	{
 		private readonly NBDContext _context;

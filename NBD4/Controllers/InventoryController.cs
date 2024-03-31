@@ -48,7 +48,7 @@ namespace NBD4.Controllers
         }
 
         // GET: Inventory/Create
-        [Authorize(Roles = "Admin, Designer, Sales Associate")]
+      [Authorize(Roles = "Admin, Designer, Sales Associate")]
         public IActionResult Create()
         {
             ViewData["MaterialTypeID"] = new SelectList(_context.MaterialTypes, "ID", "MaterialTypeName");
@@ -60,7 +60,7 @@ namespace NBD4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin, Designer, Sales Associate")]
+      [Authorize(Roles = "Admin, Designer, Sales Associate")]
         public async Task<IActionResult> Create([Bind("ID,Code,Description,Size,ListCost,MaterialTypeID")] Inventory inventory)
         {
             try
@@ -97,7 +97,7 @@ namespace NBD4.Controllers
         }
 
         // GET: Inventory/Edit/5
-        [Authorize(Roles = "Admin, Designer, Sales Associate")]
+      [Authorize(Roles = "Admin, Designer, Sales Associate")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Inventories == null)
@@ -119,7 +119,7 @@ namespace NBD4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin, Designer, Sales Associate")]
+      [Authorize(Roles = "Admin, Designer, Sales Associate")]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Code,Description,Size,ListCost,MaterialTypeID")] Inventory inventory)
         {
             var inventoryToUpdate = await _context.Inventories
@@ -161,7 +161,7 @@ namespace NBD4.Controllers
         }
 
         // GET: Inventory/Delete/5
-        [Authorize(Roles = "Admin")]
+      [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Inventories == null)
@@ -183,7 +183,7 @@ namespace NBD4.Controllers
         // POST: Inventory/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+      [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Inventories == null)

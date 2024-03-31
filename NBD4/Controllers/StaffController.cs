@@ -49,7 +49,7 @@ namespace NBD4.Controllers
         }
 
         // GET: Staff/Create
-        [Authorize(Roles = "Admin")]
+      [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             ViewData["StaffRoleID"] = new SelectList(_context.StaffRoles, "ID", "StaffRoleName");
@@ -61,7 +61,7 @@ namespace NBD4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+      [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("ID,StaffFirstName,StaffMiddleName,StaffLastName,Email,Phone,StaffRoleID")] Staff staff)
         {
            
@@ -101,7 +101,7 @@ namespace NBD4.Controllers
         }
 
         // GET: Staff/Edit/5
-        [Authorize(Roles = "Admin")]
+      [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Staffs == null)
@@ -123,7 +123,7 @@ namespace NBD4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+      [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("ID,StaffFirstName,StaffMiddleName,StaffLastName,Email,Phone,StaffRoleID")] Staff staff)
         {
             var staffToUpdate = await _context.Staffs
@@ -165,7 +165,7 @@ namespace NBD4.Controllers
         }
 
         // GET: Staff/Delete/5
-        [Authorize(Roles = "Admin")]
+      [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Staffs == null)
@@ -187,7 +187,7 @@ namespace NBD4.Controllers
         // POST: Staff/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+      [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Staffs == null)

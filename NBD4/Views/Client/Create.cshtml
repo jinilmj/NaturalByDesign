@@ -58,24 +58,19 @@
                     <option value="0">Select Province</option>
                 </select>
             </div>
-            
+
             <div class="form-group">
                 <label asp-for="CityID" class="control-label">City<span class="mandatory">*</span></label>
-                <select asp-for="CityID" class="form-control" asp-items="ViewBag.CityID">
-                    <option value="0"><span class="mandatory">Select City</span></option>
-                </select> 
-                <a asp-action="Create" asp-controller="City" class="btn btn-sm btn-outline-secondary" id="nowAddCity"
-                   >
-                    <strong>Add City</strong>
-                </a>
-               @*  <span asp-validation-for="CityID" class="text-danger"></span>  *@
-             </div>
-            @* 
-            <div class="form-group">
-                <label asp-for="CityID" class="control-label"></label>
-                <select asp-for="CityID" class ="form-control" asp-items="ViewBag.CityID"></select>
-            </div> *@
-            
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-outline-secondary" id="nowAddCity" data-bs-toggle="modal" data-bs-target="#addCityModal" type="button">&#x2795;</button>
+                    </div>
+                    <select asp-for="CityID" class="form-control" asp-items="ViewBag.CityID">
+                        <option value="0"><span class="mandatory">Select City</span></option>
+                    </select>
+                </div>
+            </div>
+           
         </div>
     </div>
     <div class="row">
@@ -86,22 +81,92 @@
         </div>
     </div>
 </form>
-    
+<partial name="_addCityModal" />
 
 
 <div>
      <a href='@ViewData["returnURL"]'>Back to the @ViewData["ControllerName"] List</a>
 </div>
 
+
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="~/js/refreshDDL.js"></script>
-    <script type="text/javascript">
+    <script>
+        // $(document).on('change', '#ProvinceID', function () {
+        //     var selectedProvince = $("#ProvinceID").val();
+        //     var URL = "/Client/GetCities/?ProvinceID=" + selectedProvince;
+        //     refreshDDL('CityID', URL, true, 'Select a Province with Cities first', false, null, true);
+        // });
         $('#ProvinceID').change(function () {
             var selectedProvince = $("#ProvinceID").val();
             var URL = "/Client/GetCities/?ProvinceID=" + selectedProvince;
             refreshDDL('CityID', URL, true, 'Select a Province with Cities first', false, null, true);
         });
+
+        $('#ProvinceID').trigger('change'); // Trigger the change event on page load to load cities for the default province
+
+        $('#addCityModal').on('hide.bs.modal', function () {
+            var selectedProvince = $("#ProvinceID").val();
+            var URL = "/Client/GetCities/?ProvinceID=" + selectedProvince;
+            refreshDDL('CityID', URL, true, 'Select a Province with Cities first', false, null, true);
+        });
+
+        $('#submitCityCreate').click(function (event) {
+            event.preventDefault();
+            ClearErrors();
+            var form = $('#createCityForm');
+            if (form.valid()) {
+                $.ajax({
+                    type: "POST",
+                    url: form.attr('action'),
+                    data: form.serialize(),
+                    success: function () {
+                        $('#addCityModal').modal('hide');
+                    },
+                    error: function (xhr) {
+                        var errorMessages = [];
+                        switch (xhr.status) {
+                            case 401:
+                                errorMessages.push("You must be logged in first.");
+                                break;
+                            case 403:
+                                errorMessages.push("You are not authorized for this action.");
+                                break;
+                            default:
+                                errorMessages = xhr.responseText.split("|").slice(0, -1);
+                        }
+                        if (!errorMessages.some((str) => str !== "")) {
+                            errorMessages.push("Error: Unable to complete operation");
+                        }
+                        var ul = document.getElementById("ErrorList");
+                        for (var i = 0; i < errorMessages.length; i++) {
+                            var errorMessage = errorMessages[i];
+                            var li = document.createElement("li");
+                            li.innerHTML = errorMessage;
+                            ul.appendChild(li);
+                        }
+                    }
+                });
+            }
+            return false;
+        });
+
+        $('#addCityModal').on('hide.bs.modal', function () {
+            document.getElementById("createCityForm").reset();
+            ClearErrors();
+            var selectedOption = $('#CityID').val();
+            //refreshDDL('CityID', '/Client/GetCities/' + selectedOption, false, null, true, 'None', true);
+        });
+
+        function ClearErrors() {
+            var ul = document.getElementById("ErrorList");
+            while (ul.firstChild) {
+                ul.removeChild(ul.firstChild);
+            }
+        }
+ 
     </script>
-   
+
 }

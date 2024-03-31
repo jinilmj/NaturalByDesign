@@ -8,7 +8,7 @@
 //      option at the top of the list.
 // defaultText - string value to display as the default/prompt value
 // fadeOutIn - Boolean for visual effect after refresh
-function refreshDDL(ddl_ID, URI, showNoDataMsg, noDataMsg, addDefault, defaultText, fadeOutIn) {
+function refreshDDL(ddl_ID, URI, showNoDataMsg, noDataMsg, addDefault, defaultText) {
     var theDDL = $("#" + ddl_ID);
     $(function () {
         $.getJSON(URI, function (data) {
@@ -46,10 +46,5 @@ function refreshDDL(ddl_ID, URI, showNoDataMsg, noDataMsg, addDefault, defaultTe
             }
         });
     });
-    if (fadeOutIn) {
-        theDDL.fadeToggle(400, function () {
-            theDDL.fadeToggle(400);
-        });
-    }
     return;
 }
