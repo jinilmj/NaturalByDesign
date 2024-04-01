@@ -123,8 +123,26 @@ namespace NBD4.Controllers
             return View(pagedData);
         }
 
+
+        // GET: Project/CreateBid
+        [Authorize(Roles = "Admin, Designer")]
+        public IActionResult CreateBid(int? projectId)
+        {
+            if (projectId == null)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction("Create", "Bid", new { projectId = projectId }); // Redirect to the create bid page.
+        }
+
+
+
+
+
+
         // GET: Project/Details/5
-      [Authorize(Roles = "Admin, Designer, Sales Associate")]
+        [Authorize(Roles = "Admin, Designer, Sales Associate")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Projects == null)

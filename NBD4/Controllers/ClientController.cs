@@ -116,8 +116,53 @@ namespace NBD4.Controllers
             return View(pagedData);
         }
 
+
+        private void PopulateDropDownLists()
+        {
+            ViewData["ClientID"] = new SelectList(_context.Clients.OrderBy(c => c.Name), "ID", "Name");
+            // Add other dropdown lists as needed
+        }
+
+        // GET: Project/Create
+        [Authorize(Roles = "Admin, Designer")]
+        public IActionResult Create(int clientId)
+        {
+            var model = new Project { ClientID = clientId };
+            PopulateDropDownLists(); // Call the method to populate dropdown lists
+            return View(model);
+        }
+
+        // POST: Project/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Designer")]
+        public async Task<IActionResult> Create([Bind("ID,StartDate,EndDate,Site,Amount,ClientID")] Project project)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _context.Add(project);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction("Details", "Client", new { id = project.ClientID });
+                }
+            }
+            catch (DbUpdateException)
+            {
+                ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
+            }
+
+            PopulateDropDownLists(); // Call the method to repopulate dropdown lists in case of validation errors
+            return View(project);
+        }
+
+
+
+
+
+
         // GET: Client/Details/5
-      [Authorize(Roles = "Admin, Designer, Sales Associate")]
+        [Authorize(Roles = "Admin, Designer, Sales Associate")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Clients == null)
