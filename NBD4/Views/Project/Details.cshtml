@@ -108,9 +108,9 @@
             <a asp-action="Edit" asp-route-id="@Model?.ID">Edit</a> |
             <a href='@ViewData["returnURL"]'>Back to the @ViewData["ControllerName"] List</a>
         </div>
+        <div>
+            <a asp-controller="Bid" asp-action="Create" asp-route-clientId="@Model.ID" class="btn btn-primary">Create Bid</a>
+        </div>
     }
 }
 
-<div>
-    <a asp-controller="Bid" asp-action="Create" asp-route-clientId="@Model.ID" class="btn btn-primary">Create Bid</a>
-</div>
