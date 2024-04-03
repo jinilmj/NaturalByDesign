@@ -170,7 +170,7 @@ namespace NBD4.Controllers
                 .AsEnumerable()
                 .Where(c => c.Site.StartsWith(searchString, StringComparison.OrdinalIgnoreCase))
                 .OrderBy(c => c.Site)
-                .Select(c => new { id = c.ID, name = c.Site })
+                .Select(c => new { id = c.ID, name = c.Site + " | " + c.StartDate.ToShortDateString() })
                 .ToList();
 
             return Json(projects);
