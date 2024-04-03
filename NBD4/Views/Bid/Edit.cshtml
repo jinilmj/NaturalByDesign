@@ -47,37 +47,6 @@
                     </table>
                 </div>
             </div>
-             @* <div class="form-group">
-                <label class="control-label">@Html.DisplayNameFor(model => model.BidLabourTypeInfos)</label>
-                <div class="m-2">
-                    <table>
-                        <tr>
-                            @{
-                                int cntw = 0;
-                                List<NBD4.ViewModels.CheckOptionVM> checkboxes1 = ViewBag.LabourTypeInfoOptions;
-                                foreach (var checkbox in checkboxes1)
-                                {
-                                    if (cntw++ % 2 == 0)
-                                    {
-                                    @:</tr><tr>
-                                    }
-                                    @:<td>
-                                        <input type="checkbox"
-                                               name="selectedLabourOptions"
-                                               value="@checkbox.ID"
-                                               @(Html.Raw(checkbox.Assigned ? "checked=\"checked\"" : "")) />
-                                        @checkbox.DisplayText @:&nbsp;&nbsp;
-                                         <input type="number"
-                                               name="selectedLabourHours[@checkbox.ID]"
-                                               value="@checkbox.Hours"
-                                               min="0" />
-                                    @:</td>
-                                }
-                        @:</tr>
-                        }
-                    </table>
-                </div>
-            </div> *@
             <div class="form-group">
                 <label class="control-label">Labour and Hours</label>
                 <div class="m-2">
@@ -165,7 +134,7 @@
                                     indexPlant++;
                                 }
                             }
-                            <!-- Empty row for adding a new inventory -->
+                          
                
                         </tbody>
                     </table>
@@ -218,7 +187,6 @@
                                     indexPottery++;
                                 }
                             }
-                            <!-- Empty row for adding a new inventory -->
 
                         </tbody>
                     </table>
@@ -271,7 +239,7 @@
                                     indexOther++;
                                 }
                             }
-                            <!-- Empty row for adding a new inventory -->
+     
 
                         </tbody>
                     </table>
@@ -288,16 +256,7 @@
                 <select asp-for="ApprovalStage" class="form-control" asp-items="Html.GetEnumSelectList<ApprovalStage>()"></select>
                 <span asp-validation-for="ApprovalStage" class="text-danger"></span>
             </div>
-            //  <div class="form-group form-check">
-            //     <label class="form-check-label">
-            //         <input class="form-check-input" asp-for="BidNBDApproved" /> @Html.DisplayNameFor(model => model.BidNBDApproved)
-            //     </label>
-            // </div>
-            // <div class="form-group">
-            //     <label asp-for="BidNBDApprovalNotes" class="control-label"></label>
-            //     <textarea asp-for="BidNBDApprovalNotes" class="form-control" > </textarea>
-            //     <span asp-validation-for="BidNBDApprovalNotes" class="text-danger"></span>
-            // </div>
+        
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="BidClientApproved" /> @Html.DisplayNameFor(model => model.BidClientApproved)
@@ -377,51 +336,7 @@
             </div>
                 }
             }
-            @* <div class="form-group">
-                <label asp-for="ApprovalStage" class="control-label"></label>
-                <select asp-for="ApprovalStage" class="form-control" asp-items="Html.GetEnumSelectList<ApprovalStage>()"></select>
-                <span asp-validation-for="ApprovalStage" class="text-danger"></span>
-            </div>
-             <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="BidNBDApproved" /> @Html.DisplayNameFor(model => model.BidNBDApproved)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="BidNBDApprovalNotes" class="control-label"></label>
-                <textarea asp-for="BidNBDApprovalNotes" class="form-control" > </textarea>
-                <span asp-validation-for="BidNBDApprovalNotes" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="BidClientApproved" /> @Html.DisplayNameFor(model => model.BidClientApproved)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="BidClientApprovalNotes" class="control-label"></label>
-                 <textarea asp-for="BidClientApprovalNotes" class="form-control"  > </textarea>
-                <span asp-validation-for="BidClientApprovalNotes" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="BidMarkForRedesign" /> @Html.DisplayNameFor(model => model.BidMarkForRedesign)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="BidMarkForRedisignNotes" class="control-label"></label>
-                <textarea asp-for="BidMarkForRedisignNotes" class="form-control" > </textarea>
-                <span asp-validation-for="BidMarkForRedisignNotes" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReviewDate" class="control-label"></label>
-                <input asp-for="ReviewDate" class="form-control" />
-                <span asp-validation-for="ReviewDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ReviewedBy" class="control-label"></label>
-                <input asp-for="ReviewedBy" class="form-control" />
-                <span asp-validation-for="ReviewedBy" class="text-danger"></span>
-            </div> *@
+            
             <div class="form-group">
                 <label asp-for="BidAmount" class="control-label"></label>
                 <input asp-for="BidAmount" class="form-control" />

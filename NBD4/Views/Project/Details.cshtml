@@ -110,18 +110,7 @@
         </div>
     }
 }
-@* <div>
-    <a asp-action="Edit" asp-route-id="@Model?.ID">Edit</a> |
-     <a href='@ViewData["returnURL"]'>Back to the @ViewData["ControllerName"] List</a>
-</div> *@
-
-
-
 
 <div>
-    <!-- Change the link to a button -->
-    <form asp-action="CreateBid" asp-route-projectId="@Model.ID">
-        <button type="submit" class="btn btn-primary">Create Bid</button>
-    </form>
+    <a asp-controller="Bid" asp-action="Create" asp-route-clientId="@Model.ID" class="btn btn-primary">Create Bid</a>
 </div>
-

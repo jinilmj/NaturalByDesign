@@ -94,18 +94,13 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="~/js/refreshDDL.js"></script>
     <script>
-        // $(document).on('change', '#ProvinceID', function () {
-        //     var selectedProvince = $("#ProvinceID").val();
-        //     var URL = "/Client/GetCities/?ProvinceID=" + selectedProvince;
-        //     refreshDDL('CityID', URL, true, 'Select a Province with Cities first', false, null, true);
-        // });
         $('#ProvinceID').change(function () {
             var selectedProvince = $("#ProvinceID").val();
             var URL = "/Client/GetCities/?ProvinceID=" + selectedProvince;
             refreshDDL('CityID', URL, true, 'Select a Province with Cities first', false, null, true);
         });
 
-        $('#ProvinceID').trigger('change'); // Trigger the change event on page load to load cities for the default province
+        $('#ProvinceID').trigger('change'); 
 
         $('#addCityModal').on('hide.bs.modal', function () {
             var selectedProvince = $("#ProvinceID").val();

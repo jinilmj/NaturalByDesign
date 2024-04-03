@@ -34,14 +34,6 @@
                 <div id="clientDropdown" class="dropdown-menu" aria-labelledby="clientSearch"></div>
                 <span asp-validation-for="ClientID" class="text-danger"></span>
             </div>
-
-           @*  <div class="form-group">
-                <label asp-for="ClientID" class="control-label">Client<span class="mandatory">*</span></label>
-                <select asp-for="ClientID" class="form-control" asp-items="ViewBag.ClientID">
-                    <option value="">Select a Client</option>
-                </select>
-                <span asp-validation-for="ClientID" class="text-danger"></span>
-            </div> *@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -58,7 +50,7 @@
     <script>
 
         $(document).ready(function () {
-            $('#clientDropdown').hide(); // Hide the dropdown initially
+            $('#clientDropdown').hide(); 
         });
 
         $('#clientSearch').click(function () {
@@ -78,13 +70,13 @@
                     }
                 });
             } else {
-                $('#clientDropdown').show(); // Show the dropdown when the input field is clicked
+                $('#clientDropdown').show();
             }
         });
 
         $(document).click(function (e) {
             if (!$(e.target).closest('#clientSearch').length) {
-                $('#clientDropdown').hide(); // Hide the dropdown when clicking outside the input field
+                $('#clientDropdown').hide(); 
             }
         });
 
@@ -110,7 +102,7 @@
             var clientName = $(this).text();
             $('#clientSearch').val(clientName);
             $('#clientId').val(clientId);
-            $('#clientDropdown').hide(); // Hide the dropdown when a client is selected
+            $('#clientDropdown').hide(); 
         });
 
     </script>

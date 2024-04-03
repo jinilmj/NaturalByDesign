@@ -51,9 +51,7 @@ namespace NBD4.Controllers
             }
             if (numberFilters != 0)
             {
-                //Toggle the Open/Closed state of the collapse depending on if we are filtering
                 ViewData["Filtering"] = " btn-danger";
-                //Show how many filters have been applied
                 ViewData["numberFilters"] = "(" + numberFilters.ToString()
                     + " Filter" + (numberFilters > 1 ? "s" : "") + " Applied)";
             }
@@ -72,7 +70,6 @@ namespace NBD4.Controllers
 				}
 			}
 
-			//Now we know which field and direction to sort by
 			if (sortField == "Start Date")
 			{
 				if (sortDirection == "asc")
@@ -123,24 +120,6 @@ namespace NBD4.Controllers
             return View(pagedData);
         }
 
-
-        // GET: Project/CreateBid
-        [Authorize(Roles = "Admin, Designer")]
-        public IActionResult CreateBid(int? projectId)
-        {
-            if (projectId == null)
-            {
-                return NotFound();
-            }
-
-            return RedirectToAction("Create", "Bid", new { projectId = projectId }); // Redirect to the create bid page.
-        }
-
-
-
-
-
-
         // GET: Project/Details/5
         [Authorize(Roles = "Admin, Designer, Sales Associate")]
         public async Task<IActionResult> Details(int? id)
@@ -163,7 +142,7 @@ namespace NBD4.Controllers
         }
         public IActionResult GetClients(string searchString)
         {
-            searchString ??= ""; // Ensure searchString is not null
+            searchString ??= "";
             var clients = _context.Clients
                 .AsEnumerable()
                 .Where(c => c.Name.StartsWith(searchString, StringComparison.OrdinalIgnoreCase))

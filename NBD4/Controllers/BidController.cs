@@ -47,11 +47,7 @@ namespace NBD4.Controllers
                 .Include(b => b.BidLabourTypeInfos).ThenInclude(p => p.LabourTypeInfo)
                 .AsNoTracking();
 
-            //if (loggedInEmployeeDesigner )
-            //{
-            //    string loggedInEmployeeFullName = "Tamara"; 
-            //    bids = bids.Where(b => b.BidStaffs.Any(s => s.Staff.StaffFirstName == loggedInEmployeeFullName));
-            //}
+           
             if (loggedInEmployeeSales)
             {
                 string loggedInEmployeeFullName = "Bob"; 
@@ -73,26 +69,26 @@ namespace NBD4.Controllers
             }
                 if (numberFilters != 0)
             {
-                //Toggle the Open/Closed state of the collapse depending on if we are filtering
+               
                 ViewData["Filtering"] = " btn-danger";
-                //Show how many filters have been applied
+            
                 ViewData["numberFilters"] = "(" + numberFilters.ToString()
                     + " Filter" + (numberFilters > 1 ? "s" : "") + " Applied)";
             }
-            if (!String.IsNullOrEmpty(actionButton)) //Form Submitted!
+            if (!String.IsNullOrEmpty(actionButton)) 
             {
                 page = 1;
 
-                if (sortOptions.Contains(actionButton))//Change of sort is requested
+                if (sortOptions.Contains(actionButton))
                 {
-                    if (actionButton == sortField) //Reverse order on same field
+                    if (actionButton == sortField) 
                     {
                         sortDirection = sortDirection == "asc" ? "desc" : "asc";
                     }
-                    sortField = actionButton;//Sort by the button clicked
+                    sortField = actionButton;
                 }
             }
-            //Now we know which field and direction to sort by
+           
             if (sortField == "Client")
             {
                 if (sortDirection == "asc")
@@ -169,7 +165,7 @@ namespace NBD4.Controllers
 
         public IActionResult GetProjects(string searchString)
         {
-            searchString ??= ""; // Ensure searchString is not null
+            searchString ??= ""; 
             var projects = _context.Projects
                 .AsEnumerable()
                 .Where(c => c.Site.StartsWith(searchString, StringComparison.OrdinalIgnoreCase))
@@ -216,12 +212,11 @@ namespace NBD4.Controllers
                     int labourId = int.Parse(labourTypeInfoId);
                     var hours = int.Parse(Request.Form[$"selectedLabourHours[{labourId}]"]);
 
-                    // Fetch the LabourTypeInfo from the database
                     var labourTypeInfo = await _context.LabourTypeInfos.FindAsync(labourId);
 
                     var labourToAdd = new BidLabourTypeInfo { BidID = bid.ID, LabourTypeInfoID = labourId, Hours = hours, LabourTypeInfo = labourTypeInfo };
                     bid.BidLabourTypeInfos.Add(labourToAdd);
-                    labourToAdd.CalculateLabourCharge(); // Calculate Labour Charge for the new labour
+                    labourToAdd.CalculateLabourCharge(); 
                     
                 }
             }
@@ -254,7 +249,6 @@ namespace NBD4.Controllers
                 {
                     var quantityPlant = int.Parse(Request.Form[$"selectedInventoryQuantitiesPlant[{invId}]"]);
 
-                    // Fetch the Inventory from the database
                     var inventory = await _context.Inventories.FindAsync(invId);
 
                     var inventoryToAdd = new BidInventory { BidID = bid.ID, InventoryID = invId, MaterialQuantity = quantityPlant, Inventory = inventory };
@@ -264,8 +258,6 @@ namespace NBD4.Controllers
                 foreach (int invId in potteryIDs)
                 {
                     var quantityPottery = int.Parse(Request.Form[$"selectedInventoryQuantitiesPottery[{invId}]"]);
-
-                    // Fetch the Inventory from the database
                     var inventory = await _context.Inventories.FindAsync(invId);
 
                     var inventoryToAdd = new BidInventory { BidID = bid.ID, InventoryID = invId, MaterialQuantity = quantityPottery, Inventory = inventory };
@@ -276,7 +268,6 @@ namespace NBD4.Controllers
                 {
                     var quantityOther = int.Parse(Request.Form[$"selectedInventoryQuantitiesOther[{invId}]"]);
 
-                    // Fetch the Inventory from the database
                     var inventory = await _context.Inventories.FindAsync(invId);
 
                     var inventoryToAdd = new BidInventory { BidID = bid.ID, InventoryID = invId, MaterialQuantity = quantityOther, Inventory = inventory };
@@ -284,7 +275,7 @@ namespace NBD4.Controllers
                     inventoryToAdd.CalculateExtendPrice();
                 }
             }
-            //UpdateBidInventories(selectedOptions, bid);
+ 
             if (ModelState.IsValid)
             {
                 bid.CalculateTotalBidAmount();
@@ -398,7 +389,6 @@ namespace NBD4.Controllers
 
                         //var inventoryToUpdate = bidToUpdate.BidInventories.FirstOrDefault(b => b.InventoryID == invId);
 
-                        // Fetch the Inventory from the database
                         var inventory = await _context.Inventories.FindAsync(invId);
 
                         var inventoryToAdd = new BidInventory { BidID = bidToUpdate.ID, InventoryID = invId, MaterialQuantity = quantityPlant, Inventory = inventory };
@@ -411,7 +401,6 @@ namespace NBD4.Controllers
 
                         //var inventoryToUpdate = bidToUpdate.BidInventories.FirstOrDefault(b => b.InventoryID == invId);
 
-                        // Fetch the Inventory from the database
                         var inventory = await _context.Inventories.FindAsync(invId);
 
                         var inventoryToAdd = new BidInventory { BidID = bidToUpdate.ID, InventoryID = invId, MaterialQuantity = quantityPottery, Inventory = inventory };
@@ -423,8 +412,6 @@ namespace NBD4.Controllers
                         var quantityOther = int.Parse(Request.Form[$"selectedInventoryQuantitiesOther[{invId}]"]);
 
                         //var inventoryToUpdate = bidToUpdate.BidInventories.FirstOrDefault(b => b.InventoryID == invId);
-
-                        // Fetch the Inventory from the database
                         var inventory = await _context.Inventories.FindAsync(invId);
 
                         var inventoryToAdd = new BidInventory { BidID = bidToUpdate.ID, InventoryID = invId, MaterialQuantity = quantityOther, Inventory = inventory };
@@ -562,7 +549,7 @@ namespace NBD4.Controllers
                 else
                 {
                     //Checkbox Not checked
-                    if (bidOptionsHS.Contains(option.ID)) //but it is currently in the history - so remove it
+                    if (bidOptionsHS.Contains(option.ID)) 
                     {
                         BidStaff staffToRemove = bidToUpdate.BidStaffs.SingleOrDefault(c => c.StaffID == option.ID);
                         _context.Remove(staffToRemove);
@@ -664,71 +651,6 @@ namespace NBD4.Controllers
             }
         }
         
-        //private void PopulateAssignedInventoryData(Bid bid)
-        //{
-        //    //For this to work, you must have Included the child collection in the parent object
-        //    var allOptions = _context.Inventories;
-        //    var currentOptionsHS = new HashSet<int>(bid.BidInventories.Select(b => b.InventoryID));
-        //    //Instead of one list with a boolean, we will make two lists
-        //    var selected = new List<ListOptionVM>();
-        //    var available = new List<ListOptionVM>();
-        //    foreach (var s in allOptions)
-        //    {
-        //        if (currentOptionsHS.Contains(s.ID))
-        //        {
-        //            selected.Add(new ListOptionVM
-        //            {
-        //                ID = s.ID,
-        //                DisplayText = s.Description
-        //            });
-        //        }
-        //        else
-        //        {
-        //            available.Add(new ListOptionVM
-        //            {
-        //                ID = s.ID,
-        //                DisplayText = s.Description
-        //            });
-        //        }
-        //    }
-
-        //    ViewData["selOpts"] = new MultiSelectList(selected.OrderBy(s => s.DisplayText), "ID", "DisplayText");
-        //    ViewData["availOpts"] = new MultiSelectList(available.OrderBy(s => s.DisplayText), "ID", "DisplayText");
-        //}
-        //private void UpdateBidInventories(string[] selectedOptions, Bid bidToUpdate)
-        //{
-        //    if (selectedOptions == null)
-        //    {
-        //        bidToUpdate.BidInventories = new List<BidInventory>();
-        //        return;
-        //    }
-
-        //    var selectedOptionsHS = new HashSet<string>(selectedOptions);
-        //    var currentOptionsHS = new HashSet<int>(bidToUpdate.BidInventories.Select(b => b.InventoryID));
-        //    foreach (var s in _context.Inventories)
-        //    {
-        //        if (selectedOptionsHS.Contains(s.ID.ToString()))//it is selected
-        //        {
-        //            if (!currentOptionsHS.Contains(s.ID))
-        //            {
-        //                bidToUpdate.BidInventories.Add(new BidInventory
-        //                {
-        //                    InventoryID = s.ID,
-        //                    BidID = bidToUpdate.ID
-        //                });
-        //            }
-        //        }
-        //        //else //not selected
-        //        //{
-        //        //    if (currentOptionsHS.Contains(s.ID))//but is currently in the Doctor's collection - Remove it!
-        //        //    {
-        //        //        BidInventory invToRemove = bidToUpdate.BidInventories.FirstOrDefault(d => d.InventoryID == s.ID);
-        //        //        _context.Remove(invToRemove);
-        //        //    }
-        //        //}
-        //    }
-        //}
-
         private bool BidExists(int id)
         {
           return _context.Bids.Any(e => e.ID == id);

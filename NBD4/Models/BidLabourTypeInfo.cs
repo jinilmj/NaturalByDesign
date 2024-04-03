@@ -35,7 +35,7 @@ namespace NBD4.Models
             }
             else
             {
-                LabourCharge = 0; // Default value if Hours or LabourTypeInfo is null
+                LabourCharge = 0; 
             }
         }
 

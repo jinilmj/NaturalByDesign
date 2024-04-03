@@ -35,7 +35,7 @@ namespace NBD4.Models
             }
             else
             {
-               MaterialExtendPrice = 0; // Default value if Hours or LabourTypeInfo is null
+               MaterialExtendPrice = 0; 
             }
             
         }
