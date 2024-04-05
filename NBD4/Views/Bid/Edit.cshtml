@@ -15,11 +15,8 @@
                 <span asp-validation-for="BidDate" class="text-danger"></span>
             </div>
              <div class="form-group">
-                <label asp-for="ProjectID" class="control-label">Project</label>
-                <input type="hidden" id="projectId" name="ProjectID" />
-                <input type="text" id="projectSearch" class="form-control" placeholder="Search for a project" />
-                <div id="projectDropdown" class="dropdown-menu" aria-labelledby="projectSearch"></div>
-                <span asp-validation-for="ProjectID" class="text-danger"></span>
+                <label asp-for="ProjectID" class="control-label"></label>
+                <select asp-for="ProjectID" class="form-control" asp-items="ViewBag.ProjectID"></select>
             </div>
             
             <div class="form-group">
@@ -358,66 +355,6 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="~/js/multiselect.js"></script>
-
-        <script>
-
-            $(document).ready(function () {
-                $('#projectDropdown').hide();
-            });
-
-            $('#projectSearch').click(function () {
-                var searchString = $('#projectSearch').val();
-                if (searchString === '') {
-                    $.ajax({
-                        url: '/Bid/GetProjects',
-                        type: 'GET',
-                        data: { searchString: searchString },
-                        success: function (data) {
-                            var dropdown = $('#projectDropdown');
-                            dropdown.empty();
-                            $.each(data, function (key, entry) {
-                                dropdown.append($('<a class="dropdown-item" href="#">').attr('data-id', entry.id).text(entry.name));
-                            });
-                            dropdown.show();
-                        }
-                    });
-                } else {
-                    $('#projectDropdown').show(); 
-                }
-            });
-
-            $(document).click(function (e) {
-                if (!$(e.target).closest('#projectSearch').length) {
-                    $('#projectDropdown').hide(); 
-                }
-            });
-
-            $('#projectSearch').on('input', function () {
-                var searchString = $(this).val();
-                $.ajax({
-                    url: '/Bid/GetProjects',
-                    type: 'GET',
-                    data: { searchString: searchString },
-                    success: function (data) {
-                        var dropdown = $('#projectDropdown');
-                        dropdown.empty();
-                        $.each(data, function (key, entry) {
-                            dropdown.append($('<a class="dropdown-item" href="#">').attr('data-id', entry.id).text(entry.name));
-                        });
-                        dropdown.show();
-                    }
-                });
-            });
-
-            $('#projectDropdown').on('click', '.dropdown-item', function () {
-                var ProjectId = $(this).data('id');
-                var siteName = $(this).text();
-                $('#projectSearch').val(siteName);
-                $('#projectId').val(ProjectId);
-                $('#projectDropdown').hide(); 
-            });
-
-        </script>
 
     <script>
 $(document).ready(function () {

@@ -53,6 +53,18 @@
                     </div>
                 </td>
                 <td class="text-center">
+                    @* @{
+
+                        var loggedInUserEmail = User.Identity.Name; 
+                        if (item.Email != loggedInUserEmail)
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-sm btn-outline-primary"
+                               role="button" data-bs-toggle="tooltip" title="Edit @ViewData["ControllerFriendlyName"]">
+                                &#x270E; Edit
+                            </a>
+
+                        }
+                        } *@
                     <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-sm btn-outline-primary"
                        role="button" data-bs-toggle="tooltip" title="Edit @ViewData["ControllerFriendlyName"]">
                         &#x270E; Edit
