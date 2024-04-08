@@ -153,12 +153,18 @@ namespace NBD4.Controllers
             return Json(clients);
         }
 
-
         // GET: Project/Create
-      [Authorize(Roles = "Admin, Designer")]
-        public IActionResult Create()
+        [Authorize(Roles = "Admin, Designer")]
+        public async Task<IActionResult> Create(int? clientId)
         {
             PopulateDropDownLists();
+            if (clientId != null)
+            {
+                var client = await _context.Clients.FindAsync(clientId);
+                ViewData["ClientName"] = client.Name;
+                ViewData["ClientID"] = (int)clientId;
+            }
+
             return View();
         }
 

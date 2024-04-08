@@ -53,6 +53,13 @@
             $('#clientDropdown').hide(); 
         });
 
+        $(document).ready(function () {
+            var clientId = '@ViewBag.ClientID';
+            var clientName = '@ViewBag.ClientName';
+            $('#clientSearch').val(clientName);
+            $('#clientId').val(clientId);
+        });
+
         $('#clientSearch').click(function () {
             var searchString = $('#clientSearch').val();
             if (searchString === '') {

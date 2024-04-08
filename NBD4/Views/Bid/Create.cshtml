@@ -264,6 +264,14 @@
             $('#projectDropdown').hide();
         });
 
+        $(document).ready(function () {
+                var ProjectId = '@ViewBag.ProjectID';
+                var siteName = '@ViewBag.ProjectSiteName';
+                $('#projectSearch').val(siteName);
+                $('#projectId').val(ProjectId);
+                $('#projectDropdown').hide(); 
+        });
+
         $('#projectSearch').click(function () {
             var searchString = $('#projectSearch').val();
             if (searchString === '') {

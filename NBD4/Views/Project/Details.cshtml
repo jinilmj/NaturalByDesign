@@ -109,7 +109,7 @@
             <a href='@ViewData["returnURL"]'>Back to the @ViewData["ControllerName"] List</a>
         </div>
         <div>
-            <a asp-controller="Bid" asp-action="Create" asp-route-clientId="@Model.ID" class="btn btn-primary">Create Bid</a>
+            <a asp-controller="Bid" asp-action="Create" asp-route-projectId="@Model.ID" class="btn btn-primary">Create Bid</a>
         </div>
     }
 }

@@ -177,13 +177,28 @@ namespace NBD4.Controllers
         }
         // GET: Bid/Create
       [Authorize(Roles = "Admin, Designer")]
-        public IActionResult Create()
+        public async Task<IActionResult> Create(int? projectId)
         {
+            if (projectId != null)
+            {
+                var project = await _context.Projects.FindAsync(projectId);
+                ViewBag.ProjectSiteName = project.Site;
+                ViewBag.ProjectId = (int)projectId;
+            }
+
             var bid = new Bid();
             PopulateAssignedStaffData(bid);
             PopulateAssignedLabourData(bid);
             PopulateAssignedInventoryData(bid);
             ViewData["ProjectID"] = new SelectList(_context.Projects, "ID", "Site");
+
+            if (projectId != null)
+            {
+                var project = await _context.Projects.FindAsync(projectId);
+                ViewData["ProjectSiteName"] = project.Site;
+                ViewData["ProjectID"] = (int)projectId;
+            }
+
             return View();
         }
 
