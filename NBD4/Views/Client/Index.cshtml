@@ -53,7 +53,7 @@
 					<input type="submit" value="Address" class="btn btn-toolbar" />
 				</th>
 				@{
-					if (User.IsInRole("Designer") || User.IsInRole("Admin"))
+					if (User.IsInRole("Designer") || User.IsInRole("Admin") || User.IsInRole("Sales Associate"))
 					{
 						<th class="text-center" style="min-width:120px">
 							<a asp-action="Create" class="btn btn-sm btn-outline-success"
