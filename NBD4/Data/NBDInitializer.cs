@@ -547,10 +547,10 @@ namespace NBD4.Data
                          new BidStaff { StaffID = context.Staffs.FirstOrDefault(c => c.StaffFirstName == "Tamara" && c.StaffLastName == "Bakken").ID, BidID = 5 },
                          new BidStaff { StaffID = context.Staffs.FirstOrDefault(c => c.StaffFirstName == "Tamara" && c.StaffLastName == "Bakken").ID, BidID = 2 },
                          new BidStaff { StaffID = context.Staffs.FirstOrDefault(c => c.StaffFirstName == "Tamara" && c.StaffLastName == "Bakken").ID, BidID = 6 },
-                         new BidStaff { StaffID = context.Staffs.FirstOrDefault(c => c.StaffFirstName == "Tamara" && c.StaffLastName == "Bakken").ID, BidID = 7 },
-                         new BidStaff { StaffID = context.Staffs.FirstOrDefault(c => c.StaffFirstName == "Tamara" && c.StaffLastName == "Bakken").ID, BidID = 8 },
-                         new BidStaff { StaffID = context.Staffs.FirstOrDefault(c => c.StaffFirstName == "Tamara" && c.StaffLastName == "Bakken").ID, BidID = 9 },
-                         new BidStaff { StaffID = context.Staffs.FirstOrDefault(c => c.StaffFirstName == "Tamara" && c.StaffLastName == "Bakken").ID, BidID = 10 }
+                         new BidStaff { StaffID = context.Staffs.FirstOrDefault(c => c.StaffFirstName == "Bob" && c.StaffLastName == "Reinhardt").ID, BidID = 7 },
+                         new BidStaff { StaffID = context.Staffs.FirstOrDefault(c => c.StaffFirstName == "Bob" && c.StaffLastName == "Reinhardt").ID, BidID = 8 },
+                         new BidStaff { StaffID = context.Staffs.FirstOrDefault(c => c.StaffFirstName == "Bob" && c.StaffLastName == "Reinhardt").ID, BidID = 9 },
+                         new BidStaff { StaffID = context.Staffs.FirstOrDefault(c => c.StaffFirstName == "Bob" && c.StaffLastName == "Reinhardt").ID, BidID = 10 }
                          );
                     context.SaveChanges();
                 }

@@ -151,7 +151,7 @@ namespace NBD4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-      [Authorize(Roles = "Admin, Designer")]
+      [Authorize(Roles = "Admin, Designer, Sales Associate")]
         public async Task<IActionResult> Create([Bind("ID,Name,ContactFirstName,ContactMiddleName,ContactLastName,Email,Phone,Street,PostalCode,CityID")] Client client)
         {
             try
