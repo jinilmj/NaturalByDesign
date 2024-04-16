@@ -147,10 +147,10 @@ namespace NBD4.Data
                     },
                     new Client
                     {
-                        Name = "Infinite Dynamics Co",
-                        ContactFirstName = "Eva",
+                        Name = "Meridian Co",
+                        ContactFirstName = "Merin",
                         ContactMiddleName = "N",
-                        ContactLastName = "Brown",
+                        ContactLastName = "Daniel",
                         Email = "eva.brown@example.com",
                         Phone = "7778889999",
                         Street = "101 Pine St",
@@ -231,7 +231,7 @@ namespace NBD4.Data
                         EndDate = DateTime.Parse("2024-11-15"),
                         Site = "Green Park Street",
                         Amount = 7000d,
-                        ClientID = context.Clients.FirstOrDefault(c => c.Name == "Infinite Dynamics Co").ID
+                        ClientID = context.Clients.FirstOrDefault(c => c.Name == "Meridian Co").ID
                     },
                     new Project
                     {
@@ -239,7 +239,7 @@ namespace NBD4.Data
                         EndDate = DateTime.Parse("2024-12-01"),
                         Site = "Metro Center Square",
                         Amount = 7000d,
-                        ClientID = context.Clients.FirstOrDefault(c => c.Name == "Infinite Dynamics Co").ID
+                        ClientID = context.Clients.FirstOrDefault(c => c.Name == "Meridian Co").ID
                     },
                     new Project
                     {
@@ -268,8 +268,8 @@ namespace NBD4.Data
                     var projectGlobalSolutions2 = context.Projects.FirstOrDefault(p => p.Site == "Tech Park Tower" && p.Client.Name == "Global Solutions Inc");
                     var projectPinnacleEnterprises1 = context.Projects.FirstOrDefault(p => p.Site == "Riverside Gardens" && p.Client.Name == "Pinnacle Enterprises");
                     var projectPinnacleEnterprises2 = context.Projects.FirstOrDefault(p => p.Site == "Harbor View Plaza" && p.Client.Name == "Pinnacle Enterprises");
-                    var projectInfiniteDynamics1 = context.Projects.FirstOrDefault(p => p.Site == "Green Park Street" && p.Client.Name == "Infinite Dynamics Co");
-                    var projectInfiniteDynamics2 = context.Projects.FirstOrDefault(p => p.Site == "Metro Center Square" && p.Client.Name == "Infinite Dynamics Co");
+                    var projectInfiniteDynamics1 = context.Projects.FirstOrDefault(p => p.Site == "Green Park Street" && p.Client.Name == "Meridian Co");
+                    var projectInfiniteDynamics2 = context.Projects.FirstOrDefault(p => p.Site == "Metro Center Square" && p.Client.Name == "Meridian Co");
                     var projectEagleEyeTechnologies1 = context.Projects.FirstOrDefault(p => p.Site == "Sunset Ridge Avenue" && p.Client.Name == "EagleEye Technologies");
                     var projectEagleEyeTechnologies2 = context.Projects.FirstOrDefault(p => p.Site == "Oakwood Terrace" && p.Client.Name == "EagleEye Technologies");
 
