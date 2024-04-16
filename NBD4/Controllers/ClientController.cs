@@ -138,7 +138,7 @@ namespace NBD4.Controllers
         }
 
         // GET: Client/Create
-      [Authorize(Roles = "Admin, Designer")]
+      [Authorize(Roles = "Admin, Designer, Sales Associate")]
         public IActionResult Create()
         {
             //ViewData["CityID"] = new SelectList(_context.Cities, "ID", "Name");
@@ -173,7 +173,7 @@ namespace NBD4.Controllers
         }
 
         // GET: Client/Edit/5
-      [Authorize(Roles = "Admin, Designer")]
+      [Authorize(Roles = "Admin, Designer, Sales Associate")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Clients == null)
@@ -196,7 +196,7 @@ namespace NBD4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-      [Authorize(Roles = "Admin, Designer")]
+      [Authorize(Roles = "Admin, Designer, Sales Associate")]
         public async Task<IActionResult> Edit(int id)
         {
             var clientToUpdate = await _context.Clients

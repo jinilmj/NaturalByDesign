@@ -42,7 +42,7 @@ namespace NBD4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-      [Authorize(Roles = "Admin, Designer")]
+      [Authorize(Roles = "Admin, Designer, Sales Associate")]
         public async Task<IActionResult> Create([Bind("Name,ID")] Province province)
         {
             try
@@ -64,7 +64,7 @@ namespace NBD4.Controllers
         }
 
         // GET: Province/Edit/5
-      [Authorize(Roles = "Admin, Designer")]
+      [Authorize(Roles = "Admin, Designer, Sales Associate")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null || _context.Provinces == null)
@@ -85,7 +85,7 @@ namespace NBD4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-      [Authorize(Roles = "Admin, Designer")]
+      [Authorize(Roles = "Admin, Designer, Sales Associate")]
         public async Task<IActionResult> Edit(string id, [Bind("ID,Name")] Province province)
         {
             

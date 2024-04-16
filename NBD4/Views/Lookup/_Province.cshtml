@@ -5,7 +5,7 @@
         @Html.DropDownList("ProvinceID", null, htmlAttributes: new { @size = 6, @class = "form-control" })
     </div>
     @{
-        if (User.IsInRole("Designer"))
+        if (User.IsInRole("Designer") || User.IsInRole("Sales Associate"))
         {
             <div class="card-footer">
                 <a asp-controller="Province" asp-action="Create">Create</a> |
